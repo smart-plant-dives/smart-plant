@@ -1,5 +1,7 @@
 package br.com.smartplant.api.repositories;
 
-public class PlantaRepository {
+import br.com.smartplant.api.entities.Planta;
+
+public class PlantaRepository extends JpaRepository<Planta, Long> {
 
 }
