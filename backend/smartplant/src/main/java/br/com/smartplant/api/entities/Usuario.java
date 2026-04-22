@@ -15,6 +15,7 @@ public class Usuario {
 	@Email(message = "Email Inválido")
 	private String email;
 	
+	
 	private String senha;
 
 }
