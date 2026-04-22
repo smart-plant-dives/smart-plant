@@ -22,15 +22,12 @@ header {
   padding: 0 30px;
 }
 
-.logo {
-  background: #fff;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+.logo img {
+    width: 60px;   /* AQUI você muda o tamanho */
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
 }
 
 .icons {
@@ -110,13 +107,55 @@ footer {
   top: 100vh;
 }
 
-footer .contato, .center, .social {
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
-  padding: 0 20px;
-  display: flex;
-  gap: 15px;
-  font-size: 18px;
-  position: fixed;
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Altura mínima da tela */
+}
+
+.conteudo-principal {
+  flex: 1; /* Faz o conteúdo crescer e empurrar o footer */
+}
+
+/* Responsivo */
+    @media (max-width: 820px){
+      .hero{grid-template-columns: 1fr;}
+
+    }
+
+    /*responsitividade*/
+
+    @media (max-width: 1024px){
+      h1{
+        font-size: 70px;
+      }
+
+      .intro-container{
+        flex-wrap: wrap;
+        text-align: center;
+      }
+
+      .img-rnb-era img{
+        width: 420px;
+        height: 420px;
+      }
+
+      .texto-rnb{
+        font-size: 16px;
+      }
+
+      .menu a{
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+
+      .logo img{
+        width: 80px;
+        height: 80px;
+      }
+    }
