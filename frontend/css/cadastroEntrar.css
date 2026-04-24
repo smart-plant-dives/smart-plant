@@ -1,5 +1,5 @@
 body {
-  background-color: #DFDACC;
+  background-color: #e0e0e0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -10,22 +10,22 @@ body {
   height: 40px;
   border-radius: 50%;
   border: none;
-  background-image: url("https://chat.google.com/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEXzA8dRdY%2BRaTJnZqrlIUoJVdO9P42SGe8xnbj5fr2fOxe5jxZaNhItOt8DjW%2FmaNgBxu6vEw4B3cAPlNt7N%2FduGDtxAIO5Tcu1B0JjJwsoklh76KZGK55V154OrqCj3I6DDkP9oWd57CdjaM4q4Ngkfz5JvPtpIcUMbD0%2Fzc7IdCRck8lnIdKKSk%2BAb%2FrZ9jyYIrcJF5BGLoCEv5bt6TthOg1uIh7PDIln4HYWc7kqBBw4Ck4tiby1DkoVixDKp8wDNpokHONRYlBsrnvC1iQb3%2FI5ryCi4ieo6oi5ZyQ8C7dOXP7fC3MuIZeLx5zDBLkuUpwINvufodyWKpgViRWNUzUcdKM1ShAEv32oz5qW5F1kdjYJlshF6TMVsfvc%2F2tlV0hGkDfKm4r%2BFGqXODIDojcCnVPUYV39XNGml6FsGkvd71ytPOwXsPWJEHDKC9WwgZopFprt%2FUHTZ2KvD2RPkP8O%2FwRtTyBh4kPHZHxqiXi3%2Ba%2FoXJBMki6UVEZ3uOnd53ouO1YIRqp36vlSkX6Ycj5PZL689uviqH15etmd660JeqwiHyJSBdW447Di1AWPdbn%2B8MWE%2BU6JfDPhPxbUkvFVbmC2nuj3nOUeieR9RkYO7IFTtKKqc91w%2FPsO8lEOM%2FxyMeDnnHXtevo%3D&allow_caching=true&sz=w512");
+  font-size: 20px;
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  border: 2px solid rgb(255, 255, 255);
-  background-color: rgb(185, 185, 185);
   display: inline-block;
   vertical-align: middle;
 }
 .cabecalho {
-  background-color: #557155;
+  background-color: #f6f6f6;
   color: white;
-  padding: 10px 30px; 
+  padding: 10px 20px; 
   display: flex;
   justify-content: space-between;
+  border-radius: 5px;
 }
+
 
 .cabecalho h1{
     margin: 0;
@@ -37,32 +37,63 @@ body {
   align-items: center;
 }
 
+.p-titulo{
+  font-family:Arial, Helvetica, sans-serif;
+}
 
 .box{
     gap: 15px; /* Espaçamento entre os botões */
-    padding: 80px;
+    padding: 70px;
+    height: 350px;
+    margin-top: 80px;
     display:center;
-    align-items: center;
+    align-items: left;
     border: 2px solid #ccc;
-    border-radius: 26px;
+    border-radius: 15px;
     background-color: white;
     justify-content: center;
     position: sticky;
     display: grid;
+    float: left;
+    margin-left: 0;
     place-items: center; /* Centraliza nos dois eixos */
 }
 
+/* From Uiverse.io by Praashoo7 */ 
+.input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 1em;
+  background-color: #ccc;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 300ms ease-in-out;
+}
 
+.input:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
+}
 
 .dados{
     justify-content: center;
     position: sticky;
     display: grid;
+    align-items: center;
+    text-align: left;
+    padding: 10px;
+    display: grid;
+    float: left;
+    margin-left: 0;
+
 }
 
 
 label{
   display:block;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 input[type="sumit"],
@@ -70,15 +101,25 @@ label{
 margin-top: 1rem;;
 }
 
+a{
+  color:#187000;
+  font-size: smaller;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: transparent;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
 
+}
 
 /* From Uiverse.io by adamgiebl */ 
 button {
-  color: #090909;
+  color: #fffcfc;
   padding: 0.7em 1.7em;
   font-size: 18px;
   border-radius: 0.5em;
-  background: #e8e8e8;
+  background: #187000;
   cursor: pointer;
   border: 1px solid #e8e8e8;
   transition: all 0.3s;
@@ -105,14 +146,16 @@ button:active {
 }
 
 footer {
-  background-color: #465D46;
+  background-color: #187000;
   color: #fff;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 14px;
+  font-size: 17px;
   padding: 1rem;
   position: sticky;
   top: 100vh;
+  border-radius: 5px;
 }
+
