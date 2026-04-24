@@ -29,6 +29,9 @@ public class Usuario {
 	@NotBlank(message = "A senha é obrigatória.")
 	@Column(name = "senha", nullable = false)
 	private String senha;
+	
+	
+	
 
 	public Usuario() {
 
