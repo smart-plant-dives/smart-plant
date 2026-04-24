@@ -1,161 +1,103 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Georgia", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
 }
 
+/* FUNDO */
 body {
-  background-color: rgb(248, 240, 230);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    background-color: #e7ddc8;
 }
 
 /* HEADER */
 header {
-  background: #1e6b2f;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
+    background-color: #1f4d2b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
 }
 
 .logo img {
-    width: 60px;   /* AQUI você muda o tamanho */
-    height: 60px;
-    object-fit: cover;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
 }
 
-.icons {
-  display: flex;
-  gap: 15px;
+/* BOTÕES */
+.menu {
+    display: inline-block;
+    margin-left: 15px;
 }
 
-.icon {
-  background: #fff;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+.menu span {
+    border: 1px solid white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-/* MAIN */
+.menu span:hover {
+    background-color: white;
+    color: #1f4d2b;
+}
+
+/* CONTAINER PRINCIPAL */
 .container {
-  display: flex;
-  padding: 50px;
-  gap: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 60px;
 }
 
+/* LADO ESQUERDO */
 .left {
-  width: 50%;
+    width: 45%;
 }
 
 .left h1 {
-  font-size: 34px;
-  margin-bottom: 15px;
+    font-size: 40px;
+    margin-bottom: 15px;
 }
 
 .left hr {
-  width: 60%;
-  margin: 10px 0 20px;
+    margin: 15px 0;
+    border: 1px solid #aaa;
+    width: 80%;
 }
 
 .left p {
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 15px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    color: #333;
 }
 
-/* IMAGENS */
+/* LADO DIREITO (IMAGENS) */
 .right {
-  width: 50%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
-
-.card {
-  border-radius: 25px;
-  overflow: hidden;
-  height: 170px;
+    width: 45%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
 }
 
 .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
 }
 
 /* FOOTER */
 footer {
-  background: #1e6b2f;
-  color: #fff;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-size: 14px;
-  padding: 1rem;
-  position: sticky;
-  top: 100vh;
+    background-color: #1f4d2b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    margin-top: 40px;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
+footer div {
+    font-size: 14px;
 }
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Altura mínima da tela */
-}
-
-.conteudo-principal {
-  flex: 1; /* Faz o conteúdo crescer e empurrar o footer */
-}
-
-/* Responsivo */
-    @media (max-width: 820px){
-      .hero{grid-template-columns: 1fr;}
-
-    }
-
-    /*responsitividade*/
-
-    @media (max-width: 1024px){
-      h1{
-        font-size: 70px;
-      }
-
-      .intro-container{
-        flex-wrap: wrap;
-        text-align: center;
-      }
-
-      .img-rnb-era img{
-        width: 420px;
-        height: 420px;
-      }
-
-      .texto-rnb{
-        font-size: 16px;
-      }
-
-      .menu a{
-        padding: 6px 10px;
-        font-size: 14px;
-      }
-
-      .logo img{
-        width: 80px;
-        height: 80px;
-      }
-    }
