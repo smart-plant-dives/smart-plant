@@ -35,7 +35,7 @@ public class PlantaService {
 
 		    pVelha.setNomePlanta(pNova.getNomePlanta());
 		    pVelha.setEspecie(pNova.getEspecie());
-		    pVelha.setExperienciaPlanta(pNova.getExperienciaPlanta());
+		    pVelha.setCategoriaPlanta(pNova.getCategoriaPlanta());
 
 		    return repository.save(pVelha);
 		
