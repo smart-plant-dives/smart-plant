@@ -7,36 +7,52 @@
     <link rel="stylesheet" href="/css/cadastroEntrar.css">
 
 </head>
-<body class="body">
-    <header class="cabecalho">
-        <a href="index.html" class="logo">Clique aqui</a>
-        
-    </header>
+<header class="main-header">
+ <a href="index.html"><img src="Beige Minimalist Flower Store Logo.png" alt="Pagina de inicio"></a>
+  <nav class="nav-auth">
+    <a href="cadastroUsuario.html" class="btn-cadastrar"> CADASTRAR</a>
+    <a href="entrarUsuario.html" class="btn-entrar"> ENTRAR</a>
+  </nav>
+</header>
 
-    
-
-    <div class="box">
-      <div class="dados">
-        <label for="email">E-mail</label>
-    <input type="email" placeholder="Email" class="input" />
-
+<main class="login-container">
+  <section class="login-box">
+    <div class="login-form">
+      <h2>Bem-vindo(a) ao SmartPlant</h2>
+      <p>Acesse sua conta e continue cuidando das suas plantas.</p>
+      
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" placeholder="Email">
       </div>
-
-      <div class="dados">
-        <label for="pass">Senha</label>
-        <input type="senha" placeholder="Senha" class="input" />
+      
+      <div class="input-group">
+        <label>Senha</label>
+        <input type="password" placeholder="Senha">
       </div>
-
-      <a href="esqueciSenha.html">Esquiceu sua senha?!</a>
-      <br>
-      <button>Entrar</button>
+      
+      <a href="esqueciSenha.html" class="forgot-password">Esqueceu a senha?</a>
+      <button class="btn-submit">Entrar</button>
     </div>
 
-   <footer>
-  <div class="contato">Contate-nos: (15) 92809-2649</div>
-  <div class="center">© Todos os Direitos Reservados</div>
-  <div class="social">📱 📷 👍</div>
-</footer>
+    <div class="divider"></div>
 
-</body>
-</html>
+    <div class="register-promo">
+      <h3>Ainda não possui conta?</h3>
+      <p>Crie sua conta e comece a cuidar ainda melhor das suas plantas.</p>
+      <a href="entrarUsuario.html" class="btn-outline">Crie uma conta aqui</a>
+    </div>
+  </section>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-info">
+    <span>📞 Contate-nos: (15) 92809-2649</span>
+  </div>
+  <div class="footer-copy">
+    <span>🛡️ © Todos os Direitos Reservados</span>
+  </div>
+  <div class="footer-social">
+    <span>🌐 Instagram Facebook</span>
+  </div>
+</footer>
