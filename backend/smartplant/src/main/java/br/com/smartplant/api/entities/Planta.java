@@ -20,6 +20,21 @@ public class Planta {
 
 	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
+<<<<<<< Updated upstream
+=======
+	
+	@Column(name = "categoria_planta", nullable = false, unique = true, length = 100)
+	private String categoriaPlanta;
+	
+public Planta() {}
+ 
+public Planta(String nomePlanta, String categoriaPlanta, String especie) {
+	
+	this.nomePlanta = nomePlanta;
+	this.categoriaPlanta = categoriaPlanta;
+	this.especie = especie;
+}
+>>>>>>> Stashed changes
 
 	@Column(name = "categoria_planta", nullable = false, length = 100)
 	private String categoriaPlanta;
@@ -34,6 +49,7 @@ public class Planta {
 		this.especie = especie;
 	}
 
+<<<<<<< Updated upstream
 	public Long getId() {
 		return id;
 	}
@@ -41,6 +57,15 @@ public class Planta {
 	public void setId(Long id) {
 		this.id = id;
 	}
+=======
+public String getCategoriaPlanta() {
+    return categoriaPlanta;
+}
+
+public void setCategoriaPlanta(String categoriaPlanta) {
+	this.categoriaPlanta = categoriaPlanta;
+}
+>>>>>>> Stashed changes
 
 	public String getNomePlanta() {
 		return nomePlanta;
