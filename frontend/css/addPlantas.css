@@ -1,6 +1,6 @@
 .form-box {
   max-width: 300px;
-  background: #f1f7fe;
+  background: #ffffff;
   overflow: hidden;
   border-radius: 16px;
   color: #000000;
@@ -20,15 +20,10 @@
   font-size: 1.6rem;
 }
 
-.subtitle {
-  font-size: 1rem;
-  color: #ffffff;
-}
-
 .form-container {
   overflow: hidden;
   border-radius: 8px;
-  background-color: #bcfbd2;
+  background-color: #aae2be;
   margin: 1rem 0 .5rem;
   width: 100%;
 }
@@ -63,7 +58,7 @@
 }
 
 .form button {
-  background-color: #25ac52;
+  background-color: #77b78c;
   color: #fff;
   border: 0;
   border-radius: 24px;
