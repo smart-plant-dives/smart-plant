@@ -1,0 +1,118 @@
+body {
+  background-color: #DFDACC;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.logo{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-image: url("https://chat.google.com/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEXzA8dRdY%2BRaTJnZqrlIUoJVdO9P42SGe8xnbj5fr2fOxe5jxZaNhItOt8DjW%2FmaNgBxu6vEw4B3cAPlNt7N%2FduGDtxAIO5Tcu1B0JjJwsoklh76KZGK55V154OrqCj3I6DDkP9oWd57CdjaM4q4Ngkfz5JvPtpIcUMbD0%2Fzc7IdCRck8lnIdKKSk%2BAb%2FrZ9jyYIrcJF5BGLoCEv5bt6TthOg1uIh7PDIln4HYWc7kqBBw4Ck4tiby1DkoVixDKp8wDNpokHONRYlBsrnvC1iQb3%2FI5ryCi4ieo6oi5ZyQ8C7dOXP7fC3MuIZeLx5zDBLkuUpwINvufodyWKpgViRWNUzUcdKM1ShAEv32oz5qW5F1kdjYJlshF6TMVsfvc%2F2tlV0hGkDfKm4r%2BFGqXODIDojcCnVPUYV39XNGml6FsGkvd71ytPOwXsPWJEHDKC9WwgZopFprt%2FUHTZ2KvD2RPkP8O%2FwRtTyBh4kPHZHxqiXi3%2Ba%2FoXJBMki6UVEZ3uOnd53ouO1YIRqp36vlSkX6Ycj5PZL689uviqH15etmd660JeqwiHyJSBdW447Di1AWPdbn%2B8MWE%2BU6JfDPhPxbUkvFVbmC2nuj3nOUeieR9RkYO7IFTtKKqc91w%2FPsO8lEOM%2FxyMeDnnHXtevo%3D&allow_caching=true&sz=w512");
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(185, 185, 185);
+  display: inline-block;
+  vertical-align: middle;
+}
+.cabecalho {
+  background-color: #557155;
+  color: white;
+  padding: 10px 30px; 
+  display: flex;
+  justify-content: space-between;
+}
+
+.cabecalho h1{
+    margin: 0;
+}
+
+.text-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.box{
+    gap: 15px; /* Espaçamento entre os botões */
+    padding: 80px;
+    display:center;
+    align-items: center;
+    border: 2px solid #ccc;
+    border-radius: 26px;
+    background-color: white;
+    justify-content: center;
+    position: sticky;
+    display: grid;
+    place-items: center; /* Centraliza nos dois eixos */
+}
+
+
+
+.dados{
+    justify-content: center;
+    position: sticky;
+    display: grid;
+}
+
+
+label{
+  display:block;
+}
+
+input[type="sumit"],
+label{
+margin-top: 1rem;;
+}
+
+
+
+/* From Uiverse.io by adamgiebl */ 
+button {
+  color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+}
+
+button:hover {
+  border: 1px solid white;
+}
+
+button:active {
+  box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
+}
+
+
+.btn-cadastro{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+footer {
+  background-color: #465D46;
+  color: #fff;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 14px;
+  padding: 1rem;
+  position: sticky;
+  top: 100vh;
+}
