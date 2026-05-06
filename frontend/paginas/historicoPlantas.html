@@ -1,12 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Smart Plant - Histórico de Plantas</title>
     <link rel="stylesheet" href="historicoPlantas.css">
+    <link rel="stylesheet" href="">
 </head>
 <body>
-    
+
+    <header class="navbar">
+        <div class="logo">
+    <a href="historicoPlantas.html">
+        <img src="https://chat.google.com/u/1/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEV2L3yfMEq1fuXE5BfiUQlbBWdGXHM2vX1vXZO1c4wQiZ8i79u%2Bj09DnWlgLw5KBwKFT6APpIxg7EteHaMFkXowvNK%2FIX0n6AOULqsGNw3LWHJvUdP4kuJr7X54cb5gQkMecEDuRY0WXMuN0p5knLZCMyWzOtzSNjsD7N4cl4N68NNiAmqvNY7SA0XtxrXaASfKAE8p5tHaG5sXjQeLayx84QJu7vX6T%2FHyjR3Vsxdtl9%2FVqa7gQmhMMo7VPTW9GYuhsxoF74K%2BZ5npQUCvxkiBp0sAeS8UgxtbST7%2BwviCjq8jtrTf1%2Ft6fOc6VE59MRYfyPALXh59E%2BpVUeZ4gqjr4aesN9nVtPIOQ5b8FcTJcsT92GKJZ2kp73OPpMqMad4y4ceTpbe8BzNN4Fx0XETdtN3kPBsfcX0UcEd%2BCn4IxkNM745Rrm%2BWMe7vU3%2F%2FAqC5VqNXyXJLVyJecTJ01CI5Jq2vWoxw44zyMErIcH952omoA%2BKRR3VaYROC9jms3KfZQGG4DDNVDVX02O7DvGy%2B3Wvbx%2FnoiX6bOwos%2FfBrOo1iOJLZ6iT20DEpG8l6W2LE9pyRvXibUqQu9oFaUC2LoQAKh3o6UeTfeR7h4BAC41sZzLuydtmClzlSoo4nZ5w%2B5krw7fymvfQ%3D&allow_caching=true&sz=w512&authuser=1" alt="Logo Smart Plant" class="logo-img">
+    </a>
+</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar">
+        </div>
+        <div class="user-account">
+            <div class="user-icon"></div>
+            <span>Sua conta</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Histórico de <span>Plantas</span></h1>
+            <div class="filter-section">
+                <p>Veja e gerencie suas plantinhas</p>
+                <div class="filter-dropdown">
+                    Filtrar por categoria: 
+                    <select>
+                        <option>Todas</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <section class="plant-grid">
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">MariHelo</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://dicasdeplantas.com.br/wp-content/uploads/2024/02/lirio-branco02.jpg')"></div>
+                <div class="card-info">
+                    <h3>Bebezinha</h3>
+                    <p class="species">Espécie: Lilium Candidum</p>
+                    <span class="tag tag-ornamental">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">legomes</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://receitatodahora.com.br/wp-content/uploads/2023/10/como-plantar-amora-no-vaso-29-091.jpg')"></div>
+                <div class="card-info">
+                    <h3>Amor</h3>
+                    <p class="species">Espécie: Amora-preta/comum</p>
+                    <span class="tag tag-frutifera">Frutífera</span>
+                </div>
+            </article>
+
+             <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">Melinda22</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://i.ytimg.com/vi/yG9BntxANY4/hqdefault.jpg?v=65aa7ffc')"></div>
+                <div class="card-info">
+                    <h3>Rosinha</h3>
+                    <p class="species">Espécie: Rosa chinensis </p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">luanacosta</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://cdn.awsli.com.br/496/496853/produto/45946185/390a4b98c7.jpg')"></div>
+                <div class="card-info">
+                    <h3>Espada</h3>
+                    <p class="species">Espécie: Espada-de-São-Jorge </p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">Ros_aTereza</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0G9kWxUi9ZAYLw16MVdjY9y_-xaO4bqdg7LPGp2oo3sqRZ0we')"></div>
+                <div class="card-info">
+                    <h3>Jardim Colorido</h3>
+                    <p class="species">Espécie: Diversas espécies </p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">isaminhao</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://s2-globorural.glbimg.com/Di6r-p6a8i1k7INvjLuy3uHI_QI=/0x0:1920x1080/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_afe5c125c3bb42f0b5ae633b58923923/internal_photos/bs/2025/V/C/jXYM6BSF6Eqthvk7f8LA/2-2-.jpg')"></div>
+                <div class="card-info">
+                    <h3>Girassol</h3>
+                    <p class="species">Espécie: Helianthus annus</p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">laurafontes</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://www.giromarilia.com.br/wp-content/uploads/2025/11/Samambaia-o-ingrediente-caseiro-que-devolve-o-verde-intenso-em-poucos-dias-1280x720-1.webp')"></div>
+                <div class="card-info">
+                    <h3>Samambaia</h3>
+                    <p class="species">Espécie: Nephrolepis exaltata </p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            <article class="plant-card">
+                <div class="card-user">
+                    <div class="user-avatar"></div>
+                    <span class="username">yurirock</span>
+                </div>
+                <div class="plant-image" style="background-image: url('https://http2.mlstatic.com/D_NQ_NP_890197-MLU78675800175_082024-O.webp')"></div>
+                <div class="card-info">
+                    <h3>Margaridas</h3>
+                    <p class="species">Espécie: Leucanthemum vulgare </p>
+                    <span class="tag tag-frutifera">Ornamental</span>
+                </div>
+            </article>
+
+            </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="contact">
+                <span>Contate-nos: (15) 92809-2649</span>
+            </div>
+            <div class="copyright">
+                © Todos os Direitos Reservados
+            </div>
+           <div class="social-icons">
+    <a href="https://wa.me/seunumeroaqui" target="_blank">
+        <img src="https://chat.google.com/u/1/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEWvV01ZHe1%2BoYl%2B140CLKDpq8qcO5aliwIpb0jtxFbdPvWNAeXRtMbSdGHyBKD8ui2aKlpnc0pqfbTQxIvdxLZo4LvGPn21O%2F%2BluJxNO1TQGHzEnJRfb3W1bIE0CJQquL1xfstJe1xlGYlIhSg9Nu8eNl0tf%2F%2F5q6EWTQeYoMYFArfyNQureAsNDIhD4E0OF6A2kadZQC2STDtQYe1FYSMhCH8Cf2HTP1chuhUEWqOWVVNglOfpYlHzPHmCT4lof7AecPHpNRJNVTEL9z94U2ycZlVV3SURDpqjXzSmBSrzBCDa2wxvzk9IJQ6Li27ExlnnXWfP3zbXkB7fq%2BMRHRUa3OMd3zUemXjN1O46TlZNpH7VmnkweHbKfXnGOZzW6lm3zGxq67Vj4Jn7oCnYAvrVTRu7i68xDixZL1NxgRWhSbcW7usaoAqhpDQfHtLPS2FFzSlnxgpaSUfbwGGUwjeLqih6LI%2FflBuNQVHIqGsX5EoNdERBbcNiYY8YosT58BGAv5qkr9ze5eu%2FcECjw%2B7z1PbqSqCojMGY8QtUyYF6O88lnx%2FuaNqX68qSUn3E1d%2Fo99sWTkyd9S%2BTyy9sQPI5pwb2GMAsMaLH5%2BoBD%2FG3tD8wSg%3D%3D&allow_caching=true&sz=s330-c&authuser=1" alt="WhatsApp" class="footer-icon">
+    </a>
+    <a href="https://instagram.com/seuusuario" target="_blank">
+        <img src="https://chat.google.com/u/1/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEVg4eyMw%2By0abStX79XZ6%2B9ZuG2LIZ4dq5uqaQr7%2FmZHc01COyxsofGf5BQm4h7tWlzdfzswQCClp31aNKHXtYb90Qrp6NJQgYXge29XKtRPKylH2QsWaPeLgar7%2F3FR2irIuB5vag9aFYHwRcMN%2BUTFhcMjXdBZxQRuWdbrhf6ywqMxZeJZ2xLM8KSatlub4amDkuQeJ5zpRIf50S2vgOV%2FyfNwKEZPPz42YjKAR4lVqpZhtY8apZLW0pchN68WDCSi0A8N48ouJpvSlhQjOzXwE2FmyWwz8NU1mjhcz4H2TA2my5FXON5BOVcAHv4ANPxnXsKtlZ62ZK92Uby8LVIIzsqEq3Ijf%2FCteRy2Zo%2BSGzU8E%2FOoCnhs%2BfxevsIGVHYDD5AIQYp5kG6Q3jnII133AyyQMw7SWnU6vH91pB%2B2%2B56heC6sJBPW%2BWg312N4i7%2B2oHxSBlMNiAHRcbU9AUDpTmx8CocdpSguPvRhB6NU0Z2o9gAqbJi6rU23oagoQ%2FOs85f0zR6tT%2BCH7tY%2F7mOo%2FigbRtH9bPs%2FzaEMgTlrNaTr0kslDDw513GqqseJX7%2BzhasMFQMK1HLT7lG8lXebwYqy0BNQPB%2BM5rWrvnLXVEogKo%3D&allow_caching=true&sz=s330-c&authuser=1" alt="Instagram" class="footer-icon">
+    </a>
+    <a href="https://facebook.com/suapagina" target="_blank">
+        <img src="https://chat.google.com/u/1/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fpng&attachment_token=AOo0EEXrjsd3aROAJH7EBlK%2F9Bv7KnnFVHLNAQs%2FhpWAC9tY24nJPpTf2hQbemZpIyb1QumjYzIjSqVgW2TZd3vIY%2B2hvBfbeqrRI1feqqDNrwESG2EwxkdFRPfaDs%2F13lFIl6WAfbDT6VWAXtywA5MPJ9wnb91Vlhm%2FqtIH8XeFrDPiJ0bo0LIMeCc%2BVtBnN3EU5CbhpIbECXu3JAX94hT5d9YS%2FO1dmVtND0yKOyEwy%2Bof7ui6qNWeSnEr4PiukZVSUgGBhhE7lhvVUZmi745F6H74y8MxCwwmIGUBBVAWXiIXtva2FNckY8N%2Fmgf1jM2hEAeoNxvpRtZmIJc2zdjpTjpl%2B99FbE1PcfSqDN2LrmNteFwhn%2FCz2Mi5oCpaoLZCN4bnnoNOWZcI5rLww0N%2FauILA1ZJnQKkxf77kOYE0GsmojCLgWxEA%2Fz3L5Gd0lszoxBrvaYRThebnARp2lTNZ67vSSxS0CZ1kdOpN5gxJ0FCRSedkVP3l9DHbONtF57aNtldk0eKMK4hYZ%2B6l5kWygnJPxSPYlbKzk6Nr0j5xIbwCbmb%2BmqLuoPABsGGBNpg%2FiwotMs4K641nQxzQwLgSTShS0WcFZkE7YT4KhnZZp%2FhTJB9Rg%3D%3D&allow_caching=true&sz=s330-c&authuser=1" alt="Facebook" class="footer-icon">
+    </a>
+</div>
+        </div>
+    </footer>
+
 </body>
 </html>
