@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,21 +19,23 @@ public class Planta {
 	@Column(name = "nome_planta", nullable = false, length = 70)
 	private String nomePlanta;
 
-	@Column(name = "especie", nullable = false, unique = true, length = 30)
+	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
 
-	@Column(name = "experiencia_planta", nullable = false, unique = true, length = 100)
-	private String experienciaPlanta;
+	@JoinColumn()
+	private Categoria categoriaPlanta;
 
 	public Planta() {
+
 	}
 
-	public Planta(String nomePlanta, String experienciaPlanta, String especie) {
+	public Planta(String nomePlanta, Categoria categoriaPlanta, String especie) {
 
 		this.nomePlanta = nomePlanta;
-		this.experienciaPlanta = experienciaPlanta;
+		this.categoriaPlanta = categoriaPlanta;
 		this.especie = especie;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -50,12 +53,12 @@ public class Planta {
 		this.nomePlanta = nomePlanta;
 	}
 
-	public String getExperienciaPlanta() {
-		return experienciaPlanta;
+	public Categoria getCategoriaPlanta() {
+		return categoriaPlanta;
 	}
 
-	public void setExperienciaPlanta(String experienciaPlanta) {
-		this.experienciaPlanta = experienciaPlanta;
+	public void setCategoriaPlanta(Categoria categoriaPlanta) {
+		this.categoriaPlanta = categoriaPlanta;
 	}
 
 	public String getEspecie() {
