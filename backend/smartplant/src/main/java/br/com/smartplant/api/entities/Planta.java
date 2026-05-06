@@ -18,19 +18,19 @@ public class Planta {
 	@Column(name = "nome_planta", nullable = false, length = 70)
 	private String nomePlanta;
 
-	@Column(name = "especie", nullable = false, unique = true, length = 30)
+	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
 
-	@Column(name = "experiencia_planta", nullable = false, unique = true, length = 100)
-	private String experienciaPlanta;
+	@Column(name = "categoria_planta", nullable = false, length = 100)
+	private String categoriaPlanta;
 
 	public Planta() {
 	}
 
-	public Planta(String nomePlanta, String experienciaPlanta, String especie) {
+	public Planta(String nomePlanta, String categoriaPlanta, String especie) {
 
 		this.nomePlanta = nomePlanta;
-		this.experienciaPlanta = experienciaPlanta;
+		this.categoriaPlanta = categoriaPlanta;
 		this.especie = especie;
 	}
 
@@ -50,12 +50,12 @@ public class Planta {
 		this.nomePlanta = nomePlanta;
 	}
 
-	public String getExperienciaPlanta() {
-		return experienciaPlanta;
+	public String getCategoriaPlanta() {
+		return categoriaPlanta;
 	}
 
-	public void setExperienciaPlanta(String experienciaPlanta) {
-		this.experienciaPlanta = experienciaPlanta;
+	public void setCategoriaPlanta(String categoriaPlanta) {
+		this.categoriaPlanta = categoriaPlanta;
 	}
 
 	public String getEspecie() {
