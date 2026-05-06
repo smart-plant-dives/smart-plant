@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartPlant</title>
-    <link rel="stylesheet" href="/css/cadastroEntrar.css">
+    <link rel="stylesheet" href="/css/esqueciSenha.css">
 
 </head>
 <header class="main-header">
@@ -15,35 +15,37 @@
   </nav>
 </header>
 
+<a href="cadastroUsuario.html" class="close-global-btn" title="Fechar">x</a>
+
 <main class="login-container">
   <section class="login-box">
     <div class="login-form">
       <h2>Bem-vindo(a) ao SmartPlant</h2>
-      <p>Acesse sua conta e continue cuidando das suas plantas.</p>
+      <p>Crie sua conta</p>
       
       <div class="input-group">
-        <label>Email</label>
+        <label for="email">Email</label>
         <input type="email" placeholder="Email">
       </div>
       
       <div class="input-group">
         <label>Senha</label>
-        <input type="password" placeholder="Senha">
+        <div class="password-input">
+            <input type="password" placeholder="Senha" id="senha">
+            <i class="fas fa-eye-slash" id="togglePassword"></i>
+        </div>
       </div>
       
-      <a href="esqueciSenha.html" class="forgot-password">Esqueceu a senha?</a>
-      <button class="btn-submit">Entrar</button>
+      
+      <button class="btn-submit">Continuar</button>
     </div>
 
-    <div class="divider"></div>
 
-    <div class="register-promo">
-      <h3>Ainda não possui conta?</h3>
-      <p>Crie sua conta e comece a cuidar ainda melhor das suas plantas.</p>
-      <a href="entrarUsuario.html" class="btn-outline">Crie uma conta aqui</a>
-    </div>
+
   </section>
 </main>
+
+
 
 <footer class="main-footer">
   <div class="footer-info">
@@ -56,3 +58,8 @@
     <span>🌐 Instagram Facebook</span>
   </div>
 </footer>
+
+
+<script src="esqueciSenha.js"></script>
+</body>
+</html>
