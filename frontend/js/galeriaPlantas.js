@@ -33,3 +33,44 @@ select.addEventListener("change", () => {
     }
 
 });
+
+const searchInput = document.getElementById("searchInput");
+const filtroCategoria = document.getElementById("opcoes");
+const plantas = document.querySelectorAll(".plant-card");
+const mensagemVazia = document.getElementById("mensagemVazia");
+
+function filtrarPlantas() {
+    const textoBusca = searchInput.value.toLowerCase();
+    const categoriaSelecionada = filtroCategoria.value;
+
+    let encontrou = false;
+
+    plantas.forEach(planta => {
+        const nome = planta.querySelector("h3").textContent.toLowerCase();
+        const usuario = planta.querySelector(".username").textContent.toLowerCase();
+        const especie = planta.querySelector("[data-species]").textContent.toLowerCase();
+        const categoria = planta.querySelector("[data-categoria]").dataset.categoria;
+
+        const correspondeBusca =
+            nome.includes(textoBusca) ||
+            usuario.includes(textoBusca) ||
+            especie.includes(textoBusca);
+
+        const correspondeCategoria =
+            categoriaSelecionada === "todas" ||
+            categoria === categoriaSelecionada;
+
+        if (correspondeBusca && correspondeCategoria) {
+            planta.style.display = "block";
+            encontrou = true;
+        } else {
+            planta.style.display = "none";
+        }
+    });
+
+    mensagemVazia.style.display = encontrou ? "none" : "block";
+}
+
+// Eventos
+searchInput.addEventListener("input", filtrarPlantas);
+filtroCategoria.addEventListener("change", filtrarPlantas);

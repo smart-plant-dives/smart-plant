@@ -235,3 +235,55 @@ select.addEventListener("change", () => {
 
     mensagem.style.display = visiveis === 0 ? "block" : "none";
 });
+
+const cadeado = document.createElement("div");
+cadeado.classList.add("cadeado");
+
+if (visibilidade.value !== "privado") {
+    cadeado.classList.add("hidden");
+}
+
+cadeado.textContent = "🔒";
+novoCard.appendChild(cadeado);
+
+btnSalvar.addEventListener("click", () => {
+
+    if (!nome.value) {
+        alert("Digite o nome da planta!");
+        return;
+    }
+
+    const novoCard = document.createElement("div");
+    novoCard.classList.add("card");
+
+    // 🔒 AQUI
+    const cadeado = document.createElement("div");
+    cadeado.classList.add("cadeado");
+
+    if (visibilidade.value !== "privado") {
+        cadeado.classList.add("hidden");
+    }
+
+    cadeado.textContent = "🔒";
+    novoCard.appendChild(cadeado);
+
+    // resto do card
+    novoCard.innerHTML += `
+        <p class="user">@Melinda.22</p>
+        <img src="${imagemBase64 || 'https://via.placeholder.com/300'}">
+        <h3>${nome.value}</h3>
+        <div data-categoria="${categoria.value}">${categoria.value}</div>
+        <div>${especie.value}</div>
+        <p>${descricao.value}</p>
+
+        <div class="actions">
+            <button class="edit">✏</button>
+            <button class="delete">🗑</button>
+        </div>
+    `;
+
+    const botaoAdd = document.getElementById("abrirModal");
+    cardsContainer.insertBefore(novoCard, botaoAdd);
+
+    modal.classList.add("hidden");
+});
