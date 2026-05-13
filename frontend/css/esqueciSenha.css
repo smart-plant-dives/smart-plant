@@ -69,6 +69,11 @@ body {
   text-decoration: none;
   border-radius: 5px;
   font-size: 12px;
+  
+} 
+
+.btn-entrar:hover { 
+    background-color: #e6f0e6; 
 }
 
 /* --- ESTILOS ESPECÍFICOS PARA A PÁGINA DE NOVA SENHA --- */
@@ -149,6 +154,23 @@ body {
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px); /* Centraliza no espaço restante da tela */
+    background-color: #ffffff;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px; /* Largura reduzida e elegante */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave igual à imagem */
+    border: 1px solid #f0f0f0;
+}
+
 .login-form {
    flex: 1.5;
    padding-right: 40px; 
@@ -179,6 +201,43 @@ body {
   transition: .4s ease-in-out;
   width: 300px
 }
+
+
+/*Olho*/
+.password-inputs {
+    position: relative;
+}
+
+.password-inputs i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #555;
+    cursor: pointer; /* Faz o mouse virar uma mãozinha indicando que é clicável */
+    font-size: 18px;
+}
+
+.forgot-password {
+    color: #1a472a;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.btn-submit {
+    padding: 12px;
+    background-color: #1a472a;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*FIM DO OLHO*/
 
 /*Olho*/
 .password-input {
@@ -216,17 +275,30 @@ body {
 
 /*FIM DO OLHO*/
 
+/* Cor padrão (erro ou pendente) */
+.validacoes li {
+    color: #a3a2a2; 
+    transition: color 0.3s ease;
+}
+
+/* Cor quando validado */
+.validacoes li.sucesso {
+    color: #2ecc71;
+}
 
 .btn-submit {
-  width: 100%;
-  background: #2d5a27;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 0.7em 9em;
+  font-size: 15px;
+  border-radius: 0.5em;
+  background: #1b3d18;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  text-decoration: none;
 }
 
 /* Rodapé Escuro */

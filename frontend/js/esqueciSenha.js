@@ -1,118 +1,108 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmarSenha");
+    const ruleAntiga = document.getElementById("validarAntiga");
+    const ruleRequisitos = document.getElementById("validarRequisitos");
+    const btnSubmit = document.querySelector(".btn-submit");
+    const toggleButtons = document.querySelectorAll(".toggle-password");
 
-    document.addEventListener('DOMContentLoaded', () => {
+    // Simulação de senha antiga vinda do banco de dados
+    const senhaAntigaBanco = "PlantSmart123!"; 
 
-    // --- SELECIONANDO OS ELEMENTOS ---
-    const inputNovaSenha = document.getElementById('togglePassword');
-    const iconeRegra = regraSenhaTexto.querySelector('regraSenha');
-    const regraSenhaTexto = document.getElementById('confirmarSenha');
-
-    // --- VERIFICAÇÃO EM TEMPO REAL ---
-    if (inputNovaSenha) {
-        // O evento 'input' dispara a cada vez que uma tecla é digitada ou apagada
-        inputNovaSenha.addEventListener('input', function() {
-            const senhaDigitada = this.value;
-
-            // 1. Verifica se tem pelo menos 8 caracteres
-            const temTamanhoCerto = senhaDigitada.length >= 8;
-
-            // 2. Verifica se tem pelo menos uma letra (maiúscula ou minúscula)
-            const temLetra = /[a-zA-Z]/.test(senhaDigitada);
-
-            // 3. Verifica se tem pelo menos um número
-            const temNumero = /[0-9]/.test(senhaDigitada);
-
-            // 4. Verifica se tem pelo menos um símbolo especial
-            const temSimbolo = /[!@#$%^&*]/.test(senhaDigitada);
-
-            // Se TODAS as condições forem verdadeiras...
-            if (temTamanhoCerto && temLetra && temNumero && temSimbolo) {
-                // Fica Verde e muda o ícone para um check
-                regraSenhaTexto.classList.remove('regra-invalida');
-                regraSenhaTexto.classList.add('regra-valida');
-                
-                iconeRegra.classList.remove('fa-circle'); // Tira bolinha vazia
-                iconeRegra.classList.add('fa-check-circle'); // Põe bolinha com check
-
+    // 1. Alternar Visibilidade da Senha (Olho)
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            const inputField = document.getElementById(targetId);
+            
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                this.classList.replace("fa-eye-slash", "fa-eye");
             } else {
-                // Se apagar e não cumprir mais a regra, volta a ficar Cinza
-                regraSenhaTexto.classList.remove('regra-valida');
-                regraSenhaTexto.classList.add('regra-invalida');
-                
-                iconeRegra.classList.remove('fa-check-circle');
-                iconeRegra.classList.add('fa-circle');
-            }
-        });
-    }
-
-});
-
-    // --- 1. LÓGICA DE MOSTRAR E OCULTAR (PARA MÚLTIPLOS OLHINHOS) ---
-    // Seleciona todos os ícones de olho na página
-    const toggleIcons = document.querySelectorAll('.toggle-password');
-
-    // Para cada olho encontrado, adiciona a função de clique
-    toggleIcons.forEach(icon => {
-        icon.addEventListener('click', function () {
-            // Descobre quem é o alvo desse olho específico usando o "data-target"
-            const targetId = this.getAttribute('data-target');
-            const inputTarget = document.getElementById(targetId);
-
-            if (inputTarget) {
-                // Inverte o tipo (text/password)
-                const tipoAtual = inputTarget.getAttribute('type');
-                const novoTipo = tipoAtual === 'password' ? 'text' : 'password';
-                inputTarget.setAttribute('type', novoTipo);
-                
-                // Alterna o ícone
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
+                inputField.type = "password";
+                this.classList.replace("fa-eye", "fa-eye-slash");
             }
         });
     });
 
-    // --- 2. LÓGICA DO BOTÃO "X" (FECHAR A PÁGINA) ---
-    const btnFechar = document.querySelector('.close-global-btn');
-    if (btnFechar) {
-        btnFechar.addEventListener('click', () => {
-            window.location.href = 'index.html'; 
-        });
+    // 2. Validação Dinâmica em Tempo Real
+    passwordInput.addEventListener("input", () => {
+        const senha = passwordInput.value;
+
+        if (senha === "") {
+            redefinirRegra(ruleAntiga);
+            redefinirRegra(ruleRequisitos);
+            return;
+        }
+
+        // Teste de Requisitos: Mínimo 8 caracteres, contendo letras, números e símbolos
+        const temTamanho = senha.length >= 8;
+        const temLetra = /[A-Za-z]/.test(senha);
+        const temNumero = /[0-9]/.test(senha);
+        const temSimbolo = /[^A-Za-z0-9]/.test(senha);
+
+        if (temTamanho && temLetra && temNumero && temSimbolo) {
+            marcarValido(ruleRequisitos);
+        } else {
+            marcarInvalido(ruleRequisitos);
+        }
+
+        // Teste de Igualdade com a Senha Antiga
+        if (senha === senhaAntigaBanco) {
+            marcarInvalido(ruleAntiga);
+        } else {
+            marcarValido(ruleAntiga);
+        }
+    });
+
+    // Funções auxiliares para manipulação visual das regras
+    function marcarValido(elemento) {
+        elemento.style.color = "#2ecc71"; // Verde
+        elemento.style.textDecoration = "line-through";
     }
 
-    // --- 3. VALIDAÇÃO DO BOTÃO "SALVAR" ---
-    const btnSalvar = document.querySelector('.btn-salvar');
-    const inputNovaSenha = document.getElementById('novaSenha');
-    const inputConfirmaSenha = document.getElementById('confirmaSenha');
-
-    if (btnSalvar) {
-        btnSalvar.addEventListener('click', (evento) => {
-            evento.preventDefault(); 
-            
-            const senha1 = inputNovaSenha.value;
-            const senha2 = inputConfirmaSenha.value;
-
-            // Verifica se estão vazios
-            if (senha1 === '' || senha2 === '') {
-                alert('Por favor, preencha os dois campos de senha.');
-                return;
-            }
-
-            // Verifica se as senhas são iguais
-            if (senha1 !== senha2) {
-                alert('As senhas não coincidem. Digite a mesma senha nos dois campos.');
-                return;
-            }
-
-            // Verifica tamanho mínimo (exemplo: 8 caracteres)
-            if (senha1.length < 8) {
-                alert('A senha deve ter pelo menos 8 caracteres.');
-                return;
-            }
-
-            alert('Senha atualizada com sucesso!');
-            // window.location.href = 'entrarUsuario.html';
-        });
+    function marcarInvalido(elemento) {
+        elemento.style.color = "#ff4d4d"; // Vermelho
+        elemento.style.textDecoration = "none";
     }
+
+    function redefinirRegra(elemento) {
+        elemento.style.color = ""; // Retorna ao padrão do CSS
+        elemento.style.textDecoration = "none";
+    }
+
+    // 3. Validação ao Enviar o Formulário
+    btnSubmit.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const senha = passwordInput.value;
+        const confirmacao = confirmInput.value;
+
+        if (!senha || !confirmacao) {
+            alert("Preencha todos os campos antes de continuar.");
+            return;
+        }
+
+        if (senha === senhaAntigaBanco) {
+            alert("A nova senha não pode ser idêntica à anterior.");
+            return;
+        }
+
+        const regexValidacao = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+        if (!regexValidacao.test(senha)) {
+            alert("A senha digitada não cumpre as regras de segurança.");
+            return;
+        }
+
+        if (senha !== confirmacao) {
+            alert("Os campos de senha e confirmação estão diferentes.");
+            return;
+        }
+
+        alert("Sucesso! Sua senha foi alterada.");
+        // Seu código para enviar os dados para a API (ex: fetch) entra aqui
+    });
 });
+
 
 

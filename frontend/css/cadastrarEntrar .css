@@ -70,6 +70,10 @@ body {
   font-size: 12px;
 }
 
+.btn-entrar:hover { 
+    background-color: #e6f0e6; 
+}
+
 .login-box {
   display: flex;
   background: white;

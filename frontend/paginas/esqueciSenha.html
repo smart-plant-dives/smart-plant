@@ -25,26 +25,30 @@
       
       <div class="input-group">
         <label>Nova Senha</label>
-         <div class="password-input">
-        <input type="password" placeholder="Nova Senha">
-        <i class="fas fa-eye-slash" id="togglePassword"></i>
-        <ul class="password-rules">
-    <li id="regraSenha" class="regra-invalida">
-        <i class="far fa-circle icon-regra"></i> A senha não pode ser igual a antiga*.
-        <i class="far fa-circle icon-regra"></i> Use 8 ou mais letras, números e símbolos.
-    </li>
-</ul>
-         </div>
+        <div class="password-inputs">
+          <!-- Correção do type para "password" -->
+          <input id="password" type="password" placeholder="Senha">
+          <i class="fas fa-eye-slash toggle-password" data-target="password"></i>
+          
+          <ul class="password-rules">
+            <li id="regraSenha">
+              <ul class="validacoes">
+                <!-- Classes iniciais neutras/padronizadas -->
+                <li id="validarAntiga" class="regra-item">A senha não pode ser igual à antiga</li>
+                <li id="validarRequisitos" class="regra-item">Use 8 ou mais letras, números e símbolos</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
       
       <div class="input-group">
         <label>Confirme a senha</label>
         <div class="password-input">
             <input type="password" placeholder="Senha" id="confirmarSenha">
-            <i class="fas fa-eye-slash" id="togglePassword"></i>
+            <i class="fas fa-eye-slash toggle-password" data-target="confirmarSenha"></i>
         </div>
       </div>
-      
       
       <button class="btn-submit">Salvar</button>
     </div>
