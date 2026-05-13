@@ -1,0 +1,239 @@
+
+/* Configurações Gerais */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  margin: 0;
+}
+
+/* Header Alinhado */
+.logo-img {
+  /* Define uma altura máxima ideal para headers padrão */
+  height: 60px; 
+  /* Mantém a proporção da largura automaticamente */
+  width: auto;
+  /* Ajusta a margem para não encostar nas bordas */
+  padding: 10px 0;
+  /* Suaviza a renderização */
+  object-fit: contain;
+}
+
+/* Ajuste no container do Header (opcional, para alinhar tudo) */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  height: 80px; /* Define uma altura fixa para o header todo */
+  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 2px solid #2d5a27;
+}
+
+.nav-auth {
+  display: flex;
+  gap: 15px;
+}
+
+/* Botão de Fechar Global ('X') */
+.close-global-btn {
+    position: fixed;
+    top: 90px;
+    right: 90px;
+    background: none;
+    border: none;
+    font-size: 35px;
+    cursor: pointer;
+    color: #333;
+    z-index: 1000;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.close-global-btn:hover {
+    color: #cc0000;
+}
+
+/* Botões do Topo */
+.btn-cadastrar {
+  background: #1b3d18;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.btn-entrar {
+  border: 1px solid #ccc;
+  color: #1b3d18;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.btn-entrar:hover { 
+    background-color: #e6f0e6; 
+}
+
+.login-box {
+  display: flex;
+  background: rgb(255, 254, 254);
+  max-width: 1000px;
+  margin: 100px auto;
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.login-form {
+   flex: 1.5;
+   padding-right: 40px; 
+}
+
+.register-promo {
+   flex: 1;
+   padding-left: 40px;
+   border-left: 1px solid #eee;
+ }
+
+.input-group {
+   margin-bottom: 20px;
+ }
+
+.input-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold; 
+}
+
+.input-group input {
+  border-radius: 7px;
+  border: 2px solid whitesmoke;
+  background-color: whitesmoke;
+  outline: none;
+  padding: 0.7em;
+  transition: .4s ease-in-out;
+  width: 300px
+}
+
+/*Olho*/
+.password-input {
+    position: relative;
+}
+
+.password-input i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #555;
+    cursor: pointer; /* Faz o mouse virar uma mãozinha indicando que é clicável */
+    font-size: 18px;
+}
+
+.forgot-password {
+    color: #1a472a;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.btn-submit {
+    padding: 12px;
+    background-color: #1a472a;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*FIM DO OLHO*/
+
+.forgot-password{
+  text-decoration: none;
+  color:#1b3d18;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 0.7em 9em;
+  font-size: 15px;
+  border-radius: 0.5em;
+  background: #1b3d18;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-outline{
+    color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 15px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+/* FOOTER */ 
+.footer { 
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
+    color: white; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 40px; 
+    margin-top: 0px; 
+} 
+
+.footer div { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+} 
+
+.footer p { 
+    font-size: 13px; 
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    margin-top: auto;
+}
+
+.footer div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer p {
+    font-size: 13px;
+}
+
+.contact img,
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
+}
+
+
+
+

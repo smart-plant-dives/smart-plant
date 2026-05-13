@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal de Perfil - Smart Plant</title>
+    <link rel="stylesheet" href="/css/modalEditarPerfil.css">
+</head>
+<body>
+
+    <button id="btnAbrirConfig" type="button" class="btn-primary" style="margin: 50px;">⚙️ Abrir Configurações</button>
+
+    <div id="modalOverlay" class="modal-overlay">
+        
+        <div class="modal-container">
+            <h2 class="modal-title">Editar Perfil</h2>
+
+            <div class="modal-body">
+                
+                <div class="coluna-perfil-foto">
+                    
+                    <div class="moldura-foto-circular" id="molduraFoto">
+                        <p class="texto-placeholder-foto" id="textoPlaceholder">Sua foto de perfil</p>
+                        
+                        <img src="" alt="Sua foto de perfil" class="foto-perfil-imagem hidden" id="fotoPreview">
+                    </div>
+
+                    <p class="regras-foto">JPG, PNG ou WEBP<br>Máx. 2MB</p>
+                    
+                    <input type="file" id="inputFoto" accept="image/jpeg, image/png, image/webp" hidden>
+                    
+                    <button id="btnTrocarFoto" type="button" class="btn-trocar-foto">Trocar foto</button>
+                </div>
+
+                <div class="perfil-form-section">
+                    <div class="form-group">
+                        <label for="inputNome">Nome</label>
+                        <input type="text" id="inputNome" placeholder="Seu nome" value="Melinda22">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputInsta">Instagram</label>
+                        <input type="url" id="inputInsta" placeholder="Url da sua conta do Instagram">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputFace">Facebook</label>
+                        <input type="url" id="inputFace" placeholder="Url da sua conta do Facebook">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputSobre">Sobre você</label>
+                        <textarea id="inputSobre" rows="4" placeholder="Fale um pouco sobre você...">Sou alguém que encontra paz entre folhas e flores...</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnCancelar" type="button" class="btn-outline">Cancelar</button>
+                <button id="btnSalvar" type="button" class="btn-primary">Salvar alterações</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="/js/modalEditarPerfil.js"></script>
+</body>
+</html>
