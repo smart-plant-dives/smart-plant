@@ -3,6 +3,7 @@ package br.com.smartplant.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,34 +13,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.smartplant.api.entities.Usuario;
-import br.com.smartplant.api.services.UsuarioService;
+import br.com.smartplant.api.entities.Categoria;
+import br.com.smartplant.api.services.CategoriaService;
 
 @RestController
-@RequestMapping("/usuario")
-public class UsuarioController {
+@RequestMapping("/categoria")
+@CrossOrigin("*")
+public class CategoriaController {
 
 	@Autowired
-	private UsuarioService service;
+	public CategoriaService service;
 
 	@PostMapping
-	public Usuario cadastrar(@RequestBody Usuario usuario) {
-		return service.salvar(usuario);
+	public Categoria cadastrar(@RequestBody Categoria categoria) {
+		return service.salvar(categoria);
 	}
 
 	@GetMapping
-	public List<Usuario> listar() {
+	public List<Categoria> listar() {
 		return service.listarTodos();
 	}
 
 	@GetMapping("/{id}")
-	public Usuario buscarPorId(@PathVariable Long id) {
+	public Categoria buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
 
 	@PutMapping("/{id}")
-	public Usuario atualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
-		return service.atualizar(id, usuario);
+	public Categoria atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
+		return service.atualizar(id, categoria);
 	}
 
 	@DeleteMapping("/{id}")
