@@ -25,26 +25,30 @@
       
       <div class="input-group">
         <label>Nova Senha</label>
-         <div class="password-input">
-        <input type="password" placeholder="Nova Senha">
-        <i class="fas fa-eye-slash" id="togglePassword"></i>
-        <ul class="password-rules">
-    <li id="regraSenha" class="regra-invalida">
-        <i class="far fa-circle icon-regra"></i> A senha não pode ser igual a antiga*.
-        <i class="far fa-circle icon-regra"></i> Use 8 ou mais letras, números e símbolos.
-    </li>
-</ul>
-         </div>
+        <div class="password-inputs">
+          <!-- Correção do type para "password" -->
+          <input id="password" type="password" placeholder="Senha">
+          <i class="fas fa-eye-slash toggle-password" data-target="password"></i>
+          
+          <ul class="password-rules">
+            <li id="regraSenha">
+              <ul class="validacoes">
+                <!-- Classes iniciais neutras/padronizadas -->
+                <li id="validarAntiga" class="regra-item">A senha não pode ser igual à antiga</li>
+                <li id="validarRequisitos" class="regra-item">Use 8 ou mais letras, números e símbolos</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
       
       <div class="input-group">
         <label>Confirme a senha</label>
         <div class="password-input">
             <input type="password" placeholder="Senha" id="confirmarSenha">
-            <i class="fas fa-eye-slash" id="togglePassword"></i>
+            <i class="fas fa-eye-slash toggle-password" data-target="confirmarSenha"></i>
         </div>
       </div>
-      
       
       <button class="btn-submit">Salvar</button>
     </div>
@@ -55,16 +59,25 @@
 </main>
 
 
-<footer class="main-footer">
-  <div class="footer-info">
-    <span>📞 Contate-nos: (15) 92809-2649</span>
-  </div>
-  <div class="footer-copy">
-    <span>🛡️ © Todos os Direitos Reservados</span>
-  </div>
-  <div class="footer-social">
-    <span>🌐 Instagram Facebook</span>
-  </div>
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="contact">
+        <img src="https://thumbnail.imgbin.com/11/3/18/telephone-call-green-phone-icon-with-signal-waves-RrwNw8zN_t.jpg" height="20">
+        <p>Contate-nos: (15) 92809-2649</p>
+    </div>
+
+    <div class="copyright">
+        <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" height="20">
+        <p>© Todos os Direitos Reservados</p>
+    </div>
+
+    <div class="social">
+        <img src="https://cdn.imgbin.com/1/15/4/imgbin-logo-whatsapp-computer-icons-viber-call-icon-rUC3mkCwdZBU8fCG71krgSdfd.jpg" height="20">
+        <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
+        <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
+    </div>
+
 </footer>
 
 <script src="/js/esqueciSenha.js"></script>
