@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,17 +23,18 @@ public class Planta {
 	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
 
-	@JoinColumn()
-	private Categoria categoriaPlanta;
+	@ManyToOne
+    @JoinColumn(name = "nome_categoria")
+	private Categoria nomeCategoria;
 
 	public Planta() {
 
 	}
 
-	public Planta(String nomePlanta, Categoria categoriaPlanta, String especie) {
+	public Planta(String nomePlanta, Categoria nomeCategoria, String especie) {
 
 		this.nomePlanta = nomePlanta;
-		this.categoriaPlanta = categoriaPlanta;
+		this.nomeCategoria = nomeCategoria;
 		this.especie = especie;
 	}
 
@@ -53,12 +55,12 @@ public class Planta {
 		this.nomePlanta = nomePlanta;
 	}
 
-	public Categoria getCategoriaPlanta() {
-		return categoriaPlanta;
+	public Categoria getNomeCategoria() {
+		return nomeCategoria;
 	}
 
-	public void setCategoriaPlanta(Categoria categoriaPlanta) {
-		this.categoriaPlanta = categoriaPlanta;
+	public void setNomeCategoria(Categoria nomeCategoria) {
+		this.nomeCategoria = nomeCategoria;
 	}
 
 	public String getEspecie() {
