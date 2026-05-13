@@ -1,4 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1; /* empurra o footer pra baixo */
+}
+
+.footer {
+    margin-top: auto;
+}
 
 /* ================= HEADER ================= */ 
 
@@ -127,7 +143,7 @@
     --primary-green: #2d5a27;
     --light-green: #e9f5e8;
     --text-dark: #333;
-    --tag-bg: #c9e4c5;
+    --tag-b: #c9e4c5;
     --border-color: #ddd;
 }
 
@@ -234,8 +250,8 @@ body {
     margin-top: 10px;
 }
 
-.tag-ornamental { background-color: var(--tag-bg); color: #2d5a27; }
-.tag-frutifera { background-color: var(--tag-bg); color: #2d5a27; }
+.data-species { background-color: var(--tag-b); color: #2d5a27; }
+.data-categoria { background-color: var(--tag-b); color: #2d5a27; }
 
 /* ================= FOOTER ================= */ 
 
@@ -321,5 +337,35 @@ body {
 .tag-frutifera {
     background-color: #c9e4c5;
     color: #2d5a27;
+}
+
+#mensagemVazia {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 20px;
+    color: #777;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+}
+
+.search-bar input {
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 250px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 

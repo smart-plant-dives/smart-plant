@@ -268,3 +268,369 @@ body {
         gap: 15px;
     }
 }
+
+/* overlay escuro */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* esconder */
+.hidden {
+    display: none;
+}
+
+/* caixa do modal */
+.modal-container-post {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    width: 350px;
+}
+
+/* inputs */
+.post-form input,
+.post-form select,
+.post-form textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+/* footer */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-save {
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  width: 500px;
+  border-radius: 10px;
+  padding: 20px;
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+  color: #2e7d32;
+}
+
+.modal-body {
+  display: flex;
+  gap: 20px;
+}
+
+/* FOTO */
+.foto-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  background: #ccc;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.btn-foto {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.info {
+  font-size: 12px;
+  color: #777;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* FORM */
+.form-perfil {
+  flex: 1;
+}
+
+.form-perfil label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.form-perfil input,
+.form-perfil textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 3px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+textarea {
+  resize: none;
+  height: 70px;
+}
+
+/* FOOTER */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background: #ccc;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-salvar {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* container das tags (espécie + categoria) */
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* estilo geral das tags */
+.tag {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+/* espécie (nova) */
+.tag-species {
+    background-color: #c9e4c5;
+    color: #161616;
+}
+
+/* categoria */
+.tag-ornamental,
+.tag-frutifera {
+    background-color: #c9e4c5;
+    color: #2d5a27;
+}
+
+#mensagemVazia {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    position: relative;
+}
+
+/* OVERLAY (FUNDO ESCURO) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* ESCONDER */
+.hidden {
+    display: none;
+}
+
+
+/* CAIXA DO MODAL (FUNDO BRANCO 🔥) */
+.modal-container {
+    background: #fff;
+    width: 600px;
+    max-width: 95%;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+
+/* TÍTULO */
+.modal-title {
+    margin-bottom: 15px;
+}
+
+
+/* CORPO */
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* COLUNA FOTO */
+.coluna-perfil-foto {
+    text-align: center;
+    width: 40%;
+}
+
+
+/* FOTO CIRCULAR */
+.moldura-foto-circular {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #eee;
+    margin: 0 auto 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.foto-perfil-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* TEXTO PLACEHOLDER */
+.texto-placeholder-foto {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    padding: 10px;
+}
+
+
+/* BOTÃO TROCAR FOTO */
+.btn-trocar-foto {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* REGRAS FOTO */
+.regras-foto {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+
+/* FORM */
+.perfil-form-section {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+/* FOOTER */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.modal-footer button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+#cancelarPerfil {
+    background: #ccc;
+}
+
+.btn-save {
+    background: #2e7d32;
+    color: white;
+}

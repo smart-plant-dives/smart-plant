@@ -1,101 +1,237 @@
-// Simulação de clique no botão de adicionar planta 
+// ================= MODAL PERFIL =================
 
-document.querySelector(".add").addEventListener("click", () => { 
+const btnAbrirPerfil = document.querySelector(".edit-profile");
+const modalPerfil = document.getElementById("modalPerfil");
+const cancelarPerfil = document.getElementById("cancelarPerfil");
+const salvarPerfil = document.getElementById("salvarPerfil");
 
-    alert("Adicionar nova planta!"); 
+const inputNomePerfil = document.getElementById("inputNome");
+const inputSobrePerfil = document.getElementById("inputSobre");
 
-}); 
+const nomePerfil = document.querySelector(".profile h2");
+const bioPerfil = document.querySelector(".profile p");
 
- 
+// abrir modal
+btnAbrirPerfil.addEventListener("click", () => {
+    modalPerfil.classList.remove("hidden");
 
-const container = document.getElementById("cards"); 
+    inputNomePerfil.value = nomePerfil.innerText.replace("@", "");
+    inputSobrePerfil.value = bioPerfil.innerText.trim();
+});
 
- 
+// fechar
+cancelarPerfil.addEventListener("click", () => {
+    modalPerfil.classList.add("hidden");
+});
 
-plantas.forEach(planta => { 
+// salvar
+salvarPerfil.addEventListener("click", () => {
+    nomePerfil.innerText = "@" + inputNomePerfil.value;
+    bioPerfil.innerText = inputSobrePerfil.value;
 
-    container.innerHTML += ` 
+    modalPerfil.classList.add("hidden");
+});
 
-        <div class="card"> 
 
-            <img src="${planta.imagem}"> 
+// ================= FOTO PERFIL =================
 
-            <h3>${planta.nome}</h3> 
+const inputFotoPerfil = document.getElementById("inputFotoPerfil");
+const btnTrocarFoto = document.getElementById("btnTrocarFoto");
+const fotoPreview = document.getElementById("fotoPreview");
+const textoPlaceholder = document.getElementById("textoPlaceholder");
+const avatar = document.querySelector(".avatar");
 
-            <p class="info"> 
+btnTrocarFoto.addEventListener("click", () => {
+    inputFotoPerfil.click();
+});
 
-                Espécie: ${planta.especie}<br> 
+inputFotoPerfil.addEventListener("change", () => {
+    const file = inputFotoPerfil.files[0];
 
-                Categoria: ${planta.categoria} 
+    if (file) {
+        const reader = new FileReader();
 
-            </p> 
+        reader.onload = function (e) {
+            fotoPreview.src = e.target.result;
+            fotoPreview.classList.remove("hidden");
+            textoPlaceholder.style.display = "none";
 
-        </div> 
+            avatar.style.backgroundImage = `url(${e.target.result})`;
+            avatar.style.backgroundSize = "cover";
+            avatar.style.backgroundPosition = "center";
+        };
 
-    `; 
+        reader.readAsDataURL(file);
+    }
+});
 
-}); 
 
- 
+// ================= MODAL ADICIONAR =================
 
-fetch("http://localhost:3000/plantas") 
+const modal = document.getElementById("modalPostagem");
+const abrirModal = document.getElementById("abrirModal");
+const fecharModal = document.getElementById("fecharModal");
 
-    .then(res => res.json()) 
+abrirModal.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+});
 
-    .then(data => { 
+fecharModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
 
-        data.forEach(planta => { 
 
-            container.innerHTML += ` 
+// ================= UPLOAD IMAGEM =================
 
-                <div class="card"> 
+const inputFoto = document.getElementById("inputFoto");
+const uploadArea = document.getElementById("uploadArea");
+const uploadPlaceholder = document.getElementById("uploadPlaceholder");
 
-                    <img src="${planta.imagem}"> 
+let imagemBase64 = "";
 
-                    <h3>${planta.nome}</h3> 
+uploadArea.addEventListener("click", () => {
+    inputFoto.click();
+});
 
-                    <p>${planta.especie}</p> 
+inputFoto.addEventListener("change", () => {
+    const file = inputFoto.files[0];
 
-                </div> 
+    if (file) {
+        const reader = new FileReader();
 
-            `; 
+        reader.onload = function(e) {
+            imagemBase64 = e.target.result;
 
-        }); 
+            uploadPlaceholder.innerHTML = `
+                <img src="${imagemBase64}" 
+                style="width:100%; height:150px; object-fit:cover; border-radius:10px;">
+            `;
+        };
 
-    }); 
+        reader.readAsDataURL(file);
+    }
+});
 
- 
 
- 
+// ================= CRIAR CARD =================
 
-const filtro = document.getElementById("filtro"); 
+const btnSalvar = document.querySelector("#modalPostagem .btn-save");
 
-const cards = document.querySelectorAll(".card"); 
+const nome = document.getElementById("nomePlanta");
+const especie = document.getElementById("especie");
+const categoria = document.getElementById("categoria");
+const descricao = document.getElementById("descricao");
+const visibilidade = document.getElementById("visibilidade");
 
- 
+const cardsContainer = document.querySelector(".cards");
 
-filtro.addEventListener("change", () => { 
+btnSalvar.addEventListener("click", () => {
 
-    const valor = filtro.value; 
+    if (!nome.value) {
+        alert("Digite o nome da planta!");
+        return;
+    }
 
- 
+    const novoCard = document.createElement("div");
+    novoCard.classList.add("card");
 
-    cards.forEach(card => { 
+    const tagPrivado = visibilidade.value === "privado"
+        ? `<span style="color:red; font-size:12px;">🔒 Privado</span>`
+        : "";
 
-        const categoria = card.getAttribute("data-categoria"); 
+    novoCard.innerHTML = `
+        <p class="user">@Melinda.22 ${tagPrivado}</p>
+        <img src="${imagemBase64 || 'https://via.placeholder.com/300'}">
+        <h3>${nome.value}</h3>
+        <div data-categoria="${categoria.value}">${categoria.value}</div>
+        <div>${especie.value}</div>
+        <p>${descricao.value}</p>
 
- 
+        <div class="actions">
+            <button class="edit">✏</button>
+            <button class="delete">🗑</button>
+        </div>
+    `;
 
-        if (valor === "todas" || valor === categoria) { 
+    const botaoAdd = document.getElementById("abrirModal");
+    cardsContainer.insertBefore(novoCard, botaoAdd);
 
-            card.style.display = "block"; 
+    modal.classList.add("hidden");
+});
 
-        } else { 
 
-            card.style.display = "none"; 
+// ================= DELETAR =================
 
-        } 
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete")) {
+        e.target.closest(".card").remove();
+    }
+});
 
-    }); 
 
-}); 
+// ================= EDITAR CARD =================
+
+const modalEditar = document.getElementById("modalEditar");
+const cancelarEdicao = document.getElementById("cancelarEdicao");
+const salvarEdicao = document.getElementById("salvarEdicao");
+
+const editNome = document.getElementById("editNome");
+const editDescricao = document.getElementById("editDescricao");
+
+let cardEditando = null;
+
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("edit")) {
+
+        cardEditando = e.target.closest(".card");
+
+        editNome.value = cardEditando.querySelector("h3").innerText;
+        editDescricao.value = cardEditando.querySelector("p:not(.user)").innerText;
+
+        modalEditar.classList.remove("hidden");
+    }
+});
+
+cancelarEdicao.addEventListener("click", () => {
+    modalEditar.classList.add("hidden");
+});
+
+salvarEdicao.addEventListener("click", () => {
+    if (!cardEditando) return;
+
+    cardEditando.querySelector("h3").innerText = editNome.value;
+    cardEditando.querySelector("p:not(.user)").innerText = editDescricao.value;
+
+    modalEditar.classList.add("hidden");
+});
+
+
+// ================= FILTRO =================
+
+const select = document.getElementById("opcoes");
+const mensagem = document.getElementById("mensagemVazia");
+
+select.addEventListener("change", () => {
+
+    const valor = select.value;
+    const cards = document.querySelectorAll(".card:not(.add)");
+
+    let visiveis = 0;
+
+    cards.forEach(card => {
+
+        const categoriaEl = card.querySelector("[data-categoria]");
+        if (!categoriaEl) return;
+
+        const categoria = categoriaEl.dataset.categoria;
+
+        if (valor === "todas" || categoria === valor) {
+            card.style.display = "block";
+            visiveis++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    mensagem.style.display = visiveis === 0 ? "block" : "none";
+});

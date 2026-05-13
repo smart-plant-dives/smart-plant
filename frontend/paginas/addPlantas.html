@@ -1,281 +1,321 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html lang="pt-br">
 
-<html lang="pt-br"> 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head> 
+<title>SmartPlant - Suas Plantas</title>
 
-<meta charset="UTF-8"> 
+<link rel="stylesheet" href="/css/addPlantas.css">
+</head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<body>
 
-<title>SmartPlant - Suas Plantas</title> 
+<!-- HEADER -->
+<header class="header">
 
-<link rel="stylesheet" href="/css/addPlantas.css"> 
+    <div class="logo">
+        <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant">
+    </div>
 
-</head> 
+    <div class="buttons">
+        <a href="/paginas/galeriaPlantas.html">
+            <button class="btn addPlantas">Galeria</button>
+        </a>
+    </div>
 
- 
+</header>
 
-<body> 
+<div class="line"></div>
 
- 
+<!-- MAIN -->
+<main class="container">
 
- <!-- HEADER --> 
+    <!-- PERFIL -->
+    <aside class="sidebar">
 
-    <header class="header"> 
+        <div class="profile">
 
-        <div class="logo"> 
+            <div class="avatar big">
+                <button class="edit-profile">✏</button>
+            </div>
 
-            <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant"> 
+            <h2>@Melinda22</h2>
 
-        </div> 
-
- 
-
-        <div class="buttons"> 
-
-            <a href="/paginas/galeriaPlantas.html"> 
-
-    <button class="btn galeria"> 
-
-        Galeria </button> 
-
-</a> 
-
-        </div> 
-
-    </header> 
-
- 
-
-<div class="line"></div> 
-
- 
-
-<div class="cards" id="cards"></div> 
-
- 
-
-<!-- MAIN --> 
-
-<main class="container"> 
-
- 
-
-    <!-- PERFIL --> 
-
-    <aside class="sidebar"> 
-
-        <div class="profile"> 
-
- 
-
-            <div class="avatar big"> 
-
-    <button class="edit-profile">✏</button> 
-
-</div> 
-
-            <h2>@Melinda22</h2> 
-
-            <p> 
-
-                <br> 
-
+            <p>
+                <br>
                 Sou alguém que encontra paz entre folhas e flores.  
-
                 Amo cuidar das plantas como quem cuida de pequenas vidas, observando cada detalhe com carinho.  
+                Meu espaço é cheio de verde, e minha rotina fica mais leve ao regar, podar e ver tudo crescer aos poucos.
+            </p>
+
+            <div class="social2">
+                <br>
+                <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
+                <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <section class="content">
+
+        <div class="top">
+            <h1>Suas Plantas</h1>
+
+            <select id="opcoes">
+                <option value="todas">Todas</option>
+                <option value="ornamental">Ornamental</option>
+                <option value="medicinais">Medicinais</option>
+                <option value="alimenticias">Alimentícias</option>
+                <option value="aromaticas">Aromáticas</option>
+                <option value="toxicas">Tóxicas</option>
+                <option value="frutifera">Frutífera</option>
+            </select>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards" id="cards">
+            <p id="mensagemVazia" style="display:none; text-align:center; margin-top:20px;">🌱 Nenhuma planta foi encontrada nessa categoria.</p>
+
+            <!-- CARD 1 -->
+            <div class="card">
+                <p class="user">@Melinda.22</p>
+                <img src="https://fernandadecarvalho.com/wp-content/uploads/2020/01/original.jpg">
+                <h3>Sol</h3>
+
+                <div data-categoria="ornamental">Ornamental</div>
+                <div data-especie="girassolDobrado">Girassol-Dobrado</div>
+
+                <p>
+                    Cria uma aparência mais delicada e sofisticada.
+                    Seu cultivo é simples: prefere sol pleno, solo bem drenado e regas moderadas.
+                </p>
+
+                <div class="actions">
+                    <button class="edit">✏</button>
+                    <button class="delete">🗑</button>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="card">
+                <p class="user">@Melinda.22</p>
+                <img src="https://grupodicas.com.br/wp-content/uploads/2023/10/Rosa-e1698245324673.jpg">
+                <h3>Rosinha</h3>
+
+                <div data-categoria="ornamental">Ornamental</div>
+                <div data-especie="rosaChinensis">Rosa-Chinensis</div>
+
+                <p>
+                    A rosa-chinesa é uma planta vibrante e delicada, conhecida por sua beleza marcante.
+                </p>
+
+                <div class="actions">
+                    <button class="edit">✏</button>
+                    <button class="delete">🗑</button>
+                </div>
+            </div>
 
-                Meu espaço é cheio de verde, e minha rotina fica mais leve ao regar, podar e ver tudo crescer aos poucos. 
+            <!-- BOTÃO ADD -->
+            <div class="card add" id="abrirModal">
+                <span>+</span>
+                <p>Adicionar nova planta</p>
+            </div>
+
+        </div>
 
-            </p> 
+    </section>
 
-        <div class="social2"> 
+</main>
 
-            <br> 
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="contact">
+        <img src="https://thumbnail.imgbin.com/11/3/18/telephone-call-green-phone-icon-with-signal-waves-RrwNw8zN_t.jpg" height="20">
+        <p>Contate-nos: (15) 92809-2649</p>
+    </div>
+
+    <div class="copyright">
+        <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" height="20">
+        <p>© Todos os Direitos Reservados</p>
+    </div>
+
+    <div class="social">
+        <img src="https://cdn.imgbin.com/1/15/4/imgbin-logo-whatsapp-computer-icons-viber-call-icon-rUC3mkCwdZBU8fCG71krgSdfd.jpg" height="20">
+        <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
+        <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
+    </div>
 
-            <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" alt="Instagram" height="20" background-color: rgba(0, 0, 0, 0)> 
+</footer>
 
-            <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" alt="Facebook" height="20" background-color: rgba(0, 0, 0, 0) > 
+<!-- MODAL -->
+<div id="modalPostagem" class="modal-overlay hidden">
 
-        </div> 
+    <div class="modal-container-post">
 
-            </div> 
+        <h2 class="titulo-modal">Adicionar Planta</h2>
 
-        </div> 
+        <!-- UPLOAD -->
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="inputFoto" accept="image/*" hidden>
 
-    </aside> 
+            <div id="uploadPlaceholder">
+                <span class="nuvem-icon">☁︎<sup>+</sup></span>
+                <p>Adicionar imagem<br>da planta</p>
+            </div>
+        </div>
 
- 
+        <!-- FORM -->
+        <div class="post-form">
 
-    <!-- CONTEÚDO --> 
+            <input type="text" id="nomePlanta" placeholder="Nome da planta">
 
-    <section class="content"> 
-
- 
-
-        <div class="top"> 
-
-            <h1>Suas Plantas</h1> 
-
- 
-
-            <select id="opcoes"> 
-
-                <option value="todas">Todas</option> 
-
-                <option value="ornamental">Ornamental</option> 
-
-                <option value="medicinais">Medicinais</option> 
-
-                <option value="alimenticias">Alimentícias</option> 
-
-                <option value="aromaticas">Aromáticas</option> 
-
-                <option value="toxicas">Tóxias</option> 
-
-            </select> 
-
-        </div> 
-
- 
-
-            <div class="cards"> 
-
- 
-
-  <div class="card"> 
-
-    <p class="user">@Melinda.22</p> 
-
-    <img src="https://fernandadecarvalho.com/wp-content/uploads/2020/01/original.jpg"> 
-
-    <h3>Sol</h3> 
-
-    <div class="card" data-categoria="ornamental">Ornamental</div> 
-
-    <div class="card" data-especie="girassolDobrado">Girassol-Dobrado</div> 
-
-    <p> 
-
-        Cria uma aparência mais delicada e sofisticada. 
-
-        Seu cultivo é simples: prefere sol pleno, solo bem drenado e regas moderadas,  
-
-        mantendo a terra levemente úmida.  
-
-        [...] 
-
-    </p> 
-
-    <div class="actions"> 
-
-        <button class="edit">✏</button> 
-
-        <button class="delete">🗑</button> 
-
-    </div> 
-
-  </div> 
-
- 
-
-  <div class="card"> 
-
-      <p class="user">@Melinda.22</p> 
-
-      <img src="https://grupodicas.com.br/wp-content/uploads/2023/10/Rosa-e1698245324673.jpg"> 
-
-      <h3>Rosinha</h3> 
-
-      <div class="card" data-categoria="ornamental">Ornamental</div> 
-
-      <div class="card" data-especie="rosaChinensis">Rosa-Chinensis</div> 
-
-      <p> 
-
-        A rosa-chinesa é uma planta vibrante e delicada, conhecida por sua beleza marcante. 
-
-        Seu cultivo é simples: prefere sol pleno, solo bem drenado e  
-
-        [...] 
-
-      </p> 
-
-      <div class="actions"> 
-
-        <button class="edit">✏</button> 
-
-        <button class="delete">🗑</button> 
-
-      </div> 
-
-  </div> 
-
- 
-
-  <div class="card add"> 
-
-    <span>+</span> 
-
-    <p>Adicionar nova planta</p> 
-
-  </div> 
-
- 
-
-</div> 
-
-        </div> 
-
-    </section> 
-
- 
-
-</main> 
-
- 
-
-<!-- FOOTER --> 
-
-<footer class="footer"> 
-
-     <div class="contact"> 
-
-            <img src="https://thumbnail.imgbin.com/11/3/18/telephone-call-green-phone-icon-with-signal-waves-RrwNw8zN_t.jpg" alt="Telefone" height="20"> 
-
-            <p>Contate-nos: (15) 92809-2649</p> 
-
-        </div> 
-
- 
-
-        <div class="copyright"> 
-
-            <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" alt="Segurança" height="20"> 
-
-            <p>© Todos os Direitos Reservados</p> 
-
-        </div> 
-
- 
-
-        <div class="social"> 
-
-            <img src="https://cdn.imgbin.com/1/15/4/imgbin-logo-whatsapp-computer-icons-viber-call-icon-rUC3mkCwdZBU8fCG71krgSdfd.jpg" alt="WhatsApp" height="20" background-color: rgba(0, 0, 0, 0) > 
-
-            <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" alt="Instagram" height="20" background-color: rgba(0, 0, 0, 0)> 
-
-            <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" alt="Facebook" height="20" background-color: rgba(0, 0, 0, 0) > 
-
-        </div> 
-
-</footer> 
-
- 
-
-<script src="script.js"></script> 
-
-</body> 
-
-</html> 
+            <select id="especie">
+                <option value="">Selecionar espécie</option>
+                <option value="rosaChinensis">Rosa-Chinensis</option>
+                <option value="girassolDobrado">Girassol-Dobrado</option>
+            </select>
+
+            <select id="categoria">
+                <option value="">Selecionar categoria</option>
+                <option value="ornamental">Ornamental</option>
+                <option value="medicinais">Medicinais</option>
+                <option value="alimenticias">Alimentícias</option>
+                <option value="aromaticas">Aromáticas</option>
+                <option value="toxicas">Tóxicas</option>
+                <option value="frutifera">Frutífera</option>
+            </select>
+
+            <!-- NOVO -->
+            <select id="visibilidade">
+                <option value="publico">Público</option>
+                <option value="privado">Privado</option>
+            </select>
+
+            <textarea id="descricao" placeholder="Sua experiência:"></textarea>
+
+        </div>
+
+        <!-- BOTÕES -->
+        <div class="modal-footer">
+            <button id="fecharModal">Cancelar</button>
+            <button class="btn-save">Salvar</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL EDITAR -->
+<div id="modalEditar" class="modal-overlay hidden">
+
+    <div class="modal-container-post">
+
+        <div class="upload-area" id="uploadAreaEdit">
+            <input type="file" id="inputFotoEdit" accept="image/*" hidden>
+
+            <div id="uploadPlaceholderEdit">
+                <span class="nuvem-icon">☁︎<sup>+</sup></span>
+                <p>Adicionar nova<br>imagem da planta</p>
+            </div>
+        </div>
+
+        <div class="post-form">
+
+            <input type="text" id="editNome" placeholder="Nome da planta">
+
+            <select id="editEspecie">
+                <option value="">Selecione a espécie</option>
+                <option value="Rosa">Rosa</option>
+                <option value="Girassol">Girassol</option>
+            </select>
+
+            <select id="editCategoria">
+                <option value="">Selecione a categoria</option>
+                <option value="Ornamental">Ornamental</option>
+                <option value="Medicinal">Medicinal</option>
+            </select>
+
+             <select id="editVisibilidade">
+    <option value="publico">Público</option>
+    <option value="privado">Privado</option>
+</select>
+
+            <textarea id="editDescricao" placeholder="Sua experiência:"></textarea>
+
+        </div>
+
+        <div class="modal-footer">
+            <button id="cancelarEdicao">Cancelar</button>
+            <button id="salvarEdicao" class="btn-save">Salvar alterações ✔</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL EDITAR PERFIL -->
+<div id="modalPerfil" class="modal-overlay hidden">
+        
+    <div class="modal-container">
+        <h2 class="modal-title">Editar Perfil</h2>
+
+        <div class="modal-body">
+            
+            <div class="coluna-perfil-foto">
+                
+                <div class="moldura-foto-circular" id="molduraFoto">
+                    <p class="texto-placeholder-foto" id="textoPlaceholder">Sua foto de perfil</p>
+                    
+                    <img src="" class="foto-perfil-imagem hidden" id="fotoPreview">
+                </div>
+
+                <p class="regras-foto">JPG, PNG ou WEBP<br>Máx. 2MB</p>
+                
+                <input type="file" id="inputFotoPerfil" accept="image/*" hidden>
+                
+                <button id="btnTrocarFoto" type="button" class="btn-trocar-foto">
+                    Trocar foto
+                </button>
+            </div>
+
+            <div class="perfil-form-section">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="inputNome" value="Melinda22">
+                </div>
+                
+                <div class="form-group">
+                    <label>Instagram</label>
+                    <input type="url" id="inputInsta">
+                </div>
+                
+                <div class="form-group">
+                    <label>Facebook</label>
+                    <input type="url" id="inputFace">
+                </div>
+                
+                <div class="form-group">
+                    <label>Sobre você</label>
+                    <textarea id="inputSobre"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="cancelarPerfil">Cancelar</button>
+            <button id="salvarPerfil" class="btn-save">Salvar alterações</button>
+        </div>
+        
+    </div>
+</div>
+
+<script src="/js/addPlantas.js"></script>
+
+</body>
+</html>
