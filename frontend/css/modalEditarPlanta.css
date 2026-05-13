@@ -1,0 +1,52 @@
+:root {
+    --verde-smart: #1b4329;
+    --cinza-claro: #d9d9d9;
+    --cinza-borda: #ccc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-overlay.active { display: flex; }
+
+.modal-container-post {
+    background: white; width: 340px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.titulo-modal { color: var(--verde-smart); font-size: 18px; margin-bottom: 15px; }
+
+.upload-area {
+    width: 100%; height: 130px; background: var(--cinza-claro); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    position: relative; overflow: hidden; margin-bottom: 15px;
+}
+#imgPreview { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+.hidden { display: none !important; }
+
+.post-form { display: flex; flex-direction: column; gap: 10px; }
+.post-form input[type="text"], .post-form textarea {
+    width: 100%; padding: 10px; border: 1px solid var(--cinza-borda); border-radius: 8px; font-size: 13px; outline: none;
+}
+
+.custom-select { position: relative; }
+.select-header {
+    padding: 10px; border: 1px solid var(--cinza-borda); border-radius: 8px;
+    display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #fff;
+}
+
+.select-options {
+    position: absolute; top: 100%; left: 0; width: 100%; background: #fff;
+    border: 1px solid var(--cinza-borda); border-radius: 8px; z-index: 100; max-height: 200px; overflow-y: auto;
+}
+
+.option-item { padding: 10px; font-size: 13px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.option-item::before { content: ""; width: 14px; height: 14px; border: 1px solid #ccc; border-radius: 3px; flex-shrink: 0; }
+.option-item.active::before { background-color: var(--verde-smart); border-color: var(--verde-smart); }
+
+.modal-footer { display: flex; justify-content: space-between; margin-top: 20px; }
+.btn-save { background: var(--verde-smart); color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.btn-pvt { background: none; border: 1px solid var(--cinza-borda); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; }
+.btn-pvt.privado { border-color: #777; color: #777; }
