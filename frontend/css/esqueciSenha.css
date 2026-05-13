@@ -301,14 +301,32 @@ body {
   text-decoration: none;
 }
 
-/* Rodapé Escuro */
-.main-footer {
-  display: flex;
-  justify-content: space-around;
-  background: #132b11;
-  color: white;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    margin-top: auto;
+}
+
+.footer div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer p {
+    font-size: 13px;
+}
+
+.contact img,
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
 }
