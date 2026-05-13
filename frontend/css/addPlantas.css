@@ -487,3 +487,150 @@ textarea {
 .container {
     position: relative;
 }
+
+/* OVERLAY (FUNDO ESCURO) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* ESCONDER */
+.hidden {
+    display: none;
+}
+
+
+/* CAIXA DO MODAL (FUNDO BRANCO 🔥) */
+.modal-container {
+    background: #fff;
+    width: 600px;
+    max-width: 95%;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+
+/* TÍTULO */
+.modal-title {
+    margin-bottom: 15px;
+}
+
+
+/* CORPO */
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* COLUNA FOTO */
+.coluna-perfil-foto {
+    text-align: center;
+    width: 40%;
+}
+
+
+/* FOTO CIRCULAR */
+.moldura-foto-circular {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #eee;
+    margin: 0 auto 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.foto-perfil-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* TEXTO PLACEHOLDER */
+.texto-placeholder-foto {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    padding: 10px;
+}
+
+
+/* BOTÃO TROCAR FOTO */
+.btn-trocar-foto {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* REGRAS FOTO */
+.regras-foto {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+
+/* FORM */
+.perfil-form-section {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+/* FOOTER */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.modal-footer button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+#cancelarPerfil {
+    background: #ccc;
+}
+
+.btn-save {
+    background: #2e7d32;
+    color: white;
+}

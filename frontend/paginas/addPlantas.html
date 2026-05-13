@@ -259,6 +259,62 @@
 
 </div>
 
+<!-- MODAL EDITAR PERFIL -->
+<div id="modalPerfil" class="modal-overlay hidden">
+        
+    <div class="modal-container">
+        <h2 class="modal-title">Editar Perfil</h2>
+
+        <div class="modal-body">
+            
+            <div class="coluna-perfil-foto">
+                
+                <div class="moldura-foto-circular" id="molduraFoto">
+                    <p class="texto-placeholder-foto" id="textoPlaceholder">Sua foto de perfil</p>
+                    
+                    <img src="" class="foto-perfil-imagem hidden" id="fotoPreview">
+                </div>
+
+                <p class="regras-foto">JPG, PNG ou WEBP<br>Máx. 2MB</p>
+                
+                <input type="file" id="inputFotoPerfil" accept="image/*" hidden>
+                
+                <button id="btnTrocarFoto" type="button" class="btn-trocar-foto">
+                    Trocar foto
+                </button>
+            </div>
+
+            <div class="perfil-form-section">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="inputNome" value="Melinda22">
+                </div>
+                
+                <div class="form-group">
+                    <label>Instagram</label>
+                    <input type="url" id="inputInsta">
+                </div>
+                
+                <div class="form-group">
+                    <label>Facebook</label>
+                    <input type="url" id="inputFace">
+                </div>
+                
+                <div class="form-group">
+                    <label>Sobre você</label>
+                    <textarea id="inputSobre"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="cancelarPerfil">Cancelar</button>
+            <button id="salvarPerfil" class="btn-save">Salvar alterações</button>
+        </div>
+        
+    </div>
+</div>
+
 <script src="/js/addPlantas.js"></script>
 
 </body>
