@@ -1,10 +1,13 @@
 package br.com.smartplant.api.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -15,6 +18,9 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@OneToMany(mappedBy = "nomeCategoria")
+	private List<Planta> planta;
 	
 	@NotBlank(message = "O nome de categoria não pode estar vazio.")
 	@Column(name = "nome_categoria", nullable = false, unique = true)
