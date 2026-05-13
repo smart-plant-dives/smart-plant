@@ -1,154 +1,123 @@
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modalPostagem');
     const btnAbrir = document.getElementById('btnAbrirModal');
-    const btnSalvar = document.getElementById('btnSalvar');
-    const btnPrivacidade = document.getElementById('btnPrivacidade');
-    
-    let cardSendoEditadoID = null; 
-    let estadoPublico = true; // Gerencia privacidade
+    const imgPreview = document.getElementById('imgPreview');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const inputFoto = document.getElementById('inputFoto');
+    const dropzone = document.getElementById('dropzone');
 
-    // --- 1. ABRIR MODO ADICIONAR ---
-    if(btnAbrir) {
-        btnAbrir.onclick = () => {
-            cardSendoEditadoID = null;
-            limparCamposModal();
-            document.getElementById('modalTitulo').innerText = "Adicionar Planta";
-            btnSalvar.innerText = "Salvar";
-            modal.classList.add('active');
-        };
-    }
-
-    // --- 2. ABRIR MODO EDITAR (ACIONADO PELO LÁPIS) ---
-    window.abrirEdicao = (idDoCard) => {
-        cardSendoEditadoID = idDoCard;
-        const card = document.getElementById(idDoCard);
-
-        document.getElementById('modalTitulo').innerText = "Editar Planta";
-        btnSalvar.innerText = "Salvar alterações";
-
-        // Preencher dados básicos
-        document.getElementById('nomePlanta').value = card.querySelector('.titulo-planta').innerText;
-        document.getElementById('descricao').value = card.querySelector('.desc-planta').innerText;
-        document.getElementById('imgPreview').src = card.querySelector('.img-planta').src;
-        document.getElementById('imgPreview').classList.remove('hidden');
-        document.getElementById('uploadPlaceholder').classList.add('hidden');
-        
-        // Sincronizar Labels dos Selects
-        document.querySelector('#selectEspecie .label').innerText = card.querySelector('.especie-planta').innerText;
-        document.querySelector('#selectCategoria .label').innerText = card.querySelector('.categoria-planta').innerText;
-
-        // Sincronizar Privacidade
-        const pvtAtual = card.getAttribute('data-privacidade');
-        estadoPublico = (pvtAtual === 'publico');
-        atualizarVisualPrivacidade();
-
-        modal.classList.add('active');
-    };
-
-    // --- 3. PRIVACIDADE ---
-    btnPrivacidade.onclick = () => {
-        estadoPublico = !estadoPublico;
-        atualizarVisualPrivacidade();
-    };
-
-    function atualizarVisualPrivacidade() {
-        document.getElementById('pvtText').innerText = estadoPublico ? "Público" : "Privado";
-        document.getElementById('pvtIcon').innerText = estadoPublico ? "🌐" : "🔒︎";
-        btnPrivacidade.classList.toggle('privado', !estadoPublico);
-    }
-
-    // --- 4. API E CATEGORIAS (IGUAL AO SEU ORIGINAL) ---
-    const inputBusca = document.querySelector('.api-search');
-    const containerEspecies = document.getElementById('resEspecies');
-
-    inputBusca.addEventListener('input', async (e) => {
-        const query = e.target.value;
-        if (query.length < 3) return;
-        try {
-            const response = await fetch(`https://api.gbif.org/v1/species/suggest?q=${query}&datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c`);
-            const data = await response.json();
-            containerEspecies.innerHTML = ''; 
-            data.forEach(item => {
-                if (item.canonicalName) {
-                    const div = document.createElement('div');
-                    div.className = 'option-item';
-                    div.innerText = item.canonicalName;
-                    div.onclick = (event) => { event.stopPropagation(); selecionarUnico(div, item.canonicalName, 'selectEspecie'); };
-                    containerEspecies.appendChild(div);
-                }
-            });
-        } catch (err) { console.error(err); }
-    });
-
-    const categorias = ["Suculentas", "Cactos", "Folhagens", "Ornamentais", "Frutíferas"];
+    // 1. GERAR CATEGORIAS
+    const categorias = ["Suculentas", "Cactos", "Flores de Época", "Folhagens", "Frutíferas", "Ornamentais"];
     const containerCat = document.getElementById('resCategorias');
+
     categorias.forEach(cat => {
         const div = document.createElement('div');
         div.className = 'option-item';
         div.innerText = cat;
-        div.onclick = (e) => { e.stopPropagation(); selecionarUnico(div, cat, 'selectCategoria'); };
+        div.onclick = (e) => {
+            e.stopPropagation();
+            selecionarUnico(div, cat, 'selectCategoria');
+        };
         containerCat.appendChild(div);
     });
+
+    // 2. UPLOAD E BUSCA AUTOMÁTICA
+    dropzone.onclick = () => inputFoto.click();
+
+    inputFoto.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                imgPreview.src = ev.target.result;
+                imgPreview.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
+
+                // Lógica: se o arquivo tiver "cacto" no nome, busca na API GBIF
+                const nomeArq = file.name.toLowerCase();
+                if (nomeArq.includes('cacto')) {
+                    buscarNaSuaAPI("Cactaceae", "Cactos");
+                } else if (nomeArq.includes('jiboia')) {
+                    buscarNaSuaAPI("Epipremnum", "Folhagens");
+                } else if (nomeArq.includes('suculenta')) {
+                    buscarNaSuaAPI("Echeveria", "Suculentas");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    async function buscarNaSuaAPI(termo, categoriaAlvo) {
+        const labelEspecie = document.querySelector('#selectEspecie .label');
+        const labelCategoria = document.querySelector('#selectCategoria .label');
+        
+        labelEspecie.innerText = "Buscando...";
+
+        try {
+            const response = await fetch(`https://api.gbif.org/v1/species/suggest?q=${termo}`);
+            const data = await response.json();
+            
+            if (data.length > 0) {
+                labelEspecie.innerText = data[0].canonicalName;
+                document.querySelector('#selectEspecie .select-header').classList.add('selected');
+            }
+
+            labelCategoria.innerText = categoriaAlvo;
+            document.querySelector('#selectCategoria .select-header').classList.add('selected');
+            
+            // Marca o quadradinho verde
+            marcarOpcaoAtiva('resCategorias', categoriaAlvo);
+            
+        } catch (err) {
+            labelEspecie.innerText = termo; // Fallback
+        }
+    }
 
     function selecionarUnico(elemento, valor, parentId) {
         const parent = document.getElementById(parentId);
         Array.from(parent.querySelectorAll('.option-item')).forEach(el => el.classList.remove('active'));
-        elemento.classList.add('active'); 
+        elemento.classList.add('active');
         parent.querySelector('.label').innerText = valor;
+        parent.querySelector('.select-header').classList.add('selected');
         parent.querySelector('.select-options').classList.add('hidden');
     }
 
-    document.querySelectorAll('.select-header').forEach(header => {
-        header.onclick = (e) => { e.stopPropagation(); header.nextElementSibling.classList.toggle('hidden'); };
-    });
-
-    // --- 5. SALVAR ---
-    btnSalvar.onclick = () => {
-        const nome = document.getElementById('nomePlanta').value;
-        if (!nome) return alert("Dê um nome para sua planta!");
-
-        if (cardSendoEditadoID) {
-            const card = document.getElementById(cardSendoEditadoID);
-            card.querySelector('.titulo-planta').innerText = nome;
-            card.querySelector('.especie-planta').innerText = document.querySelector('#selectEspecie .label').innerText;
-            card.querySelector('.categoria-planta').innerText = document.querySelector('#selectCategoria .label').innerText;
-            card.querySelector('.desc-planta').innerText = document.getElementById('descricao').value;
-            card.querySelector('.img-planta').src = document.getElementById('imgPreview').src;
-            
-            // Salva Privacidade
-            const status = estadoPublico ? 'publico' : 'privado';
-            card.setAttribute('data-privacidade', status);
-            if(card.querySelector('.status-icon')) card.querySelector('.status-icon').innerText = estadoPublico ? '🌐' : '🔒︎';
-            
-            alert("Planta atualizada!");
-        }
-        modal.classList.remove('active');
-    };
-
-    function limparCamposModal() {
-        document.getElementById('nomePlanta').value = "";
-        document.getElementById('descricao').value = "";
-        document.getElementById('imgPreview').classList.add('hidden');
-        document.getElementById('uploadPlaceholder').classList.remove('hidden');
-        document.querySelector('#selectEspecie .label').innerText = "Selecionar espécie";
-        document.querySelector('#selectCategoria .label').innerText = "Selecionar categoria";
-        estadoPublico = true;
-        atualizarVisualPrivacidade();
+    function marcarOpcaoAtiva(containerId, valor) {
+        document.querySelectorAll(`#${containerId} .option-item`).forEach(item => {
+            if(item.innerText.trim() === valor) item.classList.add('active');
+            else item.classList.remove('active');
+        });
     }
 
-    // Fechar ao clicar fora
+    // INTERFACE
+    if(btnAbrir) btnAbrir.onclick = () => { limparModal(); modal.classList.add('active'); };
     window.onclick = (e) => { if (e.target == modal) modal.classList.remove('active'); };
-
-    // Upload de foto
-    document.getElementById('dropzone').onclick = () => document.getElementById('inputFoto').click();
-    document.getElementById('inputFoto').onchange = (e) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            const img = document.getElementById('imgPreview');
-            img.src = ev.target.result;
-            img.classList.remove('hidden');
-            document.getElementById('uploadPlaceholder').classList.add('hidden');
+    
+    document.querySelectorAll('.select-header').forEach(header => {
+        header.onclick = (e) => {
+            e.stopPropagation();
+            header.nextElementSibling.classList.toggle('hidden');
         };
-        reader.readAsDataURL(e.target.files[0]);
+    });
+
+    document.getElementById('btnPrivacidade').onclick = function() {
+        const txt = document.getElementById('pvtText');
+        const ico = document.getElementById('pvtIcon');
+        if (txt.innerText === "Público") {
+            txt.innerText = "Privado";
+            ico.innerText = "🔒︎";
+        } else {
+            txt.innerText = "Público";
+            ico.innerText = "🌐";
+        }
     };
+
+    function limparModal() {
+        imgPreview.classList.add('hidden');
+        uploadPlaceholder.classList.remove('hidden');
+        document.querySelector('#selectEspecie .label').innerText = "Selecionar espécie";
+        document.querySelector('#selectCategoria .label').innerText = "Selecionar categoria";
+        document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+        document.querySelectorAll('.option-item').forEach(el => el.classList.remove('active'));
+    }
 });
