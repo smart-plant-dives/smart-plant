@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Plant - Nova Postagem</title>
-    <link rel="stylesheet" href="/css/modalAddPlantas.css">
+    <title>Smart Plant - Modal</title>
+    <link rel="stylesheet" href="/css/modalEditarPlanta.css">
 </head>
 <body>
 
-    <div style="padding: 40px;">
-        <div class="card-adicionar-post" id="btnAbrirModal">
-            <span class="mais">+</span>
-            <p>Adicionar nova planta</p>
-        </div>
+    <div class="card-adicionar-post" id="btnAbrirModal">
+        <span class="mais">+</span>
+        <p>Adicionar nova planta</p>
     </div>
 
     <div id="modalPostagem" class="modal-overlay">
         <div class="modal-container-post">
-            
             <h2 class="titulo-modal" id="modalTitulo">Adicionar Planta</h2>
 
             <div class="upload-area" id="dropzone">
@@ -38,10 +35,7 @@
                         <span class="seta">❯</span>
                     </div>
                     <div class="select-options hidden">
-                        <input type="text" class="api-search" placeholder="Buscar espécie na API...">
-                        <div class="scroll-results" id="resEspecies">
-                            <p class="aviso">Digite 3 letras para buscar...</p>
-                        </div>
+                        <div id="resEspecies"></div>
                     </div>
                 </div>
 
@@ -50,8 +44,7 @@
                         <span class="label">Selecionar categoria</span>
                         <span class="seta">❯</span>
                     </div>
-                    <div class="select-options hidden" id="resCategorias">
-                    </div>
+                    <div class="select-options hidden" id="resCategorias"></div>
                 </div>
 
                 <textarea id="descricao" placeholder="Sua experiência:" rows="3"></textarea>
@@ -61,15 +54,11 @@
                 <button type="button" id="btnPrivacidade" class="btn-pvt">
                     <span id="pvtIcon">🌐</span> <span id="pvtText">Público</span>
                 </button>
-                
-                <button type="button" id="btnSalvar" class="btn-save">
-                    Salvar
-                </button>
+                <button type="button" id="btnSalvar" class="btn-save">Salvar</button>
             </div>
-
         </div>
     </div>
 
-    <script src="/js/modalAddPlantas.js"></script>
+    <script src="/js/modalEditarPlanta.js"></script>
 </body>
 </html>
