@@ -25,16 +25,16 @@ public class Planta {
 
 	@ManyToOne
     @JoinColumn(name = "nome_categoria")
-	private Categoria categoriaPlanta;
+	private Categoria nomeCategoria;
 
 	public Planta() {
 
 	}
 
-	public Planta(String nomePlanta, Categoria categoriaPlanta, String especie) {
+	public Planta(String nomePlanta, Categoria nomeCategoria, String especie) {
 
 		this.nomePlanta = nomePlanta;
-		this.categoriaPlanta = categoriaPlanta;
+		this.nomeCategoria = nomeCategoria;
 		this.especie = especie;
 	}
 
@@ -55,12 +55,12 @@ public class Planta {
 		this.nomePlanta = nomePlanta;
 	}
 
-	public Categoria getCategoriaPlanta() {
-		return categoriaPlanta;
+	public Categoria getNomeCategoria() {
+		return nomeCategoria;
 	}
 
-	public void setCategoriaPlanta(Categoria categoriaPlanta) {
-		this.categoriaPlanta = categoriaPlanta;
+	public void setNomeCategoria(Categoria nomeCategoria) {
+		this.nomeCategoria = nomeCategoria;
 	}
 
 	public String getEspecie() {

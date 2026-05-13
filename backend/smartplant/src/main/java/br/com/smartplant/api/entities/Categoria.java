@@ -19,7 +19,7 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(mappedBy = "tb_planta")
+	@OneToMany(mappedBy = "nomeCategoria")
 	private List<Planta> planta;
 	
 	@NotBlank(message = "O nome de categoria não pode estar vazio.")
