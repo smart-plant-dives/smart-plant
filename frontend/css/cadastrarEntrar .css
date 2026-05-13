@@ -1,3 +1,4 @@
+/* Configurações Gerais */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fff;
@@ -18,13 +19,13 @@ body {
 
 /* Ajuste no container do Header (opcional, para alinhar tudo) */
 .main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5%;
-    border-bottom: 1px solid #e0e0e0;
-    border-bottom: 2px solid #2d5a27;
-    height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  height: 80px; /* Define uma altura fixa para o header todo */
+  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 2px solid #2d5a27;
 }
 
 .nav-auth {
@@ -228,15 +229,18 @@ body {
 }
 
 .btn-submit {
-  width: 100%;
-  background: #2d5a27;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 0.7em 9em;
+  font-size: 15px;
+  border-radius: 0.5em;
+  background: #1b3d18;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  text-decoration: none;
 }
 
 .btn-outline{
