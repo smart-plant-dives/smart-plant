@@ -277,7 +277,7 @@ btnSalvar.addEventListener("click", () => {
         <p>${descricao.value}</p>
 
         <div class="actions">
-            <button class="edit">✏</button>
+            <button class="edit"> EDITAR </button>
             <button class="delete">🗑</button>
         </div>
     `;
@@ -287,3 +287,4 @@ btnSalvar.addEventListener("click", () => {
 
     modal.classList.add("hidden");
 });
+

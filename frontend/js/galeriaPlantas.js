@@ -74,3 +74,72 @@ function filtrarPlantas() {
 // Eventos
 searchInput.addEventListener("input", filtrarPlantas);
 filtroCategoria.addEventListener("change", filtrarPlantas);
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const modal = document.getElementById("modalDetalhes");
+
+    const nome = document.getElementById("detalheNome");
+    const especie = document.getElementById("detalheEspecie");
+    const categoria = document.getElementById("detalheCategoria");
+    const descricao = document.getElementById("detalheDescricao");
+    const img = document.getElementById("detalheImg");
+
+    // 🔥 clique em QUALQUER card
+    document.addEventListener("click", (e) => {
+        const card = e.target.closest(".card");
+
+        if (!card) return;
+
+        nome.textContent = card.dataset.nome;
+        especie.textContent = card.dataset.especie;
+        categoria.textContent = card.dataset.categoria;
+        descricao.textContent = card.dataset.descricao;
+        img.src = card.dataset.img;
+
+        modal.classList.remove("hidden");
+    });
+
+    // fechar modal
+    modal.addEventListener("click", (e) => {
+        if (e.target.id === "modalDetalhes") {
+            modal.classList.add("hidden");
+        }
+    });
+
+});
+
+const modal = document.getElementById("modalDetalhes");
+
+const nome = document.getElementById("detalheNome");
+const especie = document.getElementById("detalheEspecie");
+const categoria = document.getElementById("detalheCategoria");
+const descricao = document.getElementById("detalheDescricao");
+const img = document.getElementById("detalheImg");
+
+// clicar no card
+document.addEventListener("click", (e) => {
+    const card = e.target.closest(".card");
+
+    if (!card) return;
+
+    nome.textContent = card.dataset.nome;
+    especie.textContent = card.dataset.especie;
+    categoria.textContent = card.dataset.categoria;
+    descricao.textContent = card.dataset.descricao;
+    img.src = card.dataset.img;
+
+    modal.classList.remove("hidden");
+});
+
+// fechar clicando fora
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.classList.add("hidden");
+    }
+});
+
+// fechar botão
+document.getElementById("fechar").addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
