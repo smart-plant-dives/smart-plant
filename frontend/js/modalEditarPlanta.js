@@ -52,10 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function atualizarVisualPrivacidade() {
-        document.getElementById('pvtText').innerText = estadoPublico ? "Público" : "Privado";
-        document.getElementById('pvtIcon').innerText = estadoPublico ? "🌐" : "🔒︎";
-        btnPrivacidade.classList.toggle('privado', !estadoPublico);
+    const pvtText = document.getElementById('pvtText');
+    const pvtIcon = document.getElementById('pvtIcon');
+
+    if (estadoPublico) {
+        pvtText.innerText = "Público";
+        pvtIcon.innerText = "🌐";
+    } else {
+        pvtText.innerText = "Privado";
+        pvtIcon.innerText = "🔒"; 
     }
+    
+    // Opcional: removemos a classe 'privado' se não for mais usar cor cinza no botão todo
+    btnPrivacidade.classList.toggle('privado', !estadoPublico);
+}
 
     // --- 4. API E CATEGORIAS (IGUAL AO SEU ORIGINAL) ---
     const inputBusca = document.querySelector('.api-search');

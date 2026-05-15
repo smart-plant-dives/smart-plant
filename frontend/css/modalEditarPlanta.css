@@ -50,3 +50,32 @@
 .btn-save { background: var(--verde-smart); color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 .btn-pvt { background: none; border: 1px solid var(--cinza-borda); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; }
 .btn-pvt.privado { border-color: #777; color: #777; }
+
+/* Estilo do botão de privacidade */
+.btn-pvt {
+    background: none;
+    border: 1px solid var(--cinza-borda);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre ícone e texto */
+    font-size: 13px;
+    color: #333;
+}
+
+/* Filtro para deixar o emoji totalmente preto */
+.icon-preto {
+    filter: grayscale(100%) brightness(0);
+    font-size: 14px;
+    display: inline-block;
+}
+
+/* Garante que o rodapé espalhe os botões */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
