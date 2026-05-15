@@ -8,16 +8,28 @@
 </head>
 <body>
 
-    <div style="padding: 20px;">
-        <div class="card-adicionar-post" id="btnAbrirModal" style="cursor:pointer; border: 2px dashed #ccc; width: 200px; padding: 20px; text-align: center; border-radius: 15px;">
-            <span style="font-size: 24px;">+</span>
+    <div style="padding: 40px; display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="card-adicionar-post" id="btnAbrirModal">
+            <span class="mais">+</span>
             <p>Adicionar nova planta</p>
+        </div>
+
+        <div class="card-planta-exemplo" id="card_99" data-privacidade="publico" style="border: 1px solid #ccc; padding: 15px; border-radius: 12px; width: 220px;">
+            <img src="https://via.placeholder.com/200" class="img-planta" style="width:100%; border-radius: 8px;">
+            <h3 class="titulo-planta">Minha Jiboia</h3>
+            <p class="especie-planta">Epipremnum pinnatum</p>
+            <p class="categoria-planta">Pendentes</p>
+            <p class="desc-planta" style="display:none;">Ela está crescendo muito rápido!</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <span class="status-icon">🌐</span>
+                <button onclick="abrirEdicao('card_99')" style="cursor:pointer; background:none; border:none; font-size:18px;">✏️</button>
+            </div>
         </div>
     </div>
 
     <div id="modalPostagem" class="modal-overlay">
         <div class="modal-container-post">
-            <h2 class="titulo-modal" id="modalTitulo">Editar Planta</h2>
+            <h2 class="titulo-modal" id="modalTitulo">Adicionar Planta</h2>
 
             <div class="upload-area" id="dropzone">
                 <input type="file" id="inputFoto" accept="image/*" hidden>
@@ -37,8 +49,8 @@
                         <span class="seta">❯</span>
                     </div>
                     <div class="select-options hidden">
-                        <input type="text" class="api-search" placeholder="Buscar espécie científica...">
-                        <div id="resEspecies">
+                        <input type="text" class="api-search" placeholder="Buscar espécie na API...">
+                        <div class="scroll-results" id="resEspecies">
                             <p class="aviso">Digite 3 letras para buscar...</p>
                         </div>
                     </div>
@@ -52,28 +64,14 @@
                     <div class="select-options hidden" id="resCategorias"></div>
                 </div>
 
-                <div class="custom-select" id="selectPrivacidade">
-                    <div class="select-header">
-                        <div style="display: flex; align-items: center;">
-                            <span id="pvtIcon" class="icon-preto">🌐</span>
-                            <span id="pvtText" class="label" style="margin-left: 10px;">Público</span>
-                        </div>
-                        <span class="seta" style="transform: rotate(90deg);">❯</span>
-                    </div>
-                    <div class="select-options hidden">
-                        <div class="option-item" onclick="setPrivacidade(true, '🌐', 'Público')">
-                            <span class="icon-preto">🌐</span> Público
-                        </div>
-                        <div class="option-item" onclick="setPrivacidade(false, '🔒', 'Privado')">
-                            <span class="icon-preto">🔒</span> Privado
-                        </div>
-                    </div>
-                </div>
-
                 <textarea id="descricao" placeholder="Sua experiência:" rows="3"></textarea>
             </div>
 
             <div class="modal-footer">
+                <button type="button" id="btnPrivacidade" class="btn-pvt">
+                    <span id="pvtIcon" class="icon-preto">🌐</span> 
+                    <span id="pvtText">Público</span>
+                </button>
                 <button type="button" id="btnSalvar" class="btn-save">Salvar alterações</button>
             </div>
         </div>
