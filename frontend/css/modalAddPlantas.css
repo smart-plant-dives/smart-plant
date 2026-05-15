@@ -95,3 +95,58 @@
     color: #999;
     text-align: center;
 }
+
+/* Container do Rodapé */
+.modal-footer {
+    display: flex;
+    justify-content: space-between; /* Empurra um para cada lado */
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee; /* Linha sutil para separar */
+}
+
+/* Estilização do Select de Visibilidade */
+#visibilidade {
+    padding: 8px 12px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 8px;
+    font-size: 13px;
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+    color: #444;
+}
+
+#visibilidade:focus {
+    border-color: var(--verde-smart);
+}
+
+/* Botão Salvar - Mais robusto */
+.btn-save {
+    background-color: var(--verde-smart);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-save:hover {
+    background-color: #14321f; /* Um verde um pouco mais escuro ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Ajuste para mobile se o modal for muito pequeno */
+@media (max-width: 350px) {
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    #visibilidade, .btn-save {
+        width: 100%;
+    }
+}
