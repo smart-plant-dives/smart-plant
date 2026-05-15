@@ -314,6 +314,39 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+    
+}
+
+#fecharModal{
+    background: #2f6f2f;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#cancelarPerfil{
+background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#btnTrocarFoto{
+    background: #d1d1d1;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#cancelarEdicao{
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
 }
 
 .btn-save {
@@ -322,6 +355,15 @@ body {
     border: none;
     padding: 10px 15px;
     border-radius: 10px;
+}
+
+.btn-cancel{
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    
 }
 
 /* MODAL EDITAR PERFIL */
@@ -354,4 +396,148 @@ body {
 /* overlay escuro atrás */
 .modal-overlay {
     background: rgba(0,0,0,0.5);
+}
+
+/* FUNDO DO MODAL */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+}
+
+/* CAIXA DO MODAL */
+.modal-container-post {
+    background: #ffffff;
+    padding: 30px;
+    width: 400px;
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+    animation: aparecer 0.25s ease;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* TÍTULO */
+.titulo-modal {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* UPLOAD */
+.upload-area {
+    border: 2px dashed #dcdcdc;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+.upload-area:hover {
+    border-color: #2e7d32;
+    background: #f6fff6;
+}
+
+.nuvem-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* INPUTS */
+.post-form input,
+.post-form select,
+.post-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+
+    border-radius: 12px;
+    border: 1px solid #ddd;
+
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.post-form input:focus,
+.post-form select:focus,
+.post-form textarea:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46,125,50,0.15);
+}
+
+/* TEXTAREA */
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* FOOTER */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* BOTÕES */
+.btn-save {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-save:hover {
+    background: #256428;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: #f5f5f5;
+}
+
+/* IMAGEM PREVIEW */
+#imgPreview {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
 }
