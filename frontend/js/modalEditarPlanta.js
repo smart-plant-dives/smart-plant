@@ -1,170 +1,146 @@
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modalPostagem');
-    const btnAbrir = document.getElementById('btnAbrirModal');
+    const inputNome = document.getElementById('nomePlanta');
+    const inputDesc = document.getElementById('descricao');
+    const imgPreview = document.getElementById('imgPreview');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
     const btnSalvar = document.getElementById('btnSalvar');
-    const btnPrivacidade = document.getElementById('btnPrivacidade');
-    
-    let cardSendoEditadoID = null; 
-    let estadoPublico = true; // Gerencia privacidade
+    const inputFoto = document.getElementById('inputFoto');
 
-    // --- 1. ABRIR MODO ADICIONAR ---
-    if(btnAbrir) {
-        btnAbrir.onclick = () => {
-            cardSendoEditadoID = null;
-            limparCamposModal();
-            document.getElementById('modalTitulo').innerText = "Adicionar Planta";
-            btnSalvar.innerText = "Salvar";
-            modal.classList.add('active');
-        };
-    }
+    let cardEditando = null;
+    let estadoPublico = true; 
 
-    // --- 2. ABRIR MODO EDITAR (ACIONADO PELO LÁPIS) ---
-    window.abrirEdicao = (idDoCard) => {
-        cardSendoEditadoID = idDoCard;
-        const card = document.getElementById(idDoCard);
+    document.addEventListener("click", (e) => {
+        // Se clicar no elemento com classe 'edit' ou dentro dele (ícone)
+        if (e.target.classList.contains("edit") || e.target.closest(".edit")) {
+            
+            cardEditando = e.target.closest(".card");
 
-        document.getElementById('modalTitulo').innerText = "Editar Planta";
-        btnSalvar.innerText = "Salvar alterações";
+            if (cardEditando) {
 
-        // Preencher dados básicos
-        document.getElementById('nomePlanta').value = card.querySelector('.titulo-planta').innerText;
-        document.getElementById('descricao').value = card.querySelector('.desc-planta').innerText;
-        document.getElementById('imgPreview').src = card.querySelector('.img-planta').src;
-        document.getElementById('imgPreview').classList.remove('hidden');
-        document.getElementById('uploadPlaceholder').classList.add('hidden');
-        
-        // Sincronizar Labels dos Selects
-        document.querySelector('#selectEspecie .label').innerText = card.querySelector('.especie-planta').innerText;
-        document.querySelector('#selectCategoria .label').innerText = card.querySelector('.categoria-planta').innerText;
+                inputNome.value = cardEditando.querySelector("h3").innerText;
 
-        // Sincronizar Privacidade
-        const pvtAtual = card.getAttribute('data-privacidade');
-        estadoPublico = (pvtAtual === 'publico');
-        atualizarVisualPrivacidade();
+                const pDesc = cardEditando.querySelector("p:not(.user)");
+                inputDesc.value = pDesc ? pDesc.innerText : "";
 
-        modal.classList.add('active');
-    };
+                const fotoCard = cardEditando.querySelector("img").src;
+                imgPreview.src = fotoCard;
+                imgPreview.classList.remove("hidden");
+                uploadPlaceholder.classList.add("hidden");
 
-    // --- 3. PRIVACIDADE ---
-    btnPrivacidade.onclick = () => {
-        estadoPublico = !estadoPublico;
-        atualizarVisualPrivacidade();
-    };
+                const iconCard = cardEditando.querySelector(".status-icon") || cardEditando.querySelector(".cadeado");
+                if (iconCard && iconCard.innerText === "🔒") {
+                    setPrivacidade(false, '🔒', 'Privado');
+                } else {
+                    setPrivacidade(true, '🌐', 'Público');
+                }
 
-    function atualizarVisualPrivacidade() {
-        const pvtText = document.getElementById('pvtText');
-        const pvtIcon = document.getElementById('pvtIcon');
-
-        if (estadoPublico) {
-            pvtText.innerText = "Público";
-            pvtIcon.innerText = "🌐";
-        } else {
-            pvtText.innerText = "Privado";
-            pvtIcon.innerText = "🔒"; 
+                modal.classList.add("active");
+            }
         }
-        
-        btnPrivacidade.classList.toggle('privado', !estadoPublico);
-    }
+    });
 
-    // --- 4. API E CATEGORIAS ---
     const inputBusca = document.querySelector('.api-search');
     const containerEspecies = document.getElementById('resEspecies');
 
     inputBusca.addEventListener('input', async (e) => {
         const query = e.target.value;
-        if (query.length < 3) return;
+        
+        if (query.length < 3) {
+            containerEspecies.innerHTML = '<p class="aviso">Digite 3 letras para buscar...</p>';
+            return;
+        }
+
         try {
-            const response = await fetch(`https://api.gbif.org/v1/species/suggest?q=${query}&datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c`);
-            const data = await response.json();
+            const res = await fetch(`https://api.gbif.org/v1/species/suggest?q=${query}`);
+            const data = await res.json();
             containerEspecies.innerHTML = ''; 
+
             data.forEach(item => {
-                if (item.canonicalName) {
-                    const div = document.createElement('div');
-                    div.className = 'option-item';
-                    div.innerText = item.canonicalName;
-                    div.onclick = (event) => { 
-                        event.stopPropagation(); 
-                        selecionarUnico(div, item.canonicalName, 'selectEspecie'); 
-                    };
-                    containerEspecies.appendChild(div);
-                }
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.innerText = item.canonicalName;
+                div.onclick = (ev) => {
+                    ev.stopPropagation();
+                    document.querySelector('#selectEspecie .label').innerText = item.canonicalName;
+                    document.querySelector('#selectEspecie .select-options').classList.add('hidden');
+                };
+                containerEspecies.appendChild(div);
             });
-        } catch (err) { console.error(err); }
+        } catch (err) { console.error("Erro na API de espécies", err); }
+    });
+
+    window.setPrivacidade = (pub, ico, txt) => {
+        estadoPublico = pub;
+        document.getElementById('pvtIcon').innerText = ico;
+        document.getElementById('pvtText').innerText = txt;
+        document.querySelector('#selectPrivacidade .select-options').classList.add('hidden');
+    };
+
+    document.querySelectorAll('.select-header').forEach(header => {
+        header.onclick = (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.select-options').forEach(opt => {
+                if (opt !== header.nextElementSibling) opt.classList.add('hidden');
+            });
+            header.nextElementSibling.classList.toggle('hidden');
+        };
     });
 
     const categorias = ["Suculentas", "Cactos", "Folhagens", "Ornamentais", "Frutíferas"];
     const containerCat = document.getElementById('resCategorias');
-    categorias.forEach(cat => {
-        const div = document.createElement('div');
-        div.className = 'option-item';
-        div.innerText = cat;
-        div.onclick = (e) => { 
-            e.stopPropagation(); 
-            selecionarUnico(div, cat, 'selectCategoria'); 
-        };
-        containerCat.appendChild(div);
-    });
-
-    function selecionarUnico(elemento, valor, parentId) {
-        const parent = document.getElementById(parentId);
-        Array.from(parent.querySelectorAll('.option-item')).forEach(el => el.classList.remove('active'));
-        elemento.classList.add('active'); 
-        parent.querySelector('.label').innerText = valor;
-        parent.querySelector('.select-options').classList.add('hidden');
+    if (containerCat) {
+        categorias.forEach(cat => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.innerText = cat;
+            div.onclick = (e) => {
+                e.stopPropagation();
+                document.querySelector('#selectCategoria .label').innerText = cat;
+                containerCat.classList.add('hidden');
+            };
+            containerCat.appendChild(div);
+        });
     }
 
-    document.querySelectorAll('.select-header').forEach(header => {
-        header.onclick = (e) => { 
-            e.stopPropagation(); 
-            header.nextElementSibling.classList.toggle('hidden'); 
-        };
-    });
-
-    // --- 5. SALVAR ---
     btnSalvar.onclick = () => {
-        const nome = document.getElementById('nomePlanta').value;
-        if (!nome) return alert("Dê um nome para sua planta!");
+        if (!inputNome.value) return alert("A planta precisa de um nome!");
 
-        if (cardSendoEditadoID) {
-            const card = document.getElementById(cardSendoEditadoID);
-            card.querySelector('.titulo-planta').innerText = nome;
-            card.querySelector('.especie-planta').innerText = document.querySelector('#selectEspecie .label').innerText;
-            card.querySelector('.categoria-planta').innerText = document.querySelector('#selectCategoria .label').innerText;
-            card.querySelector('.desc-planta').innerText = document.getElementById('descricao').value;
-            card.querySelector('.img-planta').src = document.getElementById('imgPreview').src;
+        if (cardEditando) {
+
+            cardEditando.querySelector("h3").innerText = inputNome.value;
             
-            const status = estadoPublico ? 'publico' : 'privado';
-            card.setAttribute('data-privacidade', status);
-            if(card.querySelector('.status-icon')) card.querySelector('.status-icon').innerText = estadoPublico ? '🌐' : '🔒︎';
-            
-            alert("Planta atualizada!");
+            const pDesc = cardEditando.querySelector("p:not(.user)");
+            if (pDesc) pDesc.innerText = inputDesc.value;
+
+            cardEditando.querySelector("img").src = imgPreview.src;
+
+            const statusIcon = cardEditando.querySelector(".status-icon") || cardEditando.querySelector(".cadeado");
+            if (statusIcon) {
+                statusIcon.innerText = estadoPublico ? '🌐' : '🔒';
+
+                if (estadoPublico) statusIcon.classList.add('hidden');
+                else statusIcon.classList.remove('hidden');
+            }
+
+            modal.classList.remove("active");
         }
-        modal.classList.remove('active');
     };
 
-    function limparCamposModal() {
-        document.getElementById('nomePlanta').value = "";
-        document.getElementById('descricao').value = "";
-        document.getElementById('imgPreview').classList.add('hidden');
-        document.getElementById('uploadPlaceholder').classList.remove('hidden');
-        document.querySelector('#selectEspecie .label').innerText = "Selecionar espécie";
-        document.querySelector('#selectCategoria .label').innerText = "Selecionar categoria";
-        estadoPublico = true;
-        atualizarVisualPrivacidade();
-    }
+    document.getElementById('dropzone').onclick = () => inputFoto.click();
+    inputFoto.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                imgPreview.src = ev.target.result;
+                imgPreview.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     window.onclick = (e) => { if (e.target == modal) modal.classList.remove('active'); };
-
-    // Upload de foto
-    document.getElementById('dropzone').onclick = () => document.getElementById('inputFoto').click();
-    document.getElementById('inputFoto').onchange = (e) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            const img = document.getElementById('imgPreview');
-            img.src = ev.target.result;
-            img.classList.remove('hidden');
-            document.getElementById('uploadPlaceholder').classList.add('hidden');
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
-}); 
+    document.addEventListener('keydown', (e) => { if (e.key === "Escape") modal.classList.remove('active'); });
+});
