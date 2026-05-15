@@ -149,6 +149,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
 }
 
 /*FIM DO OLHO*/
@@ -171,6 +172,7 @@ body {
   border: 1px solid #e8e8e8;
   transition: all 0.3s;
   text-decoration: none;
+  
 }
 
 .btn-outline{
@@ -183,27 +185,6 @@ body {
   border: 1px solid #e8e8e8;
   transition: all 0.3s;
   text-decoration: none;
-}
-
-/* FOOTER */ 
-.footer { 
-    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
-    color: white; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 10px 40px; 
-    margin-top: 0px; 
-} 
-
-.footer div { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-} 
-
-.footer p { 
-    font-size: 13px; 
 }
 
 /* ================= FOOTER ================= */
