@@ -173,9 +173,6 @@ body {
     transition: background 0.2s;
 }
 
-.btn-submit:hover {
-    background-color: #23461e;
-}
 
 .input-group input {
   border-radius: 7px;
