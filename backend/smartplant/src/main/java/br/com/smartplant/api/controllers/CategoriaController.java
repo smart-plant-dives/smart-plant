@@ -17,7 +17,7 @@ import br.com.smartplant.api.entities.Categoria;
 import br.com.smartplant.api.services.CategoriaService;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/api/categoria")
 @CrossOrigin("*")
 public class CategoriaController {
 
