@@ -1,5 +1,6 @@
 package br.com.smartplant.api.entities;
 
+import br.com.smartplant.api.validations.annotations.Senha;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +27,7 @@ public class Usuario {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@NotBlank(message = "A senha é obrigatória.")
-	@Size(min = 8, max = 8, message= "A senha deve conter obrigatóriamente 8 caractéres.")
+	@Senha
 	@Column(name = "senha", nullable = false)
 	private String senha;
 
