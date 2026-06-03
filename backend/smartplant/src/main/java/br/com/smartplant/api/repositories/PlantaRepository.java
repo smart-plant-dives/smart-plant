@@ -6,4 +6,6 @@ import br.com.smartplant.api.entities.Planta;
 
 public interface PlantaRepository extends JpaRepository<Planta, Long> {
 
+	Planta findByNome(String nomePlanta);
+
 }

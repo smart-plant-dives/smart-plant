@@ -45,7 +45,7 @@ public class PlantaController {
 	@GetMapping("/{id}")
     public ResponseEntity<Planta> buscarPorId(@PathVariable Long id) {
 		
-		Planta planta = service.buscarPorID(id);
+		Planta planta = service.buscarPorId(id);
 		
 		return ResponseEntity.ok(planta);
 	}
@@ -61,7 +61,7 @@ public class PlantaController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		
-		service.deletaR(id);
+		service.deletar(id);
 		
 		return ResponseEntity.noContent().build();
 	}

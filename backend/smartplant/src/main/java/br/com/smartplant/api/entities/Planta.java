@@ -63,7 +63,7 @@ public class Planta {
 		this.nomeCategoria = nomeCategoria;
 	}
 
-	public String getEspecie(String string) {
+	public String getEspecie() {
 		return especie;
 	}
 
