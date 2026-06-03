@@ -672,3 +672,40 @@ btnSalvar.addEventListener("click", () => {
             labelEspecie.innerText = "Erro ao buscar";
         }
     }
+
+    // O 'async' avisa que esta função fará uma operação de rede que pode demorar
+async function carregarCatalogo(){
+    try {
+        // 1. Fazemos a chamada (GET) para a rota da nossa API Java
+        const resposta = await fetch("http://localhost:8080/api/especie");
+
+        // 2. Convertemos o texto que a API devolve num objeto JavaScript (JSON)
+        const especie = await resposta.json();
+
+        // 3. Capturamos a <div> vazia que deixamos no HTML
+        const divLista = document.getElementById("lista-especie");
+        divLista.innerHTML = ""; // Limpa a área antes de desenhar
+
+       // 4. Percorremos cada produto que veio do banco de dados
+        produtos.forEach(especie => {
+            
+            // Garantimos que é um número, fixamos 2 casas e trocamos ponto por vírgula
+            let precoFormatado = parseFloat(produto.preco).toFixed(2).replace('.', ',');
+            // O += vai "empilhando" o HTML de cada doce dentro da div principal
+            divLista.innerHTML += `
+                <div class="card">
+                    <h3>${produto.nome}</h3>
+                    <p style="color: #ff1493; font-weight: bold; margin-top: 10px;">
+                        R$ ${precoFormatado}
+                    </p>
+                </div>
+            `;
+        });
+    } catch (erro) {
+        console.error("Erro ao carregar catálogo:", erro);
+        document.getElementById("lista-produtos").innerHTML = "<p>Erro ao carregar doces.</p>";
+    }
+}
+
+// Executa a função assim que o utilizador abre a página
+carregarCatalogo();
