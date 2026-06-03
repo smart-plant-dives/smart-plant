@@ -1,5 +1,6 @@
 package br.com.smartplant.api.entities;
 
+import br.com.smartplant.api.enuns.TipoUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
