@@ -1,77 +1,90 @@
 package br.com.smartplant.api.entities;
 
-import br.com.smartplant.api.validations.annotations.Senha;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario {
+public class Usuario<TipoUsuario> {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
+    private Long id;
+    
+    @NotBlank(message = "O nome é obrigatório.")
+    @Column(name = "nome_usuario",nullable = false, length = 100)
+    private String nome;
+    
+    @NotBlank(message = "O logion é obrigatório.")
+    @Column(nullable = false, unique = true, length = 50)
+    private String login;
+    
+    @NotBlank(message = "A senha é obrigatória.")
+    @Column(nullable = false)
+    private String senha;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_usuario", nullable = false)
+    private TipoUsuario tipoUsuario;
+    
+    public Usuario() {
+        
+    }
+    
+    public Usuario(String nome, String login, String senha, TipoUsuario tipoUsuario) {
+        this.nome = nome;
+        this.login = login;
+        this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
+    }
 
-	@NotBlank(message = "O nome é obrigatório.")
-	@Size(min = 5, max = 20, message = "O nome de usuário deve ser entre 5 a 20 caracteres.")
-	@Column(name = "nome_usuario", nullable = false, unique = true)
-	private String nomeUsuario;
+    public Long getId() {
+        return id;
+    }
 
-	@Email(message = "E-mail Inválido")
-	@Column(name = "email", nullable = false, unique = true)
-	private String email;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Senha
-	@Column(name = "senha", nullable = false)
-	private String senha;
+    public String getNome() {
+        return nome;
+    }
 
-	public Usuario() {
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public Usuario(Long id, String nomeUsuario, String email, String senha) {
-		this.id = id;
-		this.nomeUsuario = nomeUsuario;
-		this.email = email;
-		this.senha = senha;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getSenha() {
+        return senha;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+    
+    
 
 }

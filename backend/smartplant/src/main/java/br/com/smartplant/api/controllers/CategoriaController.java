@@ -30,7 +30,7 @@ public class CategoriaController {
 	}
 
 	@GetMapping
-	public List<Categoria> listar() {
+	public List<Categoria> listarTodos() {
 		return service.listarTodos();
 	}
 
@@ -45,8 +45,8 @@ public class CategoriaController {
 	}
 
 	@DeleteMapping("/{id}")
-	public String deletar(@PathVariable Long id) {
-		return service.deletar(id);
+	public void deletar(@PathVariable Long id) {
+		 service.deletar(id);
 	}
 
 }
