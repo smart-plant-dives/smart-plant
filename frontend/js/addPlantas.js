@@ -709,3 +709,4 @@ async function carregarCatalogo(){
 
 // Executa a função assim que o utilizador abre a página
 carregarCatalogo();
+

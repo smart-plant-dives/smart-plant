@@ -6,6 +6,8 @@
     <title>Smart Plant - Histórico de Plantas</title>
     <link rel="stylesheet" href="/css/galeriaPlantas.css">
 </head>
+
+
 <body>
 
      <!-- HEADER --> 
@@ -28,8 +30,7 @@
             <a href="addPlantas.html"> 
 
     <button class="btn conta"> 
-
-        Sua conta </button> 
+Sua conta </button> 
 
 </a>
 
@@ -42,27 +43,17 @@
             <h1>Histórico de <span>Plantas</span></h1>
             <div class="filter-section">
                 <p>Veja e gerencie suas plantinhas</p>
-
                         <section class="content"> 
 
         <div class="top"> 
-
             <select id="opcoes"> 
-
                 <option value="todas">Todas</option> 
-
                 <option value="ornamental">Ornamental</option> 
-
                 <option value="medicinais">Medicinais</option> 
-
                 <option value="alimenticias">Alimentícias</option> 
-
                 <option value="aromaticas">Aromáticas</option> 
-
                 <option value="toxicas">Tóxicas</option> 
-
                 <option value="frutifera">Frutífera</option>
-
             </select> 
                     </select>
                 </div>
@@ -196,6 +187,32 @@
             <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" alt="Facebook" height="20" background-color: rgba(0, 0, 0, 0) > 
         </div> 
     </footer> 
+
+
+   <div id="modalDetalhes" class="modal hidden">
+    <div class="modal-content">
+
+        <!-- HEADER -->
+        <div class="modal-header">
+            <div class="user-info">
+                <div class="avatar"></div>
+                <span id="detalheUsuario">Usuario</span>
+            </div>
+            <button id="fechar">✕</button>
+        </div>
+
+        <!-- IMAGEM -->
+        <img id="detalheImg" class="modal-img" src="" alt="Planta">
+
+        <!-- FORM -->
+        <div class="modal-body">
+            <input id="detalheNome" class="input" readonly>
+            <input id="detalheEspecie" class="input" readonly>
+            <input id="detalheCategoria" class="input" readonly>
+            <textarea id="detalheDescricao" class="textarea" readonly></textarea>
+        </div>
+    </div>
+</div>
 
     <script src="/js/galeriaPlantas.js"></script>
 </body>
