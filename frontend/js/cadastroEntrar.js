@@ -60,3 +60,47 @@ if (togglePassword && inputSenha) {
         });
     }
 });
+
+const btn = document.getElementById("btnCadastrar");
+
+btn.addEventListener("click", async () => {
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    try {
+        const resposta = await fetch("http://localhost:8080/usuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                senha: senha
+            })
+        });
+
+        if (resposta.ok) {
+            const usuario = await resposta.json();
+
+            // 🔥 salva sessão (igual login)
+            localStorage.setItem("usuarioSessao", JSON.stringify(usuario));
+
+            // 🔥 entra direto no sistema
+            window.location.href = "addPlantas.html";
+
+        } else {
+            alert("Erro ao cadastrar usuário.");
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro na conexão com o servidor.");
+    }
+
+});

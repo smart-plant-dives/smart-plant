@@ -138,8 +138,6 @@ inputFotoPerfil.addEventListener("change", () => {
 
  
 
-const modal = document.getElementById("modalPostagem"); 
-
 const abrirModal = document.getElementById("abrirModal"); 
 
 const fecharModal = document.getElementById("fecharModal"); 
@@ -710,3 +708,158 @@ async function carregarCatalogo(){
 // Executa a função assim que o utilizador abre a página
 carregarCatalogo();
 
+
+async function carregarPlantas() {
+    const resposta = await fetch("http://localhost:8080/api/plantas");
+    const plantas = await resposta.json();
+
+    const container = document.getElementById("container-plantas");
+
+    plantas.forEach(planta => {
+        const card = document.createElement("article");
+        card.classList.add("plant-card");
+
+        // 🔥 DADOS (igual você fazia no HTML)
+        card.dataset.nome = planta.nome;
+        card.dataset.especie = planta.especie;
+        card.dataset.categoria = planta.categoria;
+        card.dataset.descricao = planta.descricao;
+        card.dataset.img = planta.imagem;
+
+        // 👇 CONTEÚDO VISÍVEL (ANTES DO CLIQUE)
+        card.innerHTML = `
+            <img src="${planta.imagem}" alt="${planta.nome}">
+            <h3>${planta.nome}</h3>
+            <p class="especie">${planta.especie}</p>
+            <p class="categoria">${planta.categoria}</p>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+carregarPlantas();
+
+// ==========================================
+// 1. VERIFICAÇÃO DE SESSÃO
+// ==========================================
+const usuarioLocal = localStorage.getItem("usuarioSessao");
+
+if (!usuarioLocal) {
+    window.location.href = "login.html";
+} else {
+    const usuarioObj = JSON.parse(usuarioLocal);
+    document.getElementById("nomeUsuario").innerText = usuarioObj.nome;
+}
+
+// ==========================================
+// 2. LISTAR PLANTAS (GET)
+// ==========================================
+async function listarPlantas() {
+    const resposta = await fetch("http://localhost:8080/plantas");
+    const plantas = await resposta.json();
+
+    const container = document.getElementById("cards");
+
+    // limpa tudo (menos o botão +)
+    container.innerHTML = `
+        <div class="card add" id="abrirModal">
+            <span>+</span>
+            <p>Adicionar nova planta</p>
+        </div>
+    `;
+
+    plantas.forEach(planta => {
+        container.innerHTML += `
+            <div class="card">
+                <div class="cadeado ${planta.visibilidade === 'privado' ? '' : 'hidden'}">🔒</div>
+
+                <p class="user">@${planta.usuarioNome || "user"}</p>
+
+                <img src="${planta.imagem || 'https://via.placeholder.com/150'}">
+
+                <h3>${planta.nome}</h3>
+
+                <div>${planta.categoria}</div>
+                <div>${planta.especie}</div>
+
+                <p>${planta.descricao || ""}</p>
+
+                <div class="actions">
+                    <button onclick="editarPlanta(${planta.id})">✏</button>
+                    <button onclick="deletarPlanta(${planta.id})">🗑</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// ==========================================
+// 3. ABRIR / FECHAR MODAL
+// ==========================================
+const modal = document.getElementById("modalPostagem");
+
+document.getElementById("abrirModal").addEventListener("click", () => {
+    modal.classList.remove("hidden");
+});
+
+document.getElementById("fecharModal").addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
+
+// ==========================================
+// 4. CADASTRAR PLANTA (POST)
+// ==========================================
+document.querySelector(".btn-save").addEventListener("click", async () => {
+
+    const novaPlanta = {
+        nome: document.getElementById("nomePlanta").value,
+        especie: document.getElementById("especie").value,
+        categoria: document.getElementById("categoria").value,
+        descricao: document.getElementById("descricao").value,
+        visibilidade: document.getElementById("visibilidade").value,
+        imagem: "" // pode implementar upload depois
+    };
+
+    const resposta = await fetch("http://localhost:8080/api/plantas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(novaPlanta)
+    });
+
+    if (resposta.ok) {
+        modal.classList.add("hidden");
+        listarPlantas();
+    } else {
+        alert("Erro ao salvar planta");
+    }
+});
+
+// ==========================================
+// 5. DELETAR PLANTA (DELETE)
+// ==========================================
+async function deletarPlanta(id) {
+    const confirmacao = confirm("Deseja deletar essa planta?");
+
+    if (confirmacao) {
+        await fetch(`http://localhost:8080/plantas/${id}`, {
+            method: "DELETE"
+        });
+
+        listarPlantas();
+    }
+}
+
+// ==========================================
+// 6. EDITAR (SIMPLES - ALERTA POR ENQUANTO)
+// ==========================================
+function editarPlanta(id) {
+    alert("Implementar edição da planta ID: " + id);
+}
+
+// ==========================================
+// 7. INICIAR
+// ==========================================
+listarPlantas();

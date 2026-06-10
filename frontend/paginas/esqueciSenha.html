@@ -17,47 +17,33 @@
 
 <a href="cadastroUsuario.html" class="close-global-btn" title="Fechar">x</a>
 
-<main class="login-container">
-  <section class="login-box">
-    <div class="login-form">
-      <h2>Bem-vindo(a) ao SmartPlant</h2>
-      <p>Crie uma nova senha</p>
-      
-      <div class="input-group">
-        <label>Nova Senha</label>
-        <div class="password-inputs">
-          <!-- Correção do type para "password" -->
-          <input id="password" type="password" placeholder="Senha">
-          <i class="fas fa-eye-slash toggle-password" data-target="password"></i>
-          
-          <ul class="password-rules">
-            <li id="regraSenha">
-              <ul class="validacoes">
-                <!-- Classes iniciais neutras/padronizadas -->
-                <li id="validarAntiga" class="regra-item">A senha não pode ser igual à antiga</li>
-                <li id="validarRequisitos" class="regra-item">Use 8 ou mais letras, números e símbolos</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="input-group">
-        <label>Confirme a senha</label>
-        <div class="password-input">
-            <input type="password" placeholder="Senha" id="confirmarSenha">
-            <i class="fas fa-eye-slash toggle-password" data-target="confirmarSenha"></i>
-        </div>
-      </div>
-      
-      <a href="cadastroUsuario.html"><button class="btn-submit">Salvar</button></a>
+<form id="form-reset" class="login-form">
+  <h2>Bem-vindo(a) ao SmartPlant</h2>
+  <p>Crie uma nova senha</p>
+  
+  <div class="input-group">
+    <label>Nova Senha</label>
+    <div class="password-inputs">
+      <input id="password" type="password" placeholder="Senha" required>
+
+      <ul class="password-rules">
+        <li class="regra-item">A senha não pode ser igual à antiga</li>
+        <li class="regra-item">Use 8 ou mais caracteres</li>
+      </ul>
     </div>
+  </div>
+  
+  <div class="input-group">
+    <label>Confirme a senha</label>
+    <div class="password-input">
+        <input type="password" placeholder="Confirme a senha" id="confirmarSenha" required>
+    </div>
+  </div>
 
-    <div class="divider"></div>
+  <p id="mensagem-erro" style="color:red;"></p>
 
-  </section>
-</main>
-
+  <button type="submit" class="btn-submit">Salvar</button>
+</form>
 
 <!-- FOOTER -->
 <footer class="footer">

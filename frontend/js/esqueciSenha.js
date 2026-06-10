@@ -104,5 +104,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+const form = document.getElementById("form-reset");
+const mensagemErro = document.getElementById("mensagem-erro");
+
+// 🔥 pega o token da URL
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+form.addEventListener("submit", async function(event){
+    event.preventDefault();
+
+    const senha = document.getElementById("password").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
+
+    // validação básica
+    if (senha !== confirmar) {
+        mensagemErro.innerText = "As senhas não coincidem!";
+        return;
+    }
+
+    if (senha.length < 8) {
+        mensagemErro.innerText = "A senha deve ter pelo menos 8 caracteres.";
+        return;
+    }
+
+    try {
+        const resposta = await fetch("http://localhost:8080/api/usuario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                token: token,
+                novaSenha: senha
+            })
+        });
+
+        if (resposta.ok) {
+            alert("Senha alterada com sucesso!");
+            window.location.href = "entrarUsuario.html";
+        } else {
+            mensagemErro.innerText = "Token inválido ou expirado.";
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        mensagemErro.innerText = "Erro ao conectar com o servidor.";
+    }
+});
 
 

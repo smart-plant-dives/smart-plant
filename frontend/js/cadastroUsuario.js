@@ -61,3 +61,40 @@ if (togglePassword && inputSenha) {
         });
     }
 });
+
+const formLogin = document.getElementById("form-login");
+const mensagemErro = document.getElementById("mensagem-erro");
+
+formLogin.addEventListener("submit", async function(event){
+    event.preventDefault();
+
+    const loginInput = document.getElementById("login").value;
+    const senhaInput = document.getElementById("senha").value;
+
+    try {
+        const resposta = await fetch("http://localhost:8080/api/usuario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            email: loginInput,
+            senha: senhaInput
+})
+        });
+
+        if (resposta.ok) {
+            const dadosUsuario = await resposta.json();
+
+            localStorage.setItem("usuarioSessao", JSON.stringify(dadosUsuario));
+
+            // 🔥 REDIRECIONA CORRETAMENTE
+            window.location.href = "addPlantas.html";
+
+        } else {
+            mensagemErro.innerText = "Usuário ou senha inválidos!";
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        mensagemErro.innerText = "Erro ao conectar com o servidor.";
+    }
+});
