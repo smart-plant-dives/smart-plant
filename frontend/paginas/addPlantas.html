@@ -178,24 +178,24 @@
         </div>
 
         <!-- FORM -->
-        <div class="post-form">
+       <div class="post-form-group">
+    <div class="custom-select" id="selectEspecie">
+        <div class="select-header">
+            <span class="label">Selecionar espécie</span>
+            <span class="seta">❯</span>
+        </div>
+        <div class="select-options hidden">
+            <input type="text" class="api-search" placeholder="Buscar espécie na API...">
+            <div class="scroll-results" id="resEspecies">
+                <p class="aviso">Digite 3 letras para buscar...</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="post-form">
+    <input type="text" id="nomePlanta" placeholder="Nome da planta">
 
-            <input type="text" id="nomePlanta" placeholder="Nome da planta">
-
-            <select id="especie">
-                <div class="custom-select" id="selectEspecie">
-                    <div class="select-header">
-                        <span class="label">Selecionar espécie</span>
-                        <span class="seta">❯</span>
-                    </div>
-                    <div class="select-options hidden">
-                        <input type="text" class="api-search" placeholder="Buscar espécie na API...">
-                        <div class="scroll-results" id="resEspecies">
-                            <p class="aviso">Digite 3 letras para buscar...</p>
-                        </div>
-                    </div>
-                </div>
-            </select>
+  
 
             <select id="categoria">
                 <option value="">Selecionar categoria</option>
@@ -234,7 +234,7 @@
 
         <div class="upload-area" id="uploadAreaEdit">
             <input type="file" id="inputFotoEdit" accept="image/*" hidden>
--i 
+
             <div id="uploadPlaceholderEdit">
                 <span class="nuvem-icon">☁︎<sup>+</sup></span>
                 <p>Adicionar nova<br>imagem da planta</p>
@@ -244,10 +244,20 @@
         <div class="post-form">
 
             <input type="text" id="editNome" placeholder="Nome da planta">
-
-            <select id="editEspecie">
-                <option value="">Selecione a espécie</option>
-            </select>
+<div class="custom-select-container">
+    <div class="custom-select" id="selectEspecie">
+        <div class="select-header">
+            <span class="label">Selecionar espécie</span>
+            <span class="seta">❯</span>
+        </div>
+        <div class="select-options hidden">
+            <input type="text" id="inputBuscaEspecie" class="api-search" placeholder="Buscar espécie na API...">
+            <div class="scroll-results" id="resEspecies">
+                <p class="aviso">Digite 3 letras para buscar...</p>
+            </div>
+        </div>
+    </div>
+</div>
 
             <select id="editCategoria">
                 <option value="">Selecione a categoria</option>
