@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. Redireciona para a página desejada após o "OK"
         window.location.href = "addPlantas.html";
     });
-<<<<<<< HEAD
+
 });
 
 const form = document.getElementById("form-reset");
@@ -128,10 +128,11 @@ form.addEventListener("submit", async function(event){
         return;
     }
 
-    if (senha.length < 8) {
+    if (senha.length (`?=.*\d)(?=.*[\W_]).{8,}`) ) {
         mensagemErro.innerText = "A senha deve ter pelo menos 8 caracteres.";
         return;
     }
+
 
     try {
         const resposta = await fetch("http://localhost:8080/api/usuario", {
@@ -157,6 +158,73 @@ form.addEventListener("submit", async function(event){
 });
 
 
-=======
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ================= SELECIONAR TODOS OS OLHOS DA TELA =================
+    const olhosToggle = document.querySelectorAll('.toggle-password');
+
+    olhosToggle.forEach(olho => {
+        olho.addEventListener('click', function () {
+            const inputSenha = this.parentElement.querySelector('input');
+            
+            if (inputSenha) {
+                if (inputSenha.getAttribute('type') === 'password') {
+                    inputSenha.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                } else {
+                    inputSenha.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                }
+            }
+        });
+    });
+
+    // ================= PROCESSAMENTO E VALIDAÇÃO DO FORMULÁRIO =================
+    const formReset = document.getElementById("form-reset");
+    const mensagemErro = document.getElementById("mensagem-erro");
+
+    if (formReset) {
+        formReset.addEventListener("submit", function(event) {
+            event.preventDefault(); // Impede o envio padrão e o recarregamento da página
+
+            if (mensagemErro) mensagemErro.innerText = ""; // Limpa erros antigos
+
+            const senha = document.getElementById("password").value;
+            const confirmarSenha = document.getElementById("confirmarSenha").value;
+
+            // 1. VALIDAÇÃO: Pelo menos 8 caracteres
+            if (senha.length < 8) {
+                if (mensagemErro) {
+                    mensagemErro.innerText = "A senha deve conter 8 ou mais caracteres, incluindo números ou símbolos!";
+                } else {
+                    alert("A senha deve conter 8 ou mais caracteres, incluindo números ou símbolos!");
+                }
+                return; // Interrompe a execução do código aqui
+            }
+
+            // 2. VALIDAÇÃO: Igualdade das senhas
+            if (senha !== confirmarSenha) {
+                if (mensagemErro) {
+                    mensagemErro.innerText = "As senhas não coincidem!";
+                } else {
+                    alert("As senhas não coincidem!");
+                }
+                return; // Interrompe a execução
+            }
+
+            // 3. CONFIRMAÇÃO VISUAL (O Alerta solicitado)
+            const desejaSalvar = confirm("Deseja confirmar a alteração da sua nova senha?");
+            
+            if (desejaSalvar) {
+                alert("Senha alterada com sucesso!");
+                // Redireciona para a página de login
+                window.location.href = "entrarUsuario.html";
+            }
+        });
+    }
 });
->>>>>>> da2bdfa0e3c3edf1a6994eafd4d9d481d00299da
+

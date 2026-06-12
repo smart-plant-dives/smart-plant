@@ -76,6 +76,10 @@ body {
     background: transparent;
 } 
 
+.close-global-btn:hover {
+    color: #cc0000;
+}
+
 * HEADER */ 
 .header { 
     display: flex; 
@@ -112,18 +116,6 @@ body {
     display: flex; 
     gap: 15px; 
 } 
-
-
-.logo-img {
-  /* Define uma altura máxima ideal para headers padrão */
-  height: 60px; 
-  /* Mantém a proporção da largura automaticamente */
-  width: auto;
-  /* Ajusta a margem para não encostar nas bordas */
-  padding: 10px 0;
-  /* Suaviza a renderização */
-  object-fit: contain;
-}
 
 /* BOTÃO X */
 .close-global-btn {
