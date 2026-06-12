@@ -5,28 +5,25 @@ body {
   margin: 0;
 }
 
-/* Header Alinhado */
-.logo-img {
-  /* Define uma altura máxima ideal para headers padrão */
-  height: 60px; 
-  /* Mantém a proporção da largura automaticamente */
-  width: auto;
-  /* Ajusta a margem para não encostar nas bordas */
-  padding: 10px 0;
-  /* Suaviza a renderização */
-  object-fit: contain;
-}
-
 /* Ajuste no container do Header (opcional, para alinhar tudo) */
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  height: 80px; /* Define uma altura fixa para o header todo */
+  height: 60px; /* Define uma altura fixa para o header todo */
   border-bottom: 1px solid #e0e0e0;
   border-bottom: 2px solid #2d5a27;
 }
+
+/* Header Alinhado */
+.logo-img { 
+    display: flex;
+    align-items: center; 
+    padding: 1px 3px;
+    mix-blend-mode: multiply;
+    background: transparent;
+} 
 
 .nav-auth {
   display: flex;
@@ -85,11 +82,6 @@ body {
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.logo-img {
-    height: 45px; /* Tamanho reduzido para o header */
-    width: auto;
-    object-fit: contain;
-}
 
 /* 2. AJUSTE DA CAIXA DE LOGIN (CARD) */
 .login-container {
@@ -183,37 +175,23 @@ body {
 }
 
 /*Olho*/
-.password-input {
+/* ================= REGRAS DO OLHO CORRIGIDAS ================= */
+
+.password-inputs, .password-input {
     position: relative;
+    width: 300px; /* Força o container do olho a ter o mesmo tamanho do input cinza */
+    display: block;
 }
 
-.password-input i {
+.password-inputs i, .password-input i {
     position: absolute;
     top: 50%;
-    right: 15px;
+    right: 15px; /* Mantém o recuo interno na borda direita do campo cinza */
     transform: translateY(-50%);
     color: #555;
-    cursor: pointer; /* Faz o mouse virar uma mãozinha indicando que é clicável */
-    font-size: 18px;
-}
-
-.forgot-password {
-    color: #1a472a;
-    font-size: 14px;
-    text-decoration: none;
-    text-align: left;
-    font-weight: bold;
-}
-
-.btn-submit {
-    padding: 12px;
-    background-color: #1a472a;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
-    font-weight: bold;
+    font-size: 18px;
+    z-index: 5;
 }
 
 /*FIM DO OLHO*/

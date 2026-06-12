@@ -50,6 +50,59 @@ document.addEventListener('DOMContentLoaded', () => {
                alert('Por favor, insira um endereço de email válido.');
                return;
            }
+            // Se passou por todas as validações, simula o sucesso do login
+            console.log('Dados validados. Enviando para o servidor...', { email: email });
+            alert('Login efetuado com sucesso! (Simulação)');
+            
+            // No futuro, aqui entraria o redirecionamento real ou a chamada para o seu backend:
+            // window.location.href = 'painelUsuario.html';
+        });
+    }
+});
+
+const btn = document.getElementById("btnCadastrar");
+
+btn.addEventListener("click", async () => {
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    try {
+        const resposta = await fetch("http://localhost:8080/usuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                senha: senha
+            })
+        });
+
+        if (resposta.ok) {
+            const usuario = await resposta.json();
+
+            // 🔥 salva sessão (igual login)
+            localStorage.setItem("usuarioSessao", JSON.stringify(usuario));
+
+            // 🔥 entra direto no sistema
+            window.location.href = "addPlantas.html";
+
+        } else {
+            alert("Erro ao cadastrar usuário.");
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro na conexão com o servidor.");
+    }
+
+});
 
            // Se passou por todas as validações, simula o sucesso do login
            console.log('Dados validados. Enviando para o servidor...', { email: email });
@@ -58,7 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
            alert('Login efetuado com sucesso!');
            
            // 2. Redirecionamento para a página desejada após clicar em OK
+<<<<<<< HEAD
            window.location.href = 'addPlantas.html';
        });
    }
+ 
 });
+=======
+           window.location.href = 'addPlantas.html';
+>>>>>>> 817c79401d857afde8c3b98210692b6092b87d26
