@@ -858,3 +858,31 @@ function editarPlanta(id) {
 // 7. INICIAR
 // ==========================================
 listarPlantas();
+
+//
+//  8. API DAS ESPECIES
+
+async function dispararBuscaAPI(termo, categoriaAlvo) {
+        const labelEspecie = document.querySelector('#selectEspecie .label');
+        const labelCategoria = document.querySelector('#selectCategoria .label');
+
+        labelEspecie.innerText = "Identificando...";
+
+        try {
+            const res = await fetch(`https://api.gbif.org/v1/species/suggest?q=${termo}&datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c`);
+            const data = await res.json();
+            
+            if (data.length > 0) {
+                labelEspecie.innerText = data[0].canonicalName;
+                document.getElementById('selectEspecie').classList.add('selected');
+            }
+
+            labelCategoria.innerText = categoriaAlvo;
+            document.getElementById('selectCategoria').classList.add('selected');
+            marcarOpcaoAtiva('resCategorias', categoriaAlvo);
+
+        } catch (err) {
+            console.error("Erro GBIF:", err);
+            labelEspecie.innerText = "Erro ao buscar";
+        }
+    }
