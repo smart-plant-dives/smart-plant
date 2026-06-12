@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Plant - Cadastro</title>
+    <link rel="stylesheet" href="/css/criarConta.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <a href="/index.html">
+        <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant"></a>
+        <button class="btn homepage" > </button>
+    </div>
+
+   <div class="buttons">
+        <a href="/paginas/galeriaPlantas.html">
+            <button class="btn addPlantas">Galeria</button>
+        </a>
+    </div>
+</header>
+
+
+<main>
+
+<section class="card">
+
+    <h1>Faça sua conta!</h1>
+
+    <div class="form-area">
+
+        <div class="foto-area">
+
+            <div class="foto-container">
+                <img id="preview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+            </div>
+
+            <p>
+                JPG, PNG ou WEBP<br>
+                Máx. 2MB.
+            </p>
+
+            <label class="upload">
+                Colocar Foto
+                <input type="file" id="foto" accept="image/*">
+            </label>
+
+        </div>
+
+
+
+        <form id="form">
+
+            <label>Nome</label>
+            <input 
+            type="text" 
+            id="nome"
+            placeholder="Username">
+
+
+            <label>Instagram</label>
+            <input 
+            type="text"
+            id="instagram"
+            placeholder="Url da sua conta do instagram">
+
+
+            <label>Facebook</label>
+            <input 
+            type="text"
+            id="facebook"
+            placeholder="Url da sua conta do facebook">
+
+
+            <label>Sobre você:</label>
+
+            <textarea 
+            id="sobre"
+            placeholder="Fale um pouco sobre você..."></textarea>
+
+
+            <div class="buttons">
+
+                <button 
+                type="button" 
+                class="cancelar">
+                    Cancelar
+                </button>
+
+
+                <button 
+                type="submit" 
+                class="salvar">
+                    Salvar Conta
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="contact">
+        <img src="https://thumbnail.imgbin.com/11/3/18/telephone-call-green-phone-icon-with-signal-waves-RrwNw8zN_t.jpg" height="20">
+        <p>Contate-nos: (15) 92809-2649</p>
+    </div>
+
+    <div class="copyright">
+        <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" height="20">
+        <p>© Todos os Direitos Reservados</p>
+    </div>
+
+    <div class="social">
+        <img src="https://cdn.imgbin.com/1/15/4/imgbin-logo-whatsapp-computer-icons-viber-call-icon-rUC3mkCwdZBU8fCG71krgSdfd.jpg" height="20">
+        <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
+        <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
+    </div>
+
+</footer>
+
+
+<script src="/js/criarConta.js"></script>
+
+</body>
+</html>
