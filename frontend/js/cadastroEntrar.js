@@ -61,4 +61,5 @@ document.addEventListener('DOMContentLoaded', () => {
            window.location.href = 'addPlantas.html';
        });
    }
+ 
 });
