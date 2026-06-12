@@ -1,0 +1,863 @@
+* { 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box; 
+    font-family:"Segoe UI", Arial, sans-serif;
+}
+
+
+html,body{
+    height:100%;
+}
+
+
+body{
+
+    background:#fff;
+
+    color:#222;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:100vh;
+
+}
+
+
+
+/* ================= HEADER ================= */
+
+
+header{
+
+    height:62px;
+
+    background:white;
+
+    border-bottom:3px solid #2f6f2f;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:5px 50px;
+
+}
+
+
+
+.logo img{
+    width:80px;
+    mix-blend-mode:multiply;
+}
+
+ 
+
+.header .logo img { 
+
+    width: 80px; 
+
+} 
+
+.logo img{
+
+    width:80px;
+
+    height:auto;
+
+}
+
+
+
+.btn{
+
+    background:none;
+
+    border:none;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+
+.btn:hover{
+
+    color:#2f6f2f;
+
+}
+
+
+
+/* ================= MAIN ================= */
+
+
+main{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+
+/* ================= CARD ================= */
+
+* { 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box; 
+    font-family:"Segoe UI", Arial, sans-serif;
+}
+
+
+html, body{
+    height:100%;
+}
+
+
+body{
+
+    background:#fff;
+
+    color:#222;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:100vh;
+
+}
+
+
+
+/* ================= HEADER ================= */
+
+
+header{
+
+    height:85px;
+
+    background:#fff;
+
+    border-bottom:3px solid #2f6f2f;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 75px;
+
+}
+
+
+.logo img{
+
+    width:95px;
+
+    height:auto;
+
+}
+
+
+
+.btn{
+
+    background:none;
+
+    border:0;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+
+
+.btn:hover{
+
+    color:#2f6f2f;
+
+}
+
+
+
+/* ================= CONTEÚDO ================= */
+
+
+main{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+
+/* ================= CARD ================= */
+
+
+.card{
+
+    width:590px;
+
+    min-height:470px;
+
+    background:white;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    padding:35px;
+
+    box-shadow:0 5px 15px #0002;
+
+}
+
+
+
+/* titulo */
+
+.card h1{
+
+    font-size:24px;
+
+    color:#175d25;
+
+    border-bottom:1px solid #ddd;
+
+    padding-bottom:15px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+/* ================= FORM AREA ================= */
+
+
+.form-area{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+
+
+/* foto */
+
+
+.foto-area{
+
+    width:150px;
+
+    text-align:center;
+
+    border-right:1px solid #ddd;
+
+    padding-right:25px;
+
+}
+
+
+
+.foto-container{
+
+    position:relative;
+
+}
+
+
+
+.foto-container img{
+
+    width:115px;
+
+    height:115px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+
+.camera{
+
+    position:absolute;
+
+    bottom:3px;
+
+    right:12px;
+
+    background:#175d25;
+
+    color:white;
+
+    width:30px;
+
+    height:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    font-size:15px;
+
+}
+
+
+
+.foto-area p{
+
+    font-size:12px;
+
+    color:#777;
+
+    line-height:20px;
+
+    margin:15px 0;
+
+}
+
+
+
+.upload{
+
+    display:inline-block;
+
+    border:1px solid #398045;
+
+    color:#175d25;
+
+    padding:9px 18px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+}
+
+
+
+.upload input{
+
+    display:none;
+
+}
+
+
+
+/* ================= CAMPOS ================= */
+
+
+form{
+
+    flex:1;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:5px;
+
+    margin-top:12px;
+
+}
+
+
+
+input, textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:5px;
+
+    font-size:14px;
+
+}
+
+
+
+input::placeholder,
+
+textarea::placeholder{
+
+    color:#888;
+
+}
+
+
+
+textarea{
+
+    height:80px;
+
+    resize:none;
+
+}
+
+
+
+/* ================= BOTÕES ================= */
+
+
+form .buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:22px;
+
+}
+
+
+
+.cancelar{
+
+    background:white;
+
+    border:1px solid #ccc;
+
+    padding:10px 22px;
+
+    border-radius:6px;
+
+    font-size:13px;
+
+}
+
+
+
+.salvar{
+
+    background:#175d25;
+
+    color:white;
+
+    border:0;
+
+    padding:10px 25px;
+
+    border-radius:6px;
+
+    font-size:13px;
+
+}
+
+
+
+/* ================= FOOTER ================= */
+
+
+.footer{
+
+    height:58px;
+
+    background:#073815;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    font-size:12px;
+
+}
+
+
+
+.footer div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+.footer img{
+
+    width:20px;
+
+    height:20px;
+
+    object-fit:contain;
+
+}
+
+
+
+/* ================= RESPONSIVO ================= */
+
+
+@media(max-width:700px){
+
+
+.card{
+
+    width:90%;
+
+}
+
+
+.form-area{
+
+    flex-direction:column;
+
+}
+
+
+.foto-area{
+
+    width:100%;
+
+    border-right:none;
+
+    border-bottom:1px solid #ddd;
+
+    padding-bottom:20px;
+
+}
+
+
+.footer{
+
+    flex-direction:column;
+
+    height:auto;
+
+    padding:20px;
+
+    gap:15px;
+
+}
+
+
+}
+
+
+/* ================= FORM ================= */
+
+
+.form-area{
+
+    display:flex;
+
+    gap:20px;
+
+}
+
+
+
+.foto-area{
+
+    width:115px;
+
+    text-align:center;
+
+    border-right:1px solid #ddd;
+
+    padding-right:15px;
+
+}
+
+
+
+.foto-container{
+
+    position:relative;
+
+}
+
+
+
+.foto-container img{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+
+.camera{
+
+    position:absolute;
+
+    bottom:0;
+
+    right:10px;
+
+    background:#175d25;
+
+    color:white;
+
+    border-radius:50%;
+
+    padding:4px;
+
+    font-size:12px;
+
+}
+
+
+
+.foto-area p{
+
+    font-size:10px;
+
+    color:#777;
+
+    margin:12px 0;
+
+}
+
+
+
+.upload{
+
+    border:1px solid #398045;
+
+    color:#175d25;
+
+    padding:6px 10px;
+
+    border-radius:5px;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+}
+
+
+
+.upload input{
+
+    display:none;
+
+}
+
+
+
+
+
+form{
+
+    flex:1;
+
+}
+
+
+
+label{
+
+    font-size:11px;
+
+    display:block;
+
+    margin-top:9px;
+
+}
+
+
+
+
+input,textarea{
+
+
+    width:100%;
+
+    border:1px solid #ccc;
+
+    border-radius:3px;
+
+    padding:7px;
+
+    margin-top:4px;
+
+    font-size:14px;
+
+}
+
+
+
+textarea{
+
+    height:55px;
+
+    resize:none;
+
+}
+
+
+
+/* BOTÕES DO FORM */
+
+
+form .buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    margin-top:14px;
+
+}
+
+
+
+button{
+
+    cursor:pointer;
+
+}
+
+
+
+.cancelar{
+
+    background:white;
+
+    border:1px solid #ccc;
+
+    padding:7px 15px;
+
+    border-radius:5px;
+
+    font-size:11px;
+
+}
+
+
+
+.salvar{
+
+    background:#175d25;
+
+    color:white;
+
+    border:0;
+
+    padding:7px 18px;
+
+    border-radius:5px;
+
+    font-size:11px;
+
+}
+
+
+
+/* ================= FOOTER ================= */
+
+ 
+
+.footer { 
+
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
+
+    color: white; 
+
+    display: flex; 
+
+    justify-content: space-between; 
+
+    align-items: center; 
+
+    padding: 15px 40px; 
+
+    margin-top: auto; 
+
+} 
+
+ 
+
+.footer div { 
+
+    display: flex; 
+
+    align-items: center; 
+
+    gap: 10px; 
+
+} 
+
+ 
+
+.footer p { 
+
+    font-size: 13px; 
+
+} 
+
+ 
+
+.contact img, 
+
+.social img { 
+
+    background: transparent; 
+
+    mix-blend-mode: multiply; 
+
+} 
+  
