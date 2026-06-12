@@ -111,12 +111,5 @@ btn.addEventListener("click", async () => {
            alert('Login efetuado com sucesso!');
            
            // 2. Redirecionamento para a página desejada após clicar em OK
-<<<<<<< HEAD
+
            window.location.href = 'addPlantas.html';
-       });
-   }
- 
-});
-=======
-           window.location.href = 'addPlantas.html';
->>>>>>> 817c79401d857afde8c3b98210692b6092b87d26
