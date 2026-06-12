@@ -67,8 +67,62 @@ body {
   background: #f2f2f2;
 }
 
+/* Opcional: ajustar posição */ 
+.logo { 
+    display: flex;
+    align-items: center; 
+    padding: 1px 3px;
+    mix-blend-mode: multiply;
+    background: transparent;
+} 
+
+* HEADER */ 
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px 60px; 
+    background: #fff; 
+} 
+
+.main-header {
+  height: 65px;
+}
+.header .logo img{ 
+    width: 60px;   
+    height: 60px; 
+} 
+
+.contact img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+    
+} 
+
+.social img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+} 
+
+.logo span { 
+    color: #3d7c3d; 
+} 
+
+.buttons { 
+    display: flex; 
+    gap: 15px; 
+} 
+
+
 .logo-img {
-  height: 55px;
+  /* Define uma altura máxima ideal para headers padrão */
+  height: 60px; 
+  /* Mantém a proporção da largura automaticamente */
+  width: auto;
+  /* Ajusta a margem para não encostar nas bordas */
+  padding: 10px 0;
+  /* Suaviza a renderização */
+  object-fit: contain;
 }
 
 /* BOTÃO X */
@@ -269,14 +323,6 @@ main {
 
 } 
 
- /* Header Alinhado */
-.logo-img {
-  /* Define uma altura máxima ideal para headers padrão */
-  height: 60px; 
-  /* Mantém a proporção da largura automaticamente */
-  width: auto;
-  /* Ajusta a margem para não encostar nas bordas */
-  padding: 10px 0;
-  /* Suaviza a renderização */
-  object-fit: contain;
-}
+
+
+

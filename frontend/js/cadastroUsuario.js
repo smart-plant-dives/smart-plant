@@ -50,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
                alert('Por favor, insira um endereço de email válido.');
                return;
            }
-
-<<<<<<< HEAD
             // Se passou por todas as validações, simula o sucesso do login
             console.log('Dados validados. Enviando para o servidor...', { email: email });
             alert('Login efetuado com sucesso! (Simulação)');
@@ -97,7 +95,6 @@ formLogin.addEventListener("submit", async function(event){
         console.error(erro);
         mensagemErro.innerText = "Erro ao conectar com o servidor.";
     }
-=======
            // Se passou por todas as validações, executa o login bem-sucedido
            console.log('Dados validados. Enviando para o servidor...', { email: email });
            
@@ -107,6 +104,3 @@ formLogin.addEventListener("submit", async function(event){
            // 2. Redireciona o usuário para a nova página assim que ele clicar em "OK"
            window.location.href = 'addPlantas.html';
        });
-   }
->>>>>>> da2bdfa0e3c3edf1a6994eafd4d9d481d00299da
-});
