@@ -50,7 +50,53 @@ document.addEventListener('DOMContentLoaded', () => {
                alert('Por favor, insira um endereço de email válido.');
                return;
            }
+            // Se passou por todas as validações, simula o sucesso do login
+            console.log('Dados validados. Enviando para o servidor...', { email: email });
+            alert('Login efetuado com sucesso!');
+            // Se clicou em OK, redireciona
+                        window.location.href = "addPlantas.html";
+            
+            // No futuro, aqui entraria o redirecionamento real ou a chamada para o seu backend:
+            // window.location.href = 'painelUsuario.html';
+        });
+    }
+});
 
+const formLogin = document.getElementById("form-login");
+const mensagemErro = document.getElementById("mensagem-erro");
+
+formLogin.addEventListener("submit", async function(event){
+    event.preventDefault();
+
+    const loginInput = document.getElementById("login").value;
+    const senhaInput = document.getElementById("senha").value;
+
+    try {
+        const resposta = await fetch("http://localhost:8080/api/usuario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            email: loginInput,
+            senha: senhaInput
+})
+        });
+
+        if (resposta.ok) {
+            const dadosUsuario = await resposta.json();
+
+            localStorage.setItem("usuarioSessao", JSON.stringify(dadosUsuario));
+
+            // 🔥 REDIRECIONA CORRETAMENTE
+            window.location.href = "addPlantas.html";
+
+        } else {
+            mensagemErro.innerText = "Usuário ou senha inválidos!";
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        mensagemErro.innerText = "Erro ao conectar com o servidor.";
+    }
            // Se passou por todas as validações, executa o login bem-sucedido
            console.log('Dados validados. Enviando para o servidor...', { email: email });
            
@@ -60,5 +106,3 @@ document.addEventListener('DOMContentLoaded', () => {
            // 2. Redireciona o usuário para a nova página assim que ele clicar em "OK"
            window.location.href = 'addPlantas.html';
        });
-   }
-});

@@ -16,8 +16,8 @@
 <header class="header">
 
     <div class="logo">
-        <a href="index.html"></a>
-        <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant">
+        <a href="/index.html">
+        <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant"></a>
         <button class="btn homepage" > </button>
     </div>
 
@@ -183,7 +183,18 @@
             <input type="text" id="nomePlanta" placeholder="Nome da planta">
 
             <select id="especie">
-                <option value="">Selecionar espécie</option>
+                <div class="custom-select" id="selectEspecie">
+                    <div class="select-header">
+                        <span class="label">Selecionar espécie</span>
+                        <span class="seta">❯</span>
+                    </div>
+                    <div class="select-options hidden">
+                        <input type="text" class="api-search" placeholder="Buscar espécie na API...">
+                        <div class="scroll-results" id="resEspecies">
+                            <p class="aviso">Digite 3 letras para buscar...</p>
+                        </div>
+                    </div>
+                </div>
             </select>
 
             <select id="categoria">
