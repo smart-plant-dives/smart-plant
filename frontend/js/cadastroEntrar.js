@@ -50,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
                alert('Por favor, insira um endereço de email válido.');
                return;
            }
-
-<<<<<<< HEAD
             // Se passou por todas as validações, simula o sucesso do login
             console.log('Dados validados. Enviando para o servidor...', { email: email });
             alert('Login efetuado com sucesso! (Simulação)');
@@ -105,7 +103,7 @@ btn.addEventListener("click", async () => {
     }
 
 });
-=======
+
            // Se passou por todas as validações, simula o sucesso do login
            console.log('Dados validados. Enviando para o servidor...', { email: email });
            
@@ -114,7 +112,3 @@ btn.addEventListener("click", async () => {
            
            // 2. Redirecionamento para a página desejada após clicar em OK
            window.location.href = 'addPlantas.html';
-       });
-   }
-});
->>>>>>> da2bdfa0e3c3edf1a6994eafd4d9d481d00299da
