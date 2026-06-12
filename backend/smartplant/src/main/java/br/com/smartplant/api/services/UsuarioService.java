@@ -57,6 +57,7 @@ public class UsuarioService {
 
         usuarioAntigo.setLogin(usuarioNovo.getLogin());
         usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
+        usuarioAntigo.setEmail(usuarioNovo.getEmail());
         usuarioAntigo.setNome(usuarioNovo.getNome());
 
         if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
