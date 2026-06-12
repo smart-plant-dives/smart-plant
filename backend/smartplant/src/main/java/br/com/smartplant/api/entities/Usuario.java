@@ -1,5 +1,9 @@
 package br.com.smartplant.api.entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.smartplant.api.enuns.TipoUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,6 +44,10 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_usuario", nullable = false)
     private TipoUsuario tipoUsuario;
+    
+    @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference
+    private List<Planta> plantas;
     
     public Usuario() {
         
@@ -98,6 +107,14 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Planta> getPlantas() {
+	    return plantas;
+	}
+
+	public void setPlantas(List<Planta> plantas) {
+	    this.plantas = plantas;
 	}
     
     

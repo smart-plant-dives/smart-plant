@@ -55,6 +55,10 @@ public class PlantaService {
 				plantaAntiga.setNomeCategoria(plantaNova.getNomeCategoria());
 			}
 			
+			if(plantaNova.getUrl() != null) {
+				plantaAntiga.setUrl(plantaNova.getUrl());
+			}
+			
 			return repository.save(plantaAntiga);
 			
 			
