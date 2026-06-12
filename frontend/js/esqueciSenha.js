@@ -99,9 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // --- ALTERAÇÃO AQUI ---
+        // 1. Mostra o alerta de sucesso para o usuário
         alert("Sucesso! Sua senha foi alterada.");
-        // Seu código para enviar os dados para a API (ex: fetch) entra aqui
+        
+        // 2. Redireciona para a página desejada após o "OK"
+        window.location.href = "addPlantas.html";
     });
+<<<<<<< HEAD
 });
 
 const form = document.getElementById("form-reset");
@@ -152,3 +157,6 @@ form.addEventListener("submit", async function(event){
 });
 
 
+=======
+});
+>>>>>>> da2bdfa0e3c3edf1a6994eafd4d9d481d00299da

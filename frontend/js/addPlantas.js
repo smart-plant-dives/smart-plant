@@ -1,6 +1,8 @@
 // ================= MODAL PERFIL ================= 
 
- 
+const abrirModal = document.getElementById("abrirModal");
+const fecharModal = document.getElementById("fecharModal");
+const modal = document.getElementById("modalPostagem");
 
 const btnAbrirPerfil = document.querySelector(".edit-profile"); 
 
@@ -137,10 +139,6 @@ inputFotoPerfil.addEventListener("change", () => {
 // ================= MODAL ADICIONAR ================= 
 
  
-
-const abrirModal = document.getElementById("abrirModal"); 
-
-const fecharModal = document.getElementById("fecharModal"); 
 
  
 
@@ -486,9 +484,7 @@ if (visibilidade.value !== "privado") {
 
  
 
-cadeado.textContent = "🔒"; 
 
-novoCard.appendChild(cadeado); 
 
  
 
@@ -797,7 +793,6 @@ async function listarPlantas() {
 // ==========================================
 // 3. ABRIR / FECHAR MODAL
 // ==========================================
-const modal = document.getElementById("modalPostagem");
 
 document.getElementById("abrirModal").addEventListener("click", () => {
     modal.classList.remove("hidden");
