@@ -49,5 +49,7 @@ insert ignore into tb_planta (id_planta, especie, nome_planta, url, nome_categor
 
 insert ignore into tb_planta (id_planta, especie, nome_planta, url, nome_categoria, id_usuario) values
 (8, "Leucanthemum vulgare ","Margaridas","https://http2.mlstatic.com/D_NQ_NP_890197-MLU78675800175_082024-O.webp", 1,5);
+
+	
 	
 
