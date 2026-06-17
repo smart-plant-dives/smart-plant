@@ -534,7 +534,7 @@ btnSalvar.addEventListener("click", () => {
 
     novoCard.innerHTML += ` 
 
-        <p class="user">@Melinda.22</p> 
+        <p class="user"></p> 
 
         <img src="${imagemBase64 || 'https://via.placeholder.com/300'}"> 
 
@@ -858,3 +858,98 @@ function editarPlanta(id) {
 // 7. INICIAR
 // ==========================================
 listarPlantas();
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const perfil = JSON.parse(localStorage.getItem("perfil"));
+
+    if (perfil) {
+
+        document.getElementById("nomeUsuario").textContent = perfil.nome;
+
+        document.getElementById("username").textContent = "@" + perfil.nome;
+
+        if (perfil.sobre) {
+            document.getElementById("bioUsuario").textContent = perfil.sobre;
+        }
+
+        if (perfil.foto) {
+            document.getElementById("fotoPerfil").src = perfil.foto;
+        }
+    }
+
+
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const perfil = JSON.parse(localStorage.getItem("perfil"));
+
+    if (perfil) {
+        document.getElementById("nomeUsuario").textContent = perfil.nome;
+        document.getElementById("username").textContent = perfil.username;
+        document.getElementById("instagram").textContent = perfil.instagram;
+        document.getElementById("facebook").textContent = perfil.facebook;
+        document.getElementById("bioUsuario").textContent = perfil.sobre;
+        document.getElementById("fotoPerfil").imagem = perfil.foto;
+    }
+
+});
+
+document.getElementById("btnAddPlanta").addEventListener("click", () => {
+    document.getElementById("modalPostagem").classList.remove("hidden");
+});
+
+
+//  ======= CONECÇÃO DO  BACK COM O FRONT ===============//
+
+// URL do seu servidor Spring Boot
+const API_URL = "http://localhost:8080/api/plantas";
+
+function buscarPlantasDoServidor() {
+    fetch(API_URL) // Por padrão, o fetch faz uma requisição GET
+        .then(response => response.json()) // Converte a resposta do Java para JSON
+        .then(plantas => {
+            const containerCards = document.getElementById("cards");
+            
+            // Limpa o container antes de colocar os dados do banco (mantendo o botão de adicionar)
+            // Aqui você faria um loop (ex: plantas.forEach) para criar o HTML de cada card
+            console.log("Plantas vindas do Spring Boot:", plantas);
+        })
+        .catch(error => console.error("Erro ao conectar com o Spring Boot:", error));
+}
+
+// Executa a busca assim que a página carregar
+window.onload = buscarPlantasDoServidor;
+
+const botaoSalvar = document.querySelector('.btn-save');
+
+botaoSalvar.addEventListener('click', () => {
+    // 1. Captura o que o usuário digitou no formulário do modal
+    const dadosPlanta = {
+        nome: document.getElementById('nomePlanta').value,
+        categoria: document.getElementById('categoria').value,
+        descricao: document.getElementById('descricao').value
+        // se a sua entidade no Java esperar mais atributos, adicione-os aqui
+    };
+
+    // 2. Faz o "Send" do Postman, mas via código:
+    fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json" // Avisa o Spring Boot que estamos enviando um JSON (igual no Postman)
+        },
+        body: JSON.stringify(dadosPlanta) // Transforma o objeto do JS em texto JSON
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error("Erro ao salvar no servidor.");
+    })
+    .then(plantaSalva => {
+        alert("Planta cadastrada com sucesso no banco de dados!");
+        // Aqui você pode fechar o modal e atualizar a tela
+    })
+    .catch(error => console.error("Erro:", error));
+});
