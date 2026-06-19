@@ -34,6 +34,20 @@ public class PlantaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
 	}
 	
+	@PostMapping("/usuario/{usuarioId}")
+	public ResponseEntity<Planta> salvarParaUsuario(@PathVariable Long usuarioId, @Valid @RequestBody Planta planta) {
+		Planta plantaSalva = service.salvarParaUsuario(usuarioId, planta);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(plantaSalva);
+	}
+
+	@GetMapping("/usuario/{usuarioId}")
+	public ResponseEntity<List<Planta>> listarPorUsuario(@PathVariable Long usuarioId) {
+		List<Planta> plantas = service.listarPorUsuario(usuarioId);
+
+		return ResponseEntity.ok(plantas);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Planta>> listarTodos() {
 		
