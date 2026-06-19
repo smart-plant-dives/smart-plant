@@ -1,30 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ===========================================================
+// Tela "Criar Conta" - Etapa 1 (cadastroEntrar.html)
+// Coleta email + senha e guarda temporariamente em sessionStorage.
+// O cadastro real no backend só acontece na etapa 2 (criarConta.html),
+// quando também temos o nome e o usuário (login).
+// ===========================================================
 
-   // --- LÓGICA DE MOSTRAR E OCULTAR SENHA (ÍCONE DO OLHO) ---
+const togglePassword = document.getElementById("togglePassword");
+const inputEmail = document.getElementById("email");
+const inputSenha = document.getElementById("senha");
+const btnCadastrar = document.getElementById("btnCadastrar");
 
-   // 1. Encontra o ícone do olho e o campo de senha no HTML
-   const togglePassword = document.querySelector('#togglePassword');
-   const inputSenha = document.querySelector('#senha');
+// Mostrar/ocultar senha
+if (togglePassword && inputSenha) {
+    togglePassword.addEventListener("click", () => {
+        const tipoAtual = inputSenha.getAttribute("type");
+        inputSenha.setAttribute("type", tipoAtual === "password" ? "text" : "password");
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+}
 
-   // 2. Verifica se eles existem na página para não dar erro
-   if (togglePassword && inputSenha) {
-       
-       // 3. Adiciona um "ouvinte" que espera o clique no ícone do olho
-       togglePassword.addEventListener('click', function () {
-           
-           // 4. Verifica qual é o tipo atual do campo (se é 'password' ou 'text')
-           const tipoAtual = inputSenha.getAttribute('type');
-           
-           // 5. Se for 'password', muda para 'text' (mostra). Se for 'text', muda para 'password' (esconde).
-           const novoTipo = tipoAtual === 'password' ? 'text' : 'password';
-           inputSenha.setAttribute('type', novoTipo);
-           
-           // 6. Troca o desenho do ícone (tira o traço do olho ou coloca o traço)
-           this.classList.toggle('fa-eye');
-           this.classList.toggle('fa-eye-slash');
-       });
-   }
+btnCadastrar.addEventListener("click", (event) => {
+    event.preventDefault();
 
+<<<<<<< HEAD
+    const email = inputEmail.value.trim();
+    const senha = inputSenha.value.trim();
+=======
    // --- 3. LÓGICA DO BOTÃO "ENTRAR" (VALIDAÇÃO DO FORMULÁRIO) ---
    const btnEntrar = document.querySelector('.btn-submit');
    const inputEmail = document.querySelector('input[type="email"]');
@@ -67,12 +69,26 @@ btn.addEventListener("click", (e) => {
 
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("senha").value.trim();
+>>>>>>> e62cfca26be52e891489ebc562bde9192c8f2fbc
 
     if (!email || !senha) {
-        alert("Preencha todos os campos!");
+        alert("Preencha o email e a senha.");
         return;
     }
 
+<<<<<<< HEAD
+    const formatoEmailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formatoEmailValido.test(email)) {
+        alert("Insira um endereço de email válido.");
+        return;
+    }
+
+    // Guarda os dados desta etapa para serem usados na próxima (criarConta.html)
+    sessionStorage.setItem("cadastroEmailSenha", JSON.stringify({ email, senha }));
+
+    window.location.href = "criarConta.html";
+});
+=======
     const usuario = {
         email: email,
         senha: senha
@@ -159,3 +175,4 @@ togglePassword.addEventListener("click", () => {
     togglePassword.classList.toggle("fa-eye");
     togglePassword.classList.toggle("fa-eye-slash");
 });
+>>>>>>> e62cfca26be52e891489ebc562bde9192c8f2fbc
