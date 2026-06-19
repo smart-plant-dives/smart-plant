@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
            }
             // Se passou por todas as validações, simula o sucesso do login
             console.log('Dados validados. Enviando para o servidor...', { email: email });
-            alert('Login efetuado com sucesso! (Simulação)');
+            alert('Login efetuado com sucesso!');
             
             // No futuro, aqui entraria o redirecionamento real ou a chamada para o seu backend:
             // window.location.href = 'painelUsuario.html';

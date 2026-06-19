@@ -85,7 +85,7 @@ document.getElementById("form")
 
     localStorage.setItem("perfil", JSON.stringify(perfil));
 
-    window.location.href = "addPlantas.html";
+    window.location.href = 'addPlantas.html';
 });
 
 
