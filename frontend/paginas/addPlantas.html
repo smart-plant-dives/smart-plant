@@ -16,7 +16,7 @@
 
 
 
-<link rel="stylesheet" href="/css/addPlantas.css">
+<link rel="stylesheet" href="../css/addPlantas.css">
 
 </head>
 
@@ -34,7 +34,7 @@
 
     <div class="logo">
 
-        <a href="/index.html">
+        <a href="../index.html">
 
         <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant"></a>
 
@@ -46,7 +46,7 @@
 
     <div class="buttons">
 
-        <a href="/paginas/galeriaPlantas.html">
+        <a href="galeriaPlantas.html">
 
             <button class="btn addPlantas">Galeria</button>
 
@@ -135,49 +135,22 @@
 
 
             <select id="opcoes">
-
                 <option value="todas">Todas</option>
-
-                <option value="ornamental">Ornamental</option>
-
-                <option value="medicinais">Medicinais</option>
-
-                <option value="alimenticias">Alimentícias</option>
-
-                <option value="aromaticas">Aromáticas</option>
-
-                <option value="toxicas">Tóxicas</option>
-
-                <option value="frutifera">Frutífera</option>
-
             </select>
 
         </div>
 
-        
-<!-- CARDS --> 
- <div class="cards" id="cards"> 
-    <p id="mensagemVazia" style="display:none; text-align:center; margin-top:20px;">🌱 Nenhuma planta foi encontrada nessa categoria.</p> 
-    <!-- CARD 1 --> 
-    <div class="card"> 
-        <div class="cadeado hidden">🔒</div> 
-        <p class="user">@Melinda.22</p> <img src="https://fernandadecarvalho.com/wp-content/uploads/2020/01/original.jpg"> 
-        <h3>Sol</h3> 
-        <div data-categoria="ornamental">Ornamental</div> 
-        <div data-especie="girassolDobrado">Girassol-Dobrado</div>
-         <p> Cria uma aparência mais delicada e sofisticada. Seu cultivo é simples: prefere sol pleno, solo bem drenado e regas moderadas. </p> 
-         <div class="actions"> 
-            <button class="edit"> ✏ </button> 
-            <button class="delete">🗑</button> 
-        </div> </div>
-        
+<!-- CARDS -->
+ <div class="cards" id="cards">
+    <p id="mensagemVazia" style="display:none; text-align:center; margin-top:20px;">🌱 Nenhuma planta foi encontrada nessa categoria.</p>
+
         <!-- BOTÃO ADD -->
-          <div class="card add" id="abrirModal"> 
-            <span>+</span> 
-            <p>Adicionar nova planta</p> 
+          <div class="card add" id="abrirModal">
+            <span>+</span>
+            <p>Adicionar nova planta</p>
         </div> </div>
 
-          
+
 
     </section>
 
@@ -234,247 +207,63 @@
 
 <div id="modalPostagem" class="modal-overlay hidden">
 
-
-
     <div class="modal-container-post">
-
-
 
         <h2 class="titulo-modal">Adicionar Planta</h2>
 
-
-
-        <!-- UPLOAD -->
-
-        <div class="upload-area" id="uploadArea">
-
-            <input type="file" id="inputFoto" accept="image/*" hidden>
-
-
-
-            <div id="uploadPlaceholder">
-
-                <span class="nuvem-icon">☁︎<sup>+</sup></span>
-
-                <p>Adicionar imagem<br>da planta</p>
-
-            </div>
-
-        </div>
-
-
-
         <!-- FORM -->
+        <div class="post-form">
 
-       <div class="post-form-group">
+            <input type="text" id="nomePlanta" placeholder="Nome da planta">
 
-    <div class="custom-select" id="selectEspecie">
-
-        <div class="select-header">
-
-            <span class="label">Selecionar espécie</span>
-
-            <span class="seta">❯</span>
-
-        </div>
-
-        <div class="select-options hidden">
-
-            <input type="text" class="api-search" placeholder="Buscar espécie na API...">
-
-            <div class="scroll-results" id="resEspecies">
-
-                <p class="aviso">Digite 3 letras para buscar...</p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="post-form">
-
-    <input type="text" id="nomePlanta" placeholder="Nome da planta">
-
-
-
-  
-
-
+            <input type="text" id="especie" placeholder="Espécie">
 
             <select id="categoria">
-
                 <option value="">Selecionar categoria</option>
-
-                <option value="ornamental">Ornamental</option>
-
-                <option value="medicinais">Medicinais</option>
-
-                <option value="alimenticias">Alimentícias</option>
-
-                <option value="aromaticas">Aromáticas</option>
-
-                <option value="toxicas">Tóxicas</option>
-
-                <option value="frutifera">Frutífera</option>
-
             </select>
 
-
-
-            <!-- NOVO -->
-
-            <select id="visibilidade">
-
-                <option value="publico">Público</option>
-
-                <option value="privado">Privado</option>
-
-            </select>
-
-
-
-            <textarea id="descricao" placeholder="Sua experiência:"></textarea>
-
-
+            <input type="text" id="urlImagem" placeholder="Link da imagem (URL)">
 
         </div>
-
-
 
         <!-- BOTÕES -->
-
         <div class="modal-footer">
-
             <button id="fecharModal">Cancelar</button>
-
-            <button class="btn-save">Salvar</button>
-
+            <button id="btnSalvarPlanta" class="btn-save">Salvar</button>
         </div>
-
-
 
     </div>
 
-
-
 </div>
-
-
 
 <!-- MODAL EDITAR -->
 
 <div id="modalEditar" class="modal-overlay hidden">
 
-
-
     <div class="modal-container-post">
-
-
-
-        <div class="upload-area" id="uploadAreaEdit">
-
-            <input type="file" id="inputFotoEdit" accept="image/*" hidden>
-
-
-
-            <div id="uploadPlaceholderEdit">
-
-                <span class="nuvem-icon">☁︎<sup>+</sup></span>
-
-                <p>Adicionar nova<br>imagem da planta</p>
-
-            </div>
-
-        </div>
-
-
 
         <div class="post-form">
 
-
-
             <input type="text" id="editNome" placeholder="Nome da planta">
 
-<div class="custom-select-container">
-
-    <div class="custom-select" id="selectEspecie">
-
-        <div class="select-header">
-
-            <span class="label">Selecionar espécie</span>
-
-            <span class="seta">❯</span>
-
-        </div>
-
-        <div class="select-options hidden">
-
-            <input type="text" id="inputBuscaEspecie" class="api-search" placeholder="Buscar espécie na API...">
-
-            <div class="scroll-results" id="resEspecies">
-
-                <p class="aviso">Digite 3 letras para buscar...</p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
+            <input type="text" id="editEspecie" placeholder="Espécie">
 
             <select id="editCategoria">
-
                 <option value="">Selecione a categoria</option>
-
-                <option value="Ornamental">Ornamental</option>
-
-                <option value="Medicinal">Medicinal</option>
-
             </select>
 
-
-
-             <select id="editVisibilidade">
-
-    <option value="publico">Público</option>
-
-    <option value="privado">Privado</option>
-
-</select>
-
-
-
-            <textarea id="editDescricao" placeholder="Sua experiência:"></textarea>
-
-
+            <input type="text" id="editUrlImagem" placeholder="Link da imagem (URL)">
 
         </div>
-
-
 
         <div class="modal-footer">
-
             <button id="cancelarEdicao">Cancelar</button>
-
             <button id="salvarEdicao" class="btn-save">Salvar alterações ✔</button>
-
         </div>
-
-
 
     </div>
 
-
-
 </div>
-
-
 
 <!-- MODAL EDITAR PERFIL -->
 
@@ -534,7 +323,7 @@
 
                     <label>Nome</label>
 
-                    <input type="text" id="inputNome" value="Melinda22">
+                    <input type="text" id="inputNome" value="">
 
                 </div>
 
@@ -590,7 +379,7 @@
 
 
 
-<script src="/js/addPlantas.js"></script>
+<script src="../js/addPlantas.js"></script>
 
 
 

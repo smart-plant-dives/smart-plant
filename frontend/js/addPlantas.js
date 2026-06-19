@@ -1,955 +1,381 @@
-// ================= MODAL PERFIL ================= 
-
-const abrirModal = document.getElementById("abrirModal");
-const fecharModal = document.getElementById("fecharModal");
-const modal = document.getElementById("modalPostagem");
-
-const btnAbrirPerfil = document.querySelector(".edit-profile"); 
-
-const modalPerfil = document.getElementById("modalPerfil"); 
-
-const cancelarPerfil = document.getElementById("cancelarPerfil"); 
-
-const salvarPerfil = document.getElementById("salvarPerfil"); 
-
- 
-
-const inputNomePerfil = document.getElementById("inputNome"); 
-
-const inputSobrePerfil = document.getElementById("inputSobre"); 
-
- 
-
-const nomePerfil = document.querySelector(".profile h2"); 
-
-const bioPerfil = document.querySelector(".profile p"); 
-
- 
-
-// abrir modal 
-
-btnAbrirPerfil.addEventListener("click", () => { 
-
-    modalPerfil.classList.remove("hidden"); 
-
- 
-
-    inputNomePerfil.value = nomePerfil.innerText.replace("@", ""); 
-
-    inputSobrePerfil.value = bioPerfil.innerText.trim(); 
-
-}); 
-
- 
-
-// fechar 
-
-cancelarPerfil.addEventListener("click", () => { 
-
-    modalPerfil.classList.add("hidden"); 
-
-}); 
-
- 
-
-// salvar 
-
-salvarPerfil.addEventListener("click", () => { 
-
-    nomePerfil.innerText = "@" + inputNomePerfil.value; 
-
-    bioPerfil.innerText = inputSobrePerfil.value; 
-
- 
-
-    modalPerfil.classList.add("hidden"); 
-
-}); 
-
- 
-
- 
-
-// ================= FOTO PERFIL ================= 
-
- 
-
-const inputFotoPerfil = document.getElementById("inputFotoPerfil"); 
-
-const btnTrocarFoto = document.getElementById("btnTrocarFoto"); 
-
-const fotoPreview = document.getElementById("fotoPreview"); 
-
-const textoPlaceholder = document.getElementById("textoPlaceholder"); 
-
-const avatar = document.querySelector(".avatar"); 
-
- 
-
-btnTrocarFoto.addEventListener("click", () => { 
-
-    inputFotoPerfil.click(); 
-
-}); 
-
- 
-
-inputFotoPerfil.addEventListener("change", () => { 
-
-    const file = inputFotoPerfil.files[0]; 
-
- 
-
-    if (file) { 
-
-        const reader = new FileReader(); 
-
- 
-
-        reader.onload = function (e) { 
-
-            fotoPreview.src = e.target.result; 
-
-            fotoPreview.classList.remove("hidden"); 
-
-            textoPlaceholder.style.display = "none"; 
-
- 
-
-            avatar.style.backgroundImage = `url(${e.target.result})`; 
-
-            avatar.style.backgroundSize = "cover"; 
-
-            avatar.style.backgroundPosition = "center"; 
-
-        }; 
-
- 
-
-        reader.readAsDataURL(file); 
-
-    } 
-
-}); 
-
- 
-
- 
-
-// ================= MODAL ADICIONAR ================= 
-
- 
-
- 
-
-abrirModal.addEventListener("click", () => { 
-
-    modal.classList.remove("hidden"); 
-
-}); 
-
- 
-
-fecharModal.addEventListener("click", () => { 
-
-    modal.classList.add("hidden"); 
-
-}); 
-
- 
-
- 
-
-// ================= UPLOAD IMAGEM ================= 
-
- 
-
-const inputFoto = document.getElementById("inputFoto"); 
-
-const uploadArea = document.getElementById("uploadArea"); 
-
-const uploadPlaceholder = document.getElementById("uploadPlaceholder"); 
-
- 
-
-let imagemBase64 = ""; 
-
- 
-
-uploadArea.addEventListener("click", () => { 
-
-    inputFoto.click(); 
-
-}); 
-
- 
-
-inputFoto.addEventListener("change", () => { 
-
-    const file = inputFoto.files[0]; 
-
- 
-
-    if (file) { 
-
-        const reader = new FileReader(); 
-
- 
-
-        reader.onload = function(e) { 
-
-            imagemBase64 = e.target.result; 
-
- 
-
-            uploadPlaceholder.innerHTML = ` 
-
-                <img src="${imagemBase64}"  
-
-                style="width:100%; height:150px; object-fit:cover; border-radius:10px;"> 
-
-            `; 
-
-        }; 
-
- 
-
-        reader.readAsDataURL(file); 
-
-    } 
-
-}); 
-
- 
-
- 
-
-// ================= CRIAR CARD ================= 
-
- 
-
-const btnSalvar = document.querySelector("#modalPostagem .btn-save"); 
-
- 
-
-const nome = document.getElementById("nomePlanta"); 
-
-const especie = document.getElementById("especie"); 
-
-const categoria = document.getElementById("categoria"); 
-
-const descricao = document.getElementById("descricao"); 
-
-const visibilidade = document.getElementById("visibilidade"); 
-
- 
-
-const cardsContainer = document.querySelector(".cards"); 
-
- 
-
-btnSalvar.addEventListener("click", () => { 
-
- 
-
-    if (!nome.value) { 
-
-        alert("Digite o nome da planta!"); 
-
-        return; 
-
-    } 
-
- 
-
-    const novoCard = document.createElement("div"); 
-
-    novoCard.classList.add("card"); 
-
- 
-
-    const tagPrivado = visibilidade.value === "privado" 
-
-        ? `<span style="color:red; font-size:12px;">🔒 Privado</span>` 
-
-        : ""; 
-
- 
-
-    novoCard.innerHTML = ` 
-
-        <p class="user">@Melinda.22 ${tagPrivado}</p> 
-
-        <img src="${imagemBase64 || 'https://via.placeholder.com/300'}"> 
-
-        <h3>${nome.value}</h3> 
-
-        <div data-categoria="${categoria.value}">${categoria.value}</div> 
-
-        <div>${especie.value}</div> 
-
-        <p>${descricao.value}</p> 
-
- 
-
-        <div class="actions"> 
-
-            <button class="edit">✏</button> 
-
-            <button class="delete">🗑</button> 
-
-        </div> 
-
-    `; 
-
- 
-
-    const botaoAdd = document.getElementById("abrirModal"); 
-
-    cardsContainer.insertBefore(novoCard, botaoAdd); 
-
- 
-
-    modal.classList.add("hidden"); 
-
-}); 
-
- 
-
- 
-
-// ================= DELETAR ================= 
-
- 
-
-document.addEventListener("click", (e) => { 
-
-    if (e.target.classList.contains("delete")) { 
-
-        e.target.closest(".card").remove(); 
-
-    } 
-
-}); 
-
- 
-
- 
-
-// ================= EDITAR CARD ================= 
-
- 
-
-const modalEditar = document.getElementById("modalEditar"); 
-
-const cancelarEdicao = document.getElementById("cancelarEdicao"); 
-
-const salvarEdicao = document.getElementById("salvarEdicao"); 
-
- 
-
-const editNome = document.getElementById("editNome"); 
-
-const editDescricao = document.getElementById("editDescricao"); 
-
- 
-
-let cardEditando = null; 
-
- 
-
-document.addEventListener("click", (e) => { 
-
-    if (e.target.classList.contains("edit")) { 
-
- 
-
-        cardEditando = e.target.closest(".card"); 
-
- 
-
-        editNome.value = cardEditando.querySelector("h3").innerText; 
-
-        editDescricao.value = cardEditando.querySelector("p:not(.user)").innerText; 
-
- 
-
-        modalEditar.classList.remove("hidden"); 
-
-    } 
-
-}); 
-
- 
-
-cancelarEdicao.addEventListener("click", () => { 
-
-    modalEditar.classList.add("hidden"); 
-
-}); 
-
- 
-
-salvarEdicao.addEventListener("click", () => { 
-
-    if (!cardEditando) return; 
-
- 
-
-    cardEditando.querySelector("h3").innerText = editNome.value; 
-
-    cardEditando.querySelector("p:not(.user)").innerText = editDescricao.value; 
-
- 
-
-    modalEditar.classList.add("hidden"); 
-
-}); 
-
- 
-
- 
-
-// ================= FILTRO ================= 
-
- 
-
-const select = document.getElementById("opcoes"); 
-
-const mensagem = document.getElementById("mensagemVazia"); 
-
- 
-
-select.addEventListener("change", () => { 
-
- 
-
-    const valor = select.value; 
-
-    const cards = document.querySelectorAll(".card:not(.add)"); 
-
- 
-
-    let visiveis = 0; 
-
- 
-
-    cards.forEach(card => { 
-
- 
-
-        const categoriaEl = card.querySelector("[data-categoria]"); 
-
-        if (!categoriaEl) return; 
-
- 
-
-        const categoria = categoriaEl.dataset.categoria; 
-
- 
-
-        if (valor === "todas" || categoria === valor) { 
-
-            card.style.display = "block"; 
-
-            visiveis++; 
-
-        } else { 
-
-            card.style.display = "none"; 
-
-        } 
-
-    }); 
-
- 
-
-    mensagem.style.display = visiveis === 0 ? "block" : "none"; 
-
-}); 
-
- 
-
-const cadeado = document.createElement("div"); 
-
-cadeado.classList.add("cadeado"); 
-
- 
-
-if (visibilidade.value !== "privado") { 
-
-    cadeado.classList.add("hidden"); 
-
-} 
-
- 
-
-
-
- 
-
-btnSalvar.addEventListener("click", () => { 
-
- 
-
-    if (!nome.value) { 
-
-        alert("Digite o nome da planta!"); 
-
-        return; 
-
-    } 
-
- 
-
-    const novoCard = document.createElement("div"); 
-
-    novoCard.classList.add("card"); 
-
- 
-
-    // 🔒 AQUI 
-
-    const cadeado = document.createElement("div"); 
-
-    cadeado.classList.add("cadeado"); 
-
- 
-
-    if (visibilidade.value !== "privado") { 
-
-        cadeado.classList.add("hidden"); 
-
-    } 
-
- 
-
-    cadeado.textContent = "🔒"; 
-
-    novoCard.appendChild(cadeado); 
-
- 
-
-    // resto do card 
-
-    novoCard.innerHTML += ` 
-
-        <p class="user"></p> 
-
-        <img src="${imagemBase64 || 'https://via.placeholder.com/300'}"> 
-
-        <h3>${nome.value}</h3> 
-
-        <div data-categoria="${categoria.value}">${categoria.value}</div> 
-
-        <div>${especie.value}</div> 
-
-        <p>${descricao.value}</p> 
-
- 
-
-        <div class="actions"> 
-
-            <button class="edit"> EDITAR </button> 
-
-            <button class="delete">🗑</button> 
-
-        </div> 
-
-    `; 
-
- 
-
-    const botaoAdd = document.getElementById("abrirModal"); 
-
-    cardsContainer.insertBefore(novoCard, botaoAdd); 
-
- 
-
-    modal.classList.add("hidden"); 
-
-}); 
-
- // --- 2. BUSCA MANUAL (DIGITAR 3 LETRAS) ---
-    if (inputBuscaEspecie) {
-        inputBuscaEspecie.addEventListener('input', async (e) => {
-            const termo = e.target.value;
-
-            if (termo.length >= 3) {
-                containerResultados.innerHTML = '<p class="aviso">Buscando...</p>';
-                
-                try {
-                    const res = await fetch(`https://api.gbif.org/v1/species/suggest?q=${termo}&datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c`);
-                    const data = await res.json();
-
-                    containerResultados.innerHTML = ''; 
-
-                    if (data.length > 0) {
-                        data.forEach(item => {
-                            const p = document.createElement('p');
-                            p.style.padding = "8px 12px";
-                            p.style.cursor = "pointer";
-                            p.style.fontSize = "13px";
-                            p.style.borderBottom = "1px solid #eee";
-                            p.innerText = item.canonicalName;
-                            
-                            p.onclick = () => {
-                                const labelEspecie = document.querySelector('#selectEspecie .label');
-                                labelEspecie.innerText = item.canonicalName;
-                                document.getElementById('selectEspecie').classList.add('selected');
-                                document.querySelector('#selectEspecie .select-options').classList.add('hidden');
-                                inputBuscaEspecie.value = ''; // Limpa a busca
-                            };
-                            containerResultados.appendChild(p);
-                        });
-                    } else {
-                        containerResultados.innerHTML = '<p class="aviso">Nenhuma espécie encontrada.</p>';
-                    }
-                } catch (err) {
-                    containerResultados.innerHTML = '<p class="aviso">Erro ao conectar com a API.</p>';
-                }
-            } else {
-                containerResultados.innerHTML = '<p class="aviso">Digite 3 letras para buscar...</p>';
-            }
-        });
+// ===========================================================
+// Tela "Suas Plantas" (addPlantas.html)
+// Lista, cria, edita e apaga as plantas do usuário logado.
+// Edita também um "perfil extra" (foto/instagram/facebook/bio)
+// que fica só no navegador, pois o backend não guarda isso hoje.
+// ===========================================================
+
+const API_BASE = "http://localhost:8080/api";
+
+// -----------------------------------------------------------
+// 1. SESSÃO
+// -----------------------------------------------------------
+const usuarioSessao = JSON.parse(localStorage.getItem("usuarioSessao") || "null");
+
+if (!usuarioSessao) {
+    window.location.href = "cadastroUsuario.html";
+    throw new Error("Sem sessão ativa — redirecionando para o login.");
+}
+
+let perfilExtra = JSON.parse(localStorage.getItem("perfilExtra") || "null") || {
+    username: "@" + (usuarioSessao.login || "usuario"),
+    instagram: "",
+    facebook: "",
+    sobre: "",
+    foto: ""
+};
+
+let categorias = [];      // [{id, nomeCategoria}]
+let plantas = [];         // cache da última listagem
+let categoriaFiltroAtual = "todas";
+
+// -----------------------------------------------------------
+// 2. ELEMENTOS
+// -----------------------------------------------------------
+const cardsContainer = document.getElementById("cards");
+const abrirModalBtn = document.getElementById("abrirModal");
+const mensagemVazia = document.getElementById("mensagemVazia");
+const selectFiltro = document.getElementById("opcoes");
+
+const modalPostagem = document.getElementById("modalPostagem");
+const fecharModalBtn = document.getElementById("fecharModal");
+const btnSalvarPlanta = document.getElementById("btnSalvarPlanta");
+const inputNomePlanta = document.getElementById("nomePlanta");
+const inputEspecie = document.getElementById("especie");
+const selectCategoria = document.getElementById("categoria");
+const inputUrlImagem = document.getElementById("urlImagem");
+
+const modalEditar = document.getElementById("modalEditar");
+const cancelarEdicaoBtn = document.getElementById("cancelarEdicao");
+const salvarEdicaoBtn = document.getElementById("salvarEdicao");
+const inputEditNome = document.getElementById("editNome");
+const inputEditEspecie = document.getElementById("editEspecie");
+const selectEditCategoria = document.getElementById("editCategoria");
+const inputEditUrlImagem = document.getElementById("editUrlImagem");
+let idPlantaEmEdicao = null;
+
+const modalPerfil = document.getElementById("modalPerfil");
+const btnAbrirPerfil = document.querySelector(".edit-profile");
+const cancelarPerfilBtn = document.getElementById("cancelarPerfil");
+const salvarPerfilBtn = document.getElementById("salvarPerfil");
+const inputNomePerfil = document.getElementById("inputNome");
+const inputInstaPerfil = document.getElementById("inputInsta");
+const inputFacePerfil = document.getElementById("inputFace");
+const inputSobrePerfil = document.getElementById("inputSobre");
+
+const fotoPerfilImg = document.getElementById("fotoPerfil");
+const nomeUsuarioSpan = document.getElementById("nomeUsuario");
+const usernameH2 = document.getElementById("username");
+const bioUsuarioP = document.getElementById("bioUsuario");
+
+const inputFotoPerfil = document.getElementById("inputFotoPerfil");
+const btnTrocarFoto = document.getElementById("btnTrocarFoto");
+const fotoPreview = document.getElementById("fotoPreview");
+const textoPlaceholder = document.getElementById("textoPlaceholder");
+
+// -----------------------------------------------------------
+// 3. PERFIL (exibição)
+// -----------------------------------------------------------
+function renderizarPerfil() {
+    nomeUsuarioSpan.innerText = usuarioSessao.nome || "";
+    usernameH2.innerText = perfilExtra.username || "";
+    bioUsuarioP.innerText = perfilExtra.sobre || "";
+
+    if (perfilExtra.foto) {
+        fotoPerfilImg.src = perfilExtra.foto;
     }
+}
 
-    // --- 3. LOGICA DE UPLOAD E AUTO-PREENCHIMENTO (VIA NOME ARQUIVO) ---
-    if (dropzone) {
-        dropzone.onclick = () => inputFoto.click();
-    }
+renderizarPerfil();
 
-    inputFoto.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-                imgPreview.src = ev.target.result;
-                imgPreview.classList.remove('hidden');
-                uploadPlaceholder.classList.add('hidden');
-
-                const nomeArquivo = file.name.toLowerCase();
-                
-                if (nomeArquivo.includes('cacto')) {
-                    dispararBuscaAPI("Cactaceae", "Cactos");
-                } else if (nomeArquivo.includes('suculenta')) {
-                    dispararBuscaAPI("Echeveria", "Suculentas");
-                } else if (nomeArquivo.includes('jiboia')) {
-                    dispararBuscaAPI("Epipremnum", "Folhagens");
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    async function dispararBuscaAPI(termo, categoriaAlvo) {
-        const labelEspecie = document.querySelector('#selectEspecie .label');
-        const labelCategoria = document.querySelector('#selectCategoria .label');
-
-        labelEspecie.innerText = "Identificando...";
-
-        try {
-            const res = await fetch(`https://api.gbif.org/v1/species/suggest?q=${termo}&datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c`);
-            const data = await res.json();
-            
-            if (data.length > 0) {
-                labelEspecie.innerText = data[0].canonicalName;
-                document.getElementById('selectEspecie').classList.add('selected');
-            }
-
-            labelCategoria.innerText = categoriaAlvo;
-            document.getElementById('selectCategoria').classList.add('selected');
-            marcarOpcaoAtiva('resCategorias', categoriaAlvo);
-
-        } catch (err) {
-            console.error("Erro GBIF:", err);
-            labelEspecie.innerText = "Erro ao buscar";
-        }
-    }
-
-    // O 'async' avisa que esta função fará uma operação de rede que pode demorar
-async function carregarCatalogo(){
+// -----------------------------------------------------------
+// 4. CATEGORIAS (vem do backend)
+// -----------------------------------------------------------
+async function carregarCategorias() {
     try {
-        // 1. Fazemos a chamada (GET) para a rota da nossa API Java
-        const resposta = await fetch("http://localhost:8080/api/especie");
+        const resposta = await fetch(`${API_BASE}/categoria`);
+        categorias = await resposta.json();
 
-        // 2. Convertemos o texto que a API devolve num objeto JavaScript (JSON)
-        const especie = await resposta.json();
-
-        // 3. Capturamos a <div> vazia que deixamos no HTML
-        const divLista = document.getElementById("lista-especie");
-        divLista.innerHTML = ""; // Limpa a área antes de desenhar
-
-       // 4. Percorremos cada produto que veio do banco de dados
-        produtos.forEach(especie => {
-            
-            // Garantimos que é um número, fixamos 2 casas e trocamos ponto por vírgula
-            let precoFormatado = parseFloat(produto.preco).toFixed(2).replace('.', ',');
-            // O += vai "empilhando" o HTML de cada doce dentro da div principal
-            divLista.innerHTML += `
-                <div class="card">
-                    <h3>${produto.nome}</h3>
-                    <p style="color: #ff1493; font-weight: bold; margin-top: 10px;">
-                        R$ ${precoFormatado}
-                    </p>
-                </div>
-            `;
+        // Select do modal de adicionar
+        selectCategoria.innerHTML = '<option value="">Selecionar categoria</option>';
+        categorias.forEach(cat => {
+            selectCategoria.innerHTML += `<option value="${cat.id}">${cat.nomeCategoria}</option>`;
         });
+
+        // Select do modal de editar
+        selectEditCategoria.innerHTML = '<option value="">Selecione a categoria</option>';
+        categorias.forEach(cat => {
+            selectEditCategoria.innerHTML += `<option value="${cat.id}">${cat.nomeCategoria}</option>`;
+        });
+
+        // Select de filtro no topo da página
+        selectFiltro.innerHTML = '<option value="todas">Todas</option>';
+        categorias.forEach(cat => {
+            selectFiltro.innerHTML += `<option value="${cat.id}">${cat.nomeCategoria}</option>`;
+        });
+
     } catch (erro) {
-        console.error("Erro ao carregar catálogo:", erro);
-        document.getElementById("lista-produtos").innerHTML = "<p>Erro ao carregar doces.</p>";
+        console.error("Erro ao carregar categorias:", erro);
     }
 }
 
-// Executa a função assim que o utilizador abre a página
-carregarCatalogo();
+// -----------------------------------------------------------
+// 5. LISTAR PLANTAS
+// -----------------------------------------------------------
+function nomeDaCategoria(planta) {
+    return planta.nomeCategoria ? planta.nomeCategoria.nomeCategoria : "Sem categoria";
+}
 
+function idDaCategoria(planta) {
+    return planta.nomeCategoria ? planta.nomeCategoria.id : "";
+}
 
-async function carregarPlantas() {
-    const resposta = await fetch("http://localhost:8080/api/plantas");
-    const plantas = await resposta.json();
+function renderizarCards() {
+    // remove todos os cards de planta, mas preserva a mensagem vazia e o botão "+"
+    cardsContainer.querySelectorAll(".card:not(.add)").forEach(card => card.remove());
 
-    const container = document.getElementById("container-plantas");
+    const plantasFiltradas = categoriaFiltroAtual === "todas"
+        ? plantas
+        : plantas.filter(p => String(idDaCategoria(p)) === String(categoriaFiltroAtual));
 
-    plantas.forEach(planta => {
-        const card = document.createElement("article");
-        card.classList.add("plant-card");
+    plantasFiltradas.forEach(planta => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.id = planta.id;
 
-        // 🔥 DADOS (igual você fazia no HTML)
-        card.dataset.nome = planta.nome;
-        card.dataset.especie = planta.especie;
-        card.dataset.categoria = planta.categoria;
-        card.dataset.descricao = planta.descricao;
-        card.dataset.img = planta.imagem;
-
-        // 👇 CONTEÚDO VISÍVEL (ANTES DO CLIQUE)
         card.innerHTML = `
-            <img src="${planta.imagem}" alt="${planta.nome}">
-            <h3>${planta.nome}</h3>
-            <p class="especie">${planta.especie}</p>
-            <p class="categoria">${planta.categoria}</p>
-        `;
-
-        container.appendChild(card);
-    });
-}
-
-carregarPlantas();
-
-// ==========================================
-// 1. VERIFICAÇÃO DE SESSÃO
-// ==========================================
-const usuarioLocal = localStorage.getItem("usuarioSessao");
-
-if (!usuarioLocal) {
-    window.location.href = "login.html";
-} else {
-    const usuarioObj = JSON.parse(usuarioLocal);
-    document.getElementById("nomeUsuario").innerText = usuarioObj.nome;
-}
-
-// ==========================================
-// 2. LISTAR PLANTAS (GET)
-// ==========================================
-async function listarPlantas() {
-    const resposta = await fetch("http://localhost:8080/plantas");
-    const plantas = await resposta.json();
-
-    const container = document.getElementById("cards");
-
-    // limpa tudo (menos o botão +)
-    container.innerHTML = `
-        <div class="card add" id="abrirModal">
-            <span>+</span>
-            <p>Adicionar nova planta</p>
-        </div>
-    `;
-
-    plantas.forEach(planta => {
-        container.innerHTML += `
-            <div class="card">
-                <div class="cadeado ${planta.visibilidade === 'privado' ? '' : 'hidden'}">🔒</div>
-
-                <p class="user">@${planta.usuarioNome || "user"}</p>
-
-                <img src="${planta.imagem || 'https://via.placeholder.com/150'}">
-
-                <h3>${planta.nome}</h3>
-
-                <div>${planta.categoria}</div>
-                <div>${planta.especie}</div>
-
-                <p>${planta.descricao || ""}</p>
-
-                <div class="actions">
-                    <button onclick="editarPlanta(${planta.id})">✏</button>
-                    <button onclick="deletarPlanta(${planta.id})">🗑</button>
-                </div>
+            <img src="${planta.url || 'https://via.placeholder.com/300?text=Sem+imagem'}" alt="${planta.nomePlanta}">
+            <h3>${planta.nomePlanta}</h3>
+            <div data-categoria="${idDaCategoria(planta)}">${nomeDaCategoria(planta)}</div>
+            <div data-especie="${planta.especie}">${planta.especie}</div>
+            <div class="actions">
+                <button class="edit" data-id="${planta.id}">✏</button>
+                <button class="delete" data-id="${planta.id}">🗑</button>
             </div>
         `;
+
+        cardsContainer.insertBefore(card, abrirModalBtn);
+    });
+
+    mensagemVazia.style.display = plantasFiltradas.length === 0 ? "block" : "none";
+
+    // liga os botões de editar/apagar dos cards recém-criados
+    cardsContainer.querySelectorAll(".edit").forEach(btn => {
+        btn.addEventListener("click", () => abrirEdicao(Number(btn.dataset.id)));
+    });
+    cardsContainer.querySelectorAll(".delete").forEach(btn => {
+        btn.addEventListener("click", () => apagarPlanta(Number(btn.dataset.id)));
     });
 }
 
-// ==========================================
-// 3. ABRIR / FECHAR MODAL
-// ==========================================
+async function carregarPlantas() {
+    try {
+        const resposta = await fetch(`${API_BASE}/planta/usuario/${usuarioSessao.id}`);
+        plantas = await resposta.json();
+        renderizarCards();
+    } catch (erro) {
+        console.error("Erro ao carregar plantas:", erro);
+    }
+}
 
-document.getElementById("abrirModal").addEventListener("click", () => {
-    modal.classList.remove("hidden");
+selectFiltro.addEventListener("change", () => {
+    categoriaFiltroAtual = selectFiltro.value;
+    renderizarCards();
 });
 
-document.getElementById("fecharModal").addEventListener("click", () => {
-    modal.classList.add("hidden");
+// -----------------------------------------------------------
+// 6. ADICIONAR PLANTA
+// -----------------------------------------------------------
+abrirModalBtn.addEventListener("click", () => {
+    inputNomePlanta.value = "";
+    inputEspecie.value = "";
+    selectCategoria.value = "";
+    inputUrlImagem.value = "";
+    modalPostagem.classList.remove("hidden");
 });
 
-// ==========================================
-// 4. CADASTRAR PLANTA (POST)
-// ==========================================
-document.querySelector(".btn-save").addEventListener("click", async () => {
+fecharModalBtn.addEventListener("click", () => {
+    modalPostagem.classList.add("hidden");
+});
+
+btnSalvarPlanta.addEventListener("click", async () => {
+    const nomePlanta = inputNomePlanta.value.trim();
+    const especie = inputEspecie.value.trim();
+    const categoriaId = selectCategoria.value;
+    const url = inputUrlImagem.value.trim();
+
+    if (!nomePlanta || !especie || !categoriaId) {
+        alert("Preencha nome, espécie e categoria.");
+        return;
+    }
 
     const novaPlanta = {
-        nome: document.getElementById("nomePlanta").value,
-        especie: document.getElementById("especie").value,
-        categoria: document.getElementById("categoria").value,
-        descricao: document.getElementById("descricao").value,
-        visibilidade: document.getElementById("visibilidade").value,
-        imagem: "" // pode implementar upload depois
+        nomePlanta: nomePlanta,
+        especie: especie,
+        nomeCategoria: { id: Number(categoriaId) },
+        url: url
     };
 
-    const resposta = await fetch("http://localhost:8080/api/plantas", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(novaPlanta)
-    });
-
-    if (resposta.ok) {
-        modal.classList.add("hidden");
-        listarPlantas();
-    } else {
-        alert("Erro ao salvar planta");
-    }
-});
-
-// ==========================================
-// 5. DELETAR PLANTA (DELETE)
-// ==========================================
-async function deletarPlanta(id) {
-    const confirmacao = confirm("Deseja deletar essa planta?");
-
-    if (confirmacao) {
-        await fetch(`http://localhost:8080/plantas/${id}`, {
-            method: "DELETE"
+    try {
+        const resposta = await fetch(`${API_BASE}/planta/usuario/${usuarioSessao.id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novaPlanta)
         });
 
-        listarPlantas();
-    }
-}
-
-// ==========================================
-// 6. EDITAR (SIMPLES - ALERTA POR ENQUANTO)
-// ==========================================
-function editarPlanta(id) {
-    alert("Implementar edição da planta ID: " + id);
-}
-
-// ==========================================
-// 7. INICIAR
-// ==========================================
-listarPlantas();
-
-window.addEventListener("DOMContentLoaded", () => {
-
-    const perfil = JSON.parse(localStorage.getItem("perfil"));
-
-    if (perfil) {
-
-        document.getElementById("nomeUsuario").textContent = perfil.nome;
-
-        document.getElementById("username").textContent = "@" + perfil.nome;
-
-        if (perfil.sobre) {
-            document.getElementById("bioUsuario").textContent = perfil.sobre;
+        if (!resposta.ok) {
+            throw new Error("Não foi possível salvar a planta.");
         }
 
-        if (perfil.foto) {
-            document.getElementById("fotoPerfil").src = perfil.foto;
-        }
+        modalPostagem.classList.add("hidden");
+        await carregarPlantas();
+
+    } catch (erro) {
+        console.error("Erro ao salvar planta:", erro);
+        alert(erro.message);
     }
-
-
 });
 
-window.addEventListener("DOMContentLoaded", () => {
+// -----------------------------------------------------------
+// 7. EDITAR PLANTA
+// -----------------------------------------------------------
+function abrirEdicao(id) {
+    const planta = plantas.find(p => p.id === id);
+    if (!planta) return;
 
-    const perfil = JSON.parse(localStorage.getItem("perfil"));
+    idPlantaEmEdicao = id;
+    inputEditNome.value = planta.nomePlanta || "";
+    inputEditEspecie.value = planta.especie || "";
+    selectEditCategoria.value = idDaCategoria(planta) || "";
+    inputEditUrlImagem.value = planta.url || "";
 
-    if (perfil) {
-        document.getElementById("nomeUsuario").textContent = perfil.nome;
-        document.getElementById("username").textContent = perfil.username;
-        document.getElementById("instagram").textContent = perfil.instagram;
-        document.getElementById("facebook").textContent = perfil.facebook;
-        document.getElementById("bioUsuario").textContent = perfil.sobre;
-        document.getElementById("fotoPerfil").imagem = perfil.foto;
-    }
-
-});
-
-document.getElementById("btnAddPlanta").addEventListener("click", () => {
-    document.getElementById("modalPostagem").classList.remove("hidden");
-});
-
-
-//  ======= CONECÇÃO DO  BACK COM O FRONT ===============//
-
-// URL do seu servidor Spring Boot
-const API_URL = "http://localhost:8080/api/plantas";
-
-function buscarPlantasDoServidor() {
-    fetch(API_URL) // Por padrão, o fetch faz uma requisição GET
-        .then(response => response.json()) // Converte a resposta do Java para JSON
-        .then(plantas => {
-            const containerCards = document.getElementById("cards");
-            
-            // Limpa o container antes de colocar os dados do banco (mantendo o botão de adicionar)
-            // Aqui você faria um loop (ex: plantas.forEach) para criar o HTML de cada card
-            console.log("Plantas vindas do Spring Boot:", plantas);
-        })
-        .catch(error => console.error("Erro ao conectar com o Spring Boot:", error));
+    modalEditar.classList.remove("hidden");
 }
 
-// Executa a busca assim que a página carregar
-window.onload = buscarPlantasDoServidor;
+cancelarEdicaoBtn.addEventListener("click", () => {
+    modalEditar.classList.add("hidden");
+    idPlantaEmEdicao = null;
+});
 
-const botaoSalvar = document.querySelector('.btn-save');
+salvarEdicaoBtn.addEventListener("click", async () => {
+    if (idPlantaEmEdicao === null) return;
 
-botaoSalvar.addEventListener('click', () => {
-    // 1. Captura o que o usuário digitou no formulário do modal
-    const dadosPlanta = {
-        nome: document.getElementById('nomePlanta').value,
-        categoria: document.getElementById('categoria').value,
-        descricao: document.getElementById('descricao').value
-        // se a sua entidade no Java esperar mais atributos, adicione-os aqui
+    const plantaAtualizada = {
+        nomePlanta: inputEditNome.value.trim(),
+        especie: inputEditEspecie.value.trim(),
+        nomeCategoria: selectEditCategoria.value ? { id: Number(selectEditCategoria.value) } : null,
+        url: inputEditUrlImagem.value.trim()
     };
 
-    // 2. Faz o "Send" do Postman, mas via código:
-    fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json" // Avisa o Spring Boot que estamos enviando um JSON (igual no Postman)
-        },
-        body: JSON.stringify(dadosPlanta) // Transforma o objeto do JS em texto JSON
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
+    try {
+        const resposta = await fetch(`${API_BASE}/planta/${idPlantaEmEdicao}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(plantaAtualizada)
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível atualizar a planta.");
         }
-        throw new Error("Erro ao salvar no servidor.");
-    })
-    .then(plantaSalva => {
-        alert("Planta cadastrada com sucesso no banco de dados!");
-        // Aqui você pode fechar o modal e atualizar a tela
-    })
-    .catch(error => console.error("Erro:", error));
+
+        modalEditar.classList.add("hidden");
+        idPlantaEmEdicao = null;
+        await carregarPlantas();
+
+    } catch (erro) {
+        console.error("Erro ao atualizar planta:", erro);
+        alert(erro.message);
+    }
 });
+
+// -----------------------------------------------------------
+// 8. APAGAR PLANTA
+// -----------------------------------------------------------
+async function apagarPlanta(id) {
+    if (!confirm("Deseja apagar essa planta?")) return;
+
+    try {
+        const resposta = await fetch(`${API_BASE}/planta/${id}`, { method: "DELETE" });
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível apagar a planta.");
+        }
+
+        await carregarPlantas();
+
+    } catch (erro) {
+        console.error("Erro ao apagar planta:", erro);
+        alert(erro.message);
+    }
+}
+
+// -----------------------------------------------------------
+// 9. PERFIL (edição local — backend não guarda esses campos hoje)
+// -----------------------------------------------------------
+btnAbrirPerfil.addEventListener("click", () => {
+    inputNomePerfil.value = usuarioSessao.nome || "";
+    inputInstaPerfil.value = perfilExtra.instagram || "";
+    inputFacePerfil.value = perfilExtra.facebook || "";
+    inputSobrePerfil.value = perfilExtra.sobre || "";
+
+    if (perfilExtra.foto) {
+        fotoPreview.src = perfilExtra.foto;
+        fotoPreview.classList.remove("hidden");
+        textoPlaceholder.style.display = "none";
+    }
+
+    modalPerfil.classList.remove("hidden");
+});
+
+cancelarPerfilBtn.addEventListener("click", () => {
+    modalPerfil.classList.add("hidden");
+});
+
+salvarPerfilBtn.addEventListener("click", () => {
+    usuarioSessao.nome = inputNomePerfil.value.trim() || usuarioSessao.nome;
+    localStorage.setItem("usuarioSessao", JSON.stringify(usuarioSessao));
+
+    perfilExtra.instagram = inputInstaPerfil.value.trim();
+    perfilExtra.facebook = inputFacePerfil.value.trim();
+    perfilExtra.sobre = inputSobrePerfil.value.trim();
+    localStorage.setItem("perfilExtra", JSON.stringify(perfilExtra));
+
+    renderizarPerfil();
+    modalPerfil.classList.add("hidden");
+});
+
+btnTrocarFoto.addEventListener("click", () => {
+    inputFotoPerfil.click();
+});
+
+inputFotoPerfil.addEventListener("change", () => {
+    const arquivo = inputFotoPerfil.files[0];
+    if (!arquivo) return;
+
+    if (arquivo.size > 2 * 1024 * 1024) {
+        alert("A imagem deve ter no máximo 2MB");
+        inputFotoPerfil.value = "";
+        return;
+    }
+
+    const leitor = new FileReader();
+    leitor.onload = (e) => {
+        perfilExtra.foto = e.target.result;
+        localStorage.setItem("perfilExtra", JSON.stringify(perfilExtra));
+
+        fotoPreview.src = perfilExtra.foto;
+        fotoPreview.classList.remove("hidden");
+        textoPlaceholder.style.display = "none";
+
+        renderizarPerfil();
+    };
+    leitor.readAsDataURL(arquivo);
+});
+
+// -----------------------------------------------------------
+// 10. INÍCIO
+// -----------------------------------------------------------
+(async function iniciar() {
+    await carregarCategorias();
+    await carregarPlantas();
+})();
