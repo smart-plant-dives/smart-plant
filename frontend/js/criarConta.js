@@ -50,13 +50,43 @@ document.getElementById("form")
     document.getElementById("nome").value;
 
 
-    if(nome.trim()==""){
+    document.getElementById("form").addEventListener("submit", (e) => {
 
-        alert("Digite seu nome");
+    e.preventDefault();
 
-        return;
+    const nome = document.getElementById("nome").value;
+    let username = document.getElementById("username").value;
 
+    // 👉 se não digitou username, cria automático
+    if (!username || username.trim() === "") {
+
+        if (nome && nome.trim() !== "") {
+            username = nome
+                .toLowerCase()
+                .replace(/\s+/g, "") + Math.floor(Math.random() * 1000);
+        } else {
+            username = "user" + Math.floor(Math.random() * 10000);
+        }
     }
+
+    // 👉 garantir que tenha @
+    if (!username.startsWith("@")) {
+        username = "@" + username;
+    }
+
+    const perfil = {
+        nome: nome || "Sem nome",
+        username: username,
+        instagram: document.getElementById("instagram").value,
+        facebook: document.getElementById("facebook").value,
+        sobre: document.getElementById("sobre").value,
+        foto: imagem
+    };
+
+    localStorage.setItem("perfil", JSON.stringify(perfil));
+
+    window.location.href = "addPlantas.html";
+});
 
 
     alert(
@@ -106,54 +136,5 @@ foto.addEventListener("change", ()=>{
         leitor.readAsDataURL(arquivo);
 
     }
-
-});
-
-
-
-
-// salvar conta
-
-document.getElementById("form")
-.addEventListener("submit",(e)=>{
-
-
-    e.preventDefault();
-
-
-    const usuario = {
-
-
-        nome:
-        document.getElementById("nome").value,
-
-
-        instagram:
-        document.getElementById("instagram").value,
-
-
-        facebook:
-        document.getElementById("facebook").value,
-
-
-        sobre:
-        document.getElementById("sobre").value,
-
-
-        foto:image = imagem
-
-
-    };
-
-
-    localStorage.setItem(
-        "perfil",
-        JSON.stringify(usuario)
-    );
-
-
-
-    window.location.href =
-    "perfil.html";
 
 });
