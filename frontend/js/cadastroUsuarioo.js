@@ -20,13 +20,80 @@ if (togglePassword && inputSenha) {
     });
 }
 
+// Inputs
+const form = document.getElementById("formCadastro"); // COLOQUE ESSE ID NO <form>
+
+// ================= MOSTRAR / OCULTAR SENHA =================
+if (togglePassword && inputSenha) {
+    togglePassword.addEventListener("click", () => {
+        const tipoAtual = inputSenha.getAttribute("type");
+        inputSenha.setAttribute("type", tipoAtual === "password" ? "text" : "password");
+
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+}
+
+// ================= SUBMIT DO FORM =================
+form.addEventListener("submit", async (event) => {
+    event.preventDefault(); // NÃO RECARREGA A PÁGINA
+
+    const email = inputEmail.value.trim();
+    const senha = inputSenha.value.trim();
+
+    // ===== VALIDAÇÕES =====
+    if (email === "" || senha === "") {
+        alert("Por favor, preencha todos os campos!");
+        return;
+    }
+
+    const formatoEmailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formatoEmailValido.test(email)) {
+        alert("Por favor, insira um email válido.");
+        return;
+    }
+
+    // ===== OBJETO PARA O BACKEND =====
+    const dadosUsuario = {
+        email: email,
+        senha: senha
+    };
+
+    try {
+        const response = await fetch(API_CADASTRO_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dadosUsuario)
+        });
+
+        if (!response.ok && response.status !== 201) {
+            throw new Error("Erro ao criar conta.");
+        }
+
+        const usuarioCriado = await response.json();
+
+        alert("Conta criada com sucesso!");
+
+        // Limpa o form
+        form.reset();
+
+        // Redireciona
+        window.location.href = "/index.html";
+
+    } catch (error) {
+        console.error(error);
+        alert("Erro ao cadastrar. Tente novamente.");
+    }
+});
+
 btnCadastrar.addEventListener("click", (event) => {
     event.preventDefault();
 
-<<<<<<< HEAD
     const email = inputEmail.value.trim();
     const senha = inputSenha.value.trim();
-=======
+
    // --- 3. LÓGICA DO BOTÃO "ENTRAR" (VALIDAÇÃO DO FORMULÁRIO) ---
    const btnEntrar = document.querySelector('.btn-submit');
    const inputEmail = document.querySelector('input[type="email"]');
@@ -61,56 +128,10 @@ btnCadastrar.addEventListener("click", (event) => {
         });
     }
 });
-
-const btn = document.getElementById("btnCadastrar");
-
-btn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("senha").value.trim();
->>>>>>> e62cfca26be52e891489ebc562bde9192c8f2fbc
-
-    if (!email || !senha) {
-        alert("Preencha o email e a senha.");
-        return;
-    }
-
-<<<<<<< HEAD
-    const formatoEmailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formatoEmailValido.test(email)) {
-        alert("Insira um endereço de email válido.");
-        return;
-    }
-
-    // Guarda os dados desta etapa para serem usados na próxima (criarConta.html)
-    sessionStorage.setItem("cadastroEmailSenha", JSON.stringify({ email, senha }));
-
-    window.location.href = "criarConta.html";
-});
-=======
-    const usuario = {
-        email: email,
-        senha: senha
-    };
-
-    // 🔥 salva no navegador
-    localStorage.setItem("usuario", JSON.stringify(usuario));
-
-    alert("Conta criada com sucesso!");
-
-    // 👉 vai pra próxima página
-    window.location.href = "criarConta.html";
-});
      
 // CONECÇÃO D BACK COM O FRONT //
 // URL da rota de cadastro do seu projeto Spring Boot
-const API_CADASTRO_URL = "http://localhost:8080/api/usuarios/cadastrar";
-
-// Mapeia o botão e os inputs do HTML
-const btnCadastrar = document.getElementById("btnCadastrar");
-const inputEmail = document.getElementById("email");
-const inputSenha = document.getElementById("senha");
+const API_CADASTRO_URL = "http://localhost:8080/api/usuario/cadastrar";
 
 // Ouve o clique no botão "Criar Conta"
 btnCadastrar.addEventListener("click", (event) => {
@@ -164,7 +185,7 @@ btnCadastrar.addEventListener("click", (event) => {
 
 // ================= EXTRA: Funcionalidade do Olhinho da Senha =================
 // Já que você adicionou o ícone fa-eye-slash no HTML, vamos fazê-lo funcionar:
-const togglePassword = document.getElementById("togglePassword");
+
 
 togglePassword.addEventListener("click", () => {
     // Alterna o tipo do input entre password e text
@@ -175,4 +196,57 @@ togglePassword.addEventListener("click", () => {
     togglePassword.classList.toggle("fa-eye");
     togglePassword.classList.toggle("fa-eye-slash");
 });
->>>>>>> e62cfca26be52e891489ebc562bde9192c8f2fbc
+
+document.getElementById('')
+
+// Olhinho da senha
+togglePassword.addEventListener("click", () => {
+    const tipo = inputSenha.type === "password" ? "text" : "password";
+    inputSenha.type = tipo;
+
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+});
+
+// Submit do formulário (IGUAL ao modelo que você pediu)
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = inputEmail.value.trim();
+    const senha = inputSenha.value.trim();
+
+    if (email === "" || senha === "") {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formatoEmail.test(email)) {
+        alert("Email inválido!");
+        return;
+    }
+
+    const dadosUsuario = {
+        email: email,
+        senha: senha
+    };
+
+    try {
+        await fetch(API_CADASTRO_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dadosUsuario)
+        });
+
+        alert("Conta criada com sucesso!");
+        form.reset();
+
+        window.location.href = "/index.html";
+
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao cadastrar.");
+    }
+});

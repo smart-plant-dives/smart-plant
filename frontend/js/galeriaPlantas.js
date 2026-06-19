@@ -170,3 +170,86 @@ modal.addEventListener("click", (e) => {
     await carregarCategorias();
     await carregarPlantas();
 })();
+
+
+// URL da sua API (ajuste se necessário)
+const API_URL = "http://localhost:8080/api/plantas";
+
+// Função que busca as plantas no backend e mostra na tela
+async function carregarPlantas() {
+    const response = await fetch(API_URL); // GET no backend
+    const plantas = await response.json(); // Converte pra JSON
+
+    const grid = document.querySelector(".plant-grid"); // Onde vão os cards
+    const mensagemVazia = document.getElementById("mensagemVazia");
+
+    grid.innerHTML = ""; // Limpa antes de renderizar
+
+    // Se não tiver nenhuma planta
+    if (plantas.length === 0) {
+        mensagemVazia.style.display = "block";
+        return;
+    } else {
+        mensagemVazia.style.display = "none";
+    }
+
+    // Percorre cada planta
+    plantas.forEach(planta => {
+
+        const card = `
+            <div class="plant-card" onclick="abrirModal(${planta.id})">
+                
+                <img src="${planta.imagemUrl || 'https://via.placeholder.com/200'}" alt="Planta">
+                
+                <div class="plant-info">
+                    <h3>${planta.nome}</h3>
+                    <p>${planta.especie}</p>
+                </div>
+
+                <div class="acoes">
+                    <button onclick="event.stopPropagation(); deletarPlanta(${planta.id})">Excluir</button>
+                </div>
+
+            </div>
+        `;
+
+        grid.innerHTML += card;
+    });
+}
+
+// ================= MODAL =================
+function abrirModal(id) {
+    fetch(`${API_URL}/${id}`)
+        .then(res => res.json())
+        .then(planta => {
+
+            document.getElementById("detalheUsuario").innerText = "Usuário";
+            document.getElementById("detalheImg").src = planta.imagemUrl;
+            document.getElementById("detalheNome").value = planta.nome;
+            document.getElementById("detalheEspecie").value = planta.especie;
+            document.getElementById("detalheCategoria").value = planta.categoria;
+            document.getElementById("detalheDescricao").value = planta.descricao;
+
+            document.getElementById("modalDetalhes").classList.remove("hidden");
+        });
+}
+
+// Fechar modal
+document.getElementById("fechar").addEventListener("click", () => {
+    document.getElementById("modalDetalhes").classList.add("hidden");
+});
+
+// ================= DELETAR =================
+async function deletarPlanta(id) {
+    const confirmar = confirm("Deseja excluir essa planta?");
+    if (!confirmar) return;
+
+    await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+    });
+
+    carregarPlantas(); // Atualiza a tela
+}
+
+// ================= INICIALIZAÇÃO =================
+carregarPlantas();

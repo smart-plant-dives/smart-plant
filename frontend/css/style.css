@@ -14,10 +14,11 @@ body {
 
 /* Opcional: ajustar posição */ 
 .logo { 
-    display: flex; 
+    display: flex;
     align-items: center; 
-    padding: 1px 3px 
-
+    padding: 2px 4px;
+    mix-blend-mode: multiply;
+    background: transparent;
 } 
 
 /* HEADER */ 
@@ -29,10 +30,19 @@ body {
     background: #fff; 
 } 
 
+.main-header {
+  height: 65px;
+}
+
 .header .logo img{ 
-    width: 90px;   
-    height: 90px; 
+    width: 60px;   
+    height: 60px; 
 } 
+
+.header .logo{
+    width: 35;
+    height: 35;
+}
 
 .contact img { 
     background: transparent; 
