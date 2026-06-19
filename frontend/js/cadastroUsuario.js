@@ -106,3 +106,76 @@ formLogin.addEventListener("submit", async function(event){
            // 2. Redireciona o usuário para a nova página assim que ele clicar em "OK"
            window.location.href = 'addPlantas.html';
        });
+
+// CONCÇÃO DO BACK COM O FRONT //
+
+// URL da rota de login do seu Spring Boot
+const API_LOGIN_URL = "http://localhost:8080/api/usuarios/login";
+
+// Mapeando os elementos do HTML
+const formLogin1 = document.getElementById("form-login");
+const inputEmail = document.getElementById("login"); // O id do input no HTML é 'login'
+const inputSenha = document.getElementById("senha");
+const divErro = document.getElementById("mensagem-erro");
+
+// Captura o evento de submit do formulário
+formLogin.addEventListener("submit", (event) => {
+    event.preventDefault(); // Impede o recarregamento padrão da página
+
+    // Limpa mensagens de erro antigas
+    divErro.textContent = "";
+
+    const emailValue = inputEmail.value.trim();
+    const senhaValue = inputSenha.value.trim();
+
+    // Monta o objeto para enviar ao Spring Boot
+    const dadosLogin = {
+        email: emailValue,
+        senha: senhaValue
+    };
+
+    // Executa a chamada HTTP (Simulando o clique do Postman)
+    fetch(API_LOGIN_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dadosLogin)
+    })
+    .then(async response => {
+        // Se o status não for sucesso (ex: 401 Unauthorized ou 404 Not Found)
+        if (!response.ok) {
+            const textoErro = await response.text();
+            throw new Error(textoErro || "Erro ao efetuar login.");
+        }
+        return response.json(); // Se deu certo, converte a resposta do usuário
+    })
+    .then(usuarioLogado => {
+        console.log("Login bem-sucedido:", usuarioLogado);
+
+        // Opcional: Salva o ID ou dados do usuário na sessão do navegador 
+        // para você saber quem está logado quando abrir a tela de adicionar plantas
+        sessionStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
+        alert("Bem-vindo(a) de volta!");
+        
+        // Redireciona para a tela principal/painel de plantas
+        window.location.href = "addPlantas.html";
+    })
+    .catch(error => {
+        console.error("Erro no login:", error);
+        // Exibe o erro na div vermelha que já existe no seu HTML
+        divErro.textContent = "E-mail ou senha incorretos.";
+    });
+});
+
+// ================= EXTRA: Funcionalidade de Mostrar/Esconder Senha =================
+const togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener("click", () => {
+    const type = inputSenha.getAttribute("type") === "password" ? "text" : "password";
+    inputSenha.setAttribute("type", type);
+    
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+});
