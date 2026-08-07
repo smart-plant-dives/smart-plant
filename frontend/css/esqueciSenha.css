@@ -35,11 +35,10 @@ body {
 /* Botão de Fechar Global ('X') FORA DO QUADRADO */
 .close-global-btn {
     position: fixed;
-    top: 110px; /* Jogado um pouco para baixo do header */
-    right: 5%;  /* Alinhado com a margem padrão das fotos */
+    
     background: none;
     border: none;
-    font-size: 25px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     color: #211e1e;
