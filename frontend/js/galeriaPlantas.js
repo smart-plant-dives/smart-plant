@@ -1,255 +1,180 @@
-// ===========================================================
-// Galeria de Plantas (galeriaPlantas.html)
-// Mostra as plantas do usuário logado, com busca e filtro por
-// categoria, e um modal com os detalhes de cada planta.
-// ===========================================================
+// =========================
+// CONFIGURAÇÃO DA API
+// =========================
+const API_URL = "http://localhost:8080/api/planta";
 
-const API_BASE = "http://localhost:8080/api";
-
-const usuarioSessao = JSON.parse(localStorage.getItem("usuarioSessao") || "null");
-
-if (!usuarioSessao) {
-    window.location.href = "cadastroUsuario.html";
-    throw new Error("Sem sessão ativa — redirecionando para o login.");
-}
-
-let categorias = [];
 let plantas = [];
+
+const usuarioSessao =
+JSON.parse(localStorage.getItem("perfil"));
 
 const grid = document.querySelector(".plant-grid");
 const mensagemVazia = document.getElementById("mensagemVazia");
 const searchInput = document.getElementById("searchInput");
-const selectFiltro = document.getElementById("opcoes");
+const filtro = document.getElementById("opcoes");
 
-const modal = document.getElementById("modalDetalhes");
-const detalheUsuario = document.getElementById("detalheUsuario");
-const detalheImg = document.getElementById("detalheImg");
-const detalheNome = document.getElementById("detalheNome");
-const detalheEspecie = document.getElementById("detalheEspecie");
-const detalheCategoria = document.getElementById("detalheCategoria");
-const detalheDescricao = document.getElementById("detalheDescricao");
+// =========================
+// CARREGAR PLANTAS
+// =========================
+async function carregarPlantas() {
 
-// -----------------------------------------------------------
-// Descrição automática (recurso decorativo, não vem do backend)
-// -----------------------------------------------------------
-function gerarDescricao(especie, categoria) {
-    const texto = (especie || "").toLowerCase();
-
-    if (texto.includes("rosa")) {
-        return "A rosa-chinesa é uma planta vibrante e delicada, conhecida por sua beleza marcante.";
-    }
-    if (texto.includes("lilium")) {
-        return "Uma planta ornamental sofisticada, com flores grandes e perfumadas.";
-    }
-    if (texto.includes("amora")) {
-        return "Uma planta frutífera que produz frutos saborosos e ricos em nutrientes.";
-    }
-    if (texto.includes("girassol") || texto.includes("helianthus")) {
-        return "Cria uma aparência delicada e sofisticada. Prefere sol pleno, solo bem drenado e regas moderadas.";
-    }
-    if (texto.includes("espada")) {
-        return "Uma planta resistente e muito usada na decoração.";
-    }
-    return `Uma planta ${(categoria || "").toLowerCase()} com características únicas.`;
-}
-
-// -----------------------------------------------------------
-// Categorias (para o filtro)
-// -----------------------------------------------------------
-async function carregarCategorias() {
     try {
-        const resposta = await fetch(`${API_BASE}/categoria`);
-        categorias = await resposta.json();
 
-        selectFiltro.innerHTML = '<option value="todas">Todas</option>';
-        categorias.forEach(cat => {
-            selectFiltro.innerHTML += `<option value="${cat.id}">${cat.nomeCategoria}</option>`;
-        });
+        const response = await fetch(API_URL);
+
+        plantas = await response.json();
+
+        renderizarCards();
+
     } catch (erro) {
-        console.error("Erro ao carregar categorias:", erro);
+
+        console.error("Erro ao carregar plantas:", erro);
+
     }
+
 }
 
-// -----------------------------------------------------------
-// Plantas
-// -----------------------------------------------------------
-function nomeDaCategoria(planta) {
-    return planta.nomeCategoria ? planta.nomeCategoria.nomeCategoria : "Sem categoria";
-}
-
-function idDaCategoria(planta) {
-    return planta.nomeCategoria ? planta.nomeCategoria.id : "";
-}
-
+// =========================
+// RENDERIZAR CARDS
+// =========================
 function renderizarCards() {
-    grid.querySelectorAll(".plant-card").forEach(card => card.remove());
 
-    const termoBusca = searchInput.value.trim().toLowerCase();
-    const categoriaSelecionada = selectFiltro.value;
+    const pesquisa = searchInput.value.toLowerCase();
+
+    const categoria = filtro.value;
+
+    grid.innerHTML = "";
 
     const filtradas = plantas.filter(planta => {
-        const correspondeBusca =
-            !termoBusca ||
-            planta.nomePlanta.toLowerCase().includes(termoBusca) ||
-            planta.especie.toLowerCase().includes(termoBusca);
 
-        const correspondeCategoria =
-            categoriaSelecionada === "todas" ||
-            String(idDaCategoria(planta)) === String(categoriaSelecionada);
+        const nome = (planta.nome || planta.nomePlanta || "").toLowerCase();
 
-        return correspondeBusca && correspondeCategoria;
+        const especie = (planta.especie || "").toLowerCase();
+
+        const categoriaPlanta = planta.categoria || planta.nomeCategoria || "";
+
+        const busca =
+            nome.includes(pesquisa) ||
+            especie.includes(pesquisa);
+
+        const filtroCategoria =
+            categoria === "todas" ||
+            categoriaPlanta == categoria;
+
+        return busca && filtroCategoria;
+
     });
+
+    if (filtradas.length === 0) {
+
+        mensagemVazia.style.display = "block";
+
+        return;
+
+    }
+
+    mensagemVazia.style.display = "none";
 
     filtradas.forEach(planta => {
+
         const card = document.createElement("div");
-        card.classList.add("plant-card");
-        card.dataset.id = planta.id;
+
+        card.className = "plant-card";
 
         card.innerHTML = `
-            <div class="card-user">
-                <div class="user-avatar"></div>
-                <span class="username">@${usuarioSessao.login || usuarioSessao.nome}</span>
+
+            <img src="${planta.imagemUrl || planta.url || 'https://via.placeholder.com/250'}">
+
+            <div class="plant-info">
+
+                <h3>${planta.nome || planta.nomePlanta}</h3>
+
+                <p>${planta.especie}</p>
+
             </div>
-            <div class="plant-image" style="background-image:url('${planta.url || "https://via.placeholder.com/300?text=Sem+imagem"}')"></div>
-            <div class="card-info">
-                <h3>${planta.nomePlanta}</h3>
-                <p class="species">${planta.especie}</p>
-                <span class="tag data-categoria">${nomeDaCategoria(planta)}</span>
-            </div>
+
         `;
 
-        card.addEventListener("click", () => abrirDetalhes(planta));
+        card.onclick = () => abrirModal(planta);
 
         grid.appendChild(card);
+
     });
 
-    mensagemVazia.style.display = filtradas.length === 0 ? "block" : "none";
 }
 
-async function carregarPlantas() {
-    try {
-        const resposta = await fetch(`${API_BASE}/planta/usuario/${usuarioSessao.id}`);
-        plantas = await resposta.json();
-        renderizarCards();
-    } catch (erro) {
-        console.error("Erro ao carregar plantas:", erro);
-    }
+// =========================
+// MODAL
+// =========================
+function abrirModal(planta) {
+
+    document.getElementById("detalheUsuario").innerText =
+        planta.usuario || "Usuário";
+
+    document.getElementById("detalheImg").src =
+        planta.imagemUrl || planta.url || "https://via.placeholder.com/250";
+
+    document.getElementById("detalheNome").value =
+        planta.nome || planta.nomePlanta;
+
+    document.getElementById("detalheEspecie").value =
+        planta.especie;
+
+    document.getElementById("detalheCategoria").value =
+        planta.categoria || planta.nomeCategoria || "";
+
+    document.getElementById("detalheDescricao").value =
+        planta.descricao || "Sem descrição.";
+
+    document
+        .getElementById("modalDetalhes")
+        .classList.remove("hidden");
+
 }
 
-searchInput.addEventListener("input", renderizarCards);
-selectFiltro.addEventListener("change", renderizarCards);
+// =========================
+// FECHAR MODAL
+// =========================
+document.getElementById("fechar").onclick = () => {
 
-// -----------------------------------------------------------
-// Modal de detalhes
-// -----------------------------------------------------------
-function abrirDetalhes(planta) {
-    detalheUsuario.textContent = usuarioSessao.nome;
-    detalheImg.src = planta.url || "https://via.placeholder.com/300?text=Sem+imagem";
-    detalheNome.value = planta.nomePlanta;
-    detalheEspecie.value = planta.especie;
-    detalheCategoria.value = nomeDaCategoria(planta);
-    detalheDescricao.value = gerarDescricao(planta.especie, nomeDaCategoria(planta));
+    document
+        .getElementById("modalDetalhes")
+        .classList.add("hidden");
 
-    modal.classList.remove("hidden");
-}
+};
 
-document.getElementById("fechar").addEventListener("click", () => {
-    modal.classList.add("hidden");
-});
-
-modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.classList.add("hidden");
-    }
-});
-
-// -----------------------------------------------------------
-// Início
-// -----------------------------------------------------------
-(async function iniciar() {
-    await carregarCategorias();
-    await carregarPlantas();
-})();
-
-
-// URL da sua API (ajuste se necessário)
-const API_URL = "http://localhost:8080/api/plantas";
-
-// Função que busca as plantas no backend e mostra na tela
-async function carregarPlantas() {
-    const response = await fetch(API_URL); // GET no backend
-    const plantas = await response.json(); // Converte pra JSON
-
-    const grid = document.querySelector(".plant-grid"); // Onde vão os cards
-    const mensagemVazia = document.getElementById("mensagemVazia");
-
-    grid.innerHTML = ""; // Limpa antes de renderizar
-
-    // Se não tiver nenhuma planta
-    if (plantas.length === 0) {
-        mensagemVazia.style.display = "block";
-        return;
-    } else {
-        mensagemVazia.style.display = "none";
-    }
-
-    // Percorre cada planta
-    plantas.forEach(planta => {
-
-        const card = `
-            <div class="plant-card" onclick="abrirModal(${planta.id})">
-                
-                <img src="${planta.imagemUrl || 'https://via.placeholder.com/200'}" alt="Planta">
-                
-                <div class="plant-info">
-                    <h3>${planta.nome}</h3>
-                    <p>${planta.especie}</p>
-                </div>
-
-                <div class="acoes">
-                    <button onclick="event.stopPropagation(); deletarPlanta(${planta.id})">Excluir</button>
-                </div>
-
-            </div>
-        `;
-
-        grid.innerHTML += card;
-    });
-}
-
-// ================= MODAL =================
-function abrirModal(id) {
-    fetch(`${API_URL}/${id}`)
-        .then(res => res.json())
-        .then(planta => {
-
-            document.getElementById("detalheUsuario").innerText = "Usuário";
-            document.getElementById("detalheImg").src = planta.imagemUrl;
-            document.getElementById("detalheNome").value = planta.nome;
-            document.getElementById("detalheEspecie").value = planta.especie;
-            document.getElementById("detalheCategoria").value = planta.categoria;
-            document.getElementById("detalheDescricao").value = planta.descricao;
-
-            document.getElementById("modalDetalhes").classList.remove("hidden");
-        });
-}
-
-// Fechar modal
-document.getElementById("fechar").addEventListener("click", () => {
-    document.getElementById("modalDetalhes").classList.add("hidden");
-});
-
-// ================= DELETAR =================
+// =========================
+// DELETAR
+// =========================
 async function deletarPlanta(id) {
-    const confirmar = confirm("Deseja excluir essa planta?");
-    if (!confirmar) return;
+
+    if (!confirm("Deseja excluir esta planta?")) {
+
+        return;
+
+    }
 
     await fetch(`${API_URL}/${id}`, {
+
         method: "DELETE"
+
     });
 
-    carregarPlantas(); // Atualiza a tela
+    carregarPlantas();
+
 }
 
-// ================= INICIALIZAÇÃO =================
+// =========================
+// PESQUISA
+// =========================
+searchInput.addEventListener("input", renderizarCards);
+
+// =========================
+// FILTRO
+// =========================
+filtro.addEventListener("change", renderizarCards);
+
+// =========================
+// INICIAR
+// =========================
 carregarPlantas();
