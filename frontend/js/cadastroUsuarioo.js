@@ -250,3 +250,4 @@ form.addEventListener("submit", async (event) => {
         alert("Erro ao cadastrar.");
     }
 });
+
