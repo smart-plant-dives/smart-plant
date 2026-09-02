@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Plant - Sistema de Edição</title>
     <link rel="stylesheet" href="/css/modalEditarPlanta.css">
 </head>
+
 <body>
 
     <div style="padding: 40px; display: flex; gap: 20px; flex-wrap: wrap;">
@@ -14,7 +16,8 @@
             <p>Adicionar nova planta</p>
         </div>
 
-        <div class="card-planta-exemplo" id="card_99" data-privacidade="publico" style="border: 1px solid #ccc; padding: 15px; border-radius: 12px; width: 220px;">
+        <div class="card-planta-exemplo" id="card_99" data-privacidade="publico"
+            style="border: 1px solid #ccc; padding: 15px; border-radius: 12px; width: 220px;">
             <img src="https://via.placeholder.com/200" class="img-planta" style="width:100%; border-radius: 8px;">
             <h3 class="titulo-planta">Minha Jiboia</h3>
             <p class="especie-planta">Epipremnum pinnatum</p>
@@ -22,67 +25,69 @@
             <p class="desc-planta" style="display:none;">Ela está crescendo muito rápido!</p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                 <span class="status-icon">🌐</span>
-                <button onclick="abrirEdicao('card_99')" style="cursor:pointer; background:none; border:none; font-size:18px;">✏️</button>
+                <button onclick="abrirEdicao('card_99')"
+                    style="cursor:pointer; background:none; border:none; font-size:18px;">✏️</button>
             </div>
         </div>
     </div>
 
-   <div id="modalPostagem" class="modal-overlay">
-    <div class="modal-container-post">
-        <h2 class="titulo-modal" id="modalTitulo">Editar Planta</h2>
+    <div id="modalPostagem" class="modal-overlay">
+        <div class="modal-container-post">
+            <h2 class="titulo-modal" id="modalTitulo">Editar Planta</h2>
 
-        <div class="upload-area" id="dropzone">
-            <input type="file" id="inputFoto" accept="image/*" hidden>
-            <div id="uploadPlaceholder">
-                <span class="nuvem-icon">☁︎<sup>+</sup></span>
-                <p>Adicionar imagem<br>da planta</p>
-            </div>
-            <img src="" id="imgPreview" class="hidden">
-        </div>
-
-        <div class="post-form">
-            <input type="text" id="nomePlanta" placeholder="Nome da planta">
-
-            <div class="custom-select" id="selectEspecie">
-                <div class="select-header">
-                    <span class="label">Selecionar espécie</span>
-                    <span class="seta">❯</span>
+            <div class="upload-area" id="dropzone">
+                <input type="file" id="inputFoto" accept="image/*" hidden>
+                <div id="uploadPlaceholder">
+                    <span class="nuvem-icon">☁︎<sup>+</sup></span>
+                    <p>Adicionar imagem<br>da planta</p>
                 </div>
-                <div class="select-options hidden">
-                    <input type="text" class="api-search" placeholder="Buscar espécie...">
-                    <div id="resEspecies">
+                <img src="" id="imgPreview" class="hidden">
+            </div>
+
+            <div class="post-form">
+                <input type="text" id="nomePlanta" placeholder="Nome da planta">
+
+                <div class="custom-select" id="selectEspecie">
+                    <div class="select-header">
+                        <span class="label">Selecionar espécie</span>
+                        <span class="seta">❯</span>
+                    </div>
+                    <div class="select-options hidden">
+                        <input type="text" class="api-search" placeholder="Buscar espécie...">
+                        <div id="resEspecies">
                         </div>
+                    </div>
                 </div>
+
+                <div class="custom-select" id="selectCategoria">
+                    <div class="select-header">
+                        <span class="label">Selecionar categoria</span>
+                        <span class="seta">❯</span>
+                    </div>
+                    <div class="select-options hidden" id="resCategorias"></div>
+                </div>
+
+                <textarea id="descricao" placeholder="Sua experiência:" rows="3"></textarea>
             </div>
 
-            <div class="custom-select" id="selectCategoria">
-                <div class="select-header">
-                    <span class="label">Selecionar categoria</span>
-                    <span class="seta">❯</span>
+            <div class="modal-footer">
+                <div class="custom-select" id="selectPrivacidade" style="width: 140px;">
+                    <div class="select-header">
+                        <span id="pvtIcon" class="icon-preto">🌐</span>
+                        <span id="pvtText" class="label" style="font-size: 12px; margin-left: 5px;">Público</span>
+                        <span class="seta" style="transform: rotate(90deg);">❯</span>
+                    </div>
+                    <div class="select-options hidden">
+                        <div class="option-item" onclick="setPrivacidade(true, '🌐', 'Público')">Público</div>
+                        <div class="option-item" onclick="setPrivacidade(false, '🔒', 'Privado')">Privado</div>
+                    </div>
                 </div>
-                <div class="select-options hidden" id="resCategorias"></div>
+                <button type="button" id="btnSalvar" class="btn-save">Salvar</button>
             </div>
-
-            <textarea id="descricao" placeholder="Sua experiência:" rows="3"></textarea>
-        </div>
-
-        <div class="modal-footer">
-            <div class="custom-select" id="selectPrivacidade" style="width: 140px;">
-                <div class="select-header">
-                    <span id="pvtIcon" class="icon-preto">🌐</span>
-                    <span id="pvtText" class="label" style="font-size: 12px; margin-left: 5px;">Público</span>
-                    <span class="seta" style="transform: rotate(90deg);">❯</span>
-                </div>
-                <div class="select-options hidden">
-                    <div class="option-item" onclick="setPrivacidade(true, '🌐', 'Público')">Público</div>
-                    <div class="option-item" onclick="setPrivacidade(false, '🔒', 'Privado')">Privado</div>
-                </div>
-            </div>
-            <button type="button" id="btnSalvar" class="btn-save">Salvar</button>
         </div>
     </div>
-</div>
 
     <script src="/js/modalEditarPlanta.js"></script>
 </body>
+
 </html>

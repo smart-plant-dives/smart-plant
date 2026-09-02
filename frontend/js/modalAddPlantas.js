@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'option-item';
             div.innerText = cat;
             div.onclick = (e) => {
+
                 e.stopPropagation();
                 selecionarUnico(div, cat, 'selectCategoria');
             };
