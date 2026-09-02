@@ -104,7 +104,6 @@ public class Planta {
 	public void setUsuario(Usuario usuario) {
 	    this.usuario = usuario;
 	}
-
 	public String getDescricao() {
 		return descricao;
 	}
@@ -112,8 +111,4 @@ public class Planta {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
-	
-
 }

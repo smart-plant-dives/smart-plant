@@ -1,64 +1,261 @@
-html, body {
-    height: 100%;
+/* =========================================================
+   RESET / CONFIGURAÇÃO GERAL
+========================================================= */
+
+
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: "Segoe UI", Arial, sans-serif; 
+} 
+
+body { 
+    background-color: #f6f4f4; 
+    color: #222; 
+} 
+
+/* Opcional: ajustar posição */ 
+.logo { 
+    display: flex;
+    align-items: center; 
+    padding: 2px 4px;
+    mix-blend-mode: multiply;
+    background: transparent;
+} 
+
+/* HEADER */ 
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px 60px; 
+    background: #fff; 
+} 
+
+.header {
+    height: 70px; /* controla altura */
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #2e5e2e;
+    background-color: #fff;
+}
+
+.header {
+    height: 65px; /* diminua aqui */
+}
+
+.main-header {
+  height: 65px;
+}
+
+.logo h2 {
+    font-size: 18px;
+    line-height: 18px;
     margin: 0;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+.header .logo img{ 
+    width: 60px;   
+    height: 60px; 
+} 
+
+.logo {
+    margin-left: 40px; /* aumenta conforme quiser */
 }
+
+.header .logo{
+    width: 40;
+    height: 40;
+}
+
+.contact img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+} 
+
+.social img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+} 
+
+.logo span { 
+    color: #3d7c3d; 
+} 
+
+/* =========================================================
+   BUSCA
+========================================================= */
+
+.search-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    width: 280px;
+    height: 34px;
+
+    padding: 0 16px;
+
+    border: 1px solid #ddd;
+    border-radius: 20px;
+
+    background: #fafafa;
+
+    font-size: 12px;
+    color: #333;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.search-bar input::placeholder {
+    color: #999;
+}
+
+.search-bar input:focus {
+    border-color: #4caf50;
+    background: #fff;
+
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.08);
+}
+
+
+/* =========================================================
+   CONTA / BOTÕES
+========================================================= */
+
+.user-account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 14px;
+    color: #222;
+
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn {
+    background: transparent;
+    border: none;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn:hover {
+    color: var(--primary-green);
+}
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
 
 .container {
-    flex: 1; /* empurra o footer pra baixo */
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 45px 50px 60px;
+
+    flex: 1;
+
+    position: relative;
 }
 
-.footer {
-    margin-top: auto;
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.page-header {
+    margin-bottom: 30px;
 }
 
-/* ================= HEADER ================= */ 
+.page-header h1 {
+    margin: 0 0 8px;
 
- 
+    font-size: 34px;
+    line-height: 1.2;
 
-.header { 
+    font-weight: 700;
+    color: #222;
+}
 
-    display: flex; 
+.page-header h1 span {
+    color: var(--primary-green);
+}
 
-    justify-content: space-between; 
+.page-header p {
+    margin: 0;
 
-    align-items: center; 
+    font-size: 14px;
+    color: #666;
+}
 
-    padding: 2px 4px; 
 
-    background: #fff; 
+/* =========================================================
+   FILTRO
+========================================================= */
 
-    border-bottom: 3px solid #2f6f2f; 
+.filter-section {
+    width: 100%;
 
-} 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
- 
+    margin-bottom: 28px;
+}
 
-.logo { 
 
-    display: flex; 
+/* Container do select */
 
-    align-items: center; 
+.top {
+    position: relative;
+    display: inline-block;
+}
 
-} 
 
-/* Estilo do select (filtro) */
+/* Select */
+
 #opcoes {
-    appearance: none; /* remove estilo padrão do navegador */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    background-color: #f2f2f2;
-    border: 1px solid #ffffff;
-    border-radius: 12px;
+    min-width: 90px;
+    height: 36px;
 
-    padding: 10px 40px 10px 15px;
-    font-size: 16px;
-    color: #000000;
+    padding: 0 35px 0 15px;
+
+    border: 1px solid #eee;
+    border-radius: 10px;
+
+    background: #f5f5f5;
+
+    color: #333;
+    font-size: 13px;
 
     cursor: pointer;
     outline: none;
@@ -66,534 +263,552 @@ body {
     transition: 0.2s;
 }
 
-/* Efeito ao passar o mouse */
 #opcoes:hover {
-    border-color: #ffffff;
+    background: #eeeeee;
 }
 
-/* Efeito ao clicar */
 #opcoes:focus {
-    border-color: #ffffff;
-    box-shadow: 0 0 5px rgb(255, 255, 255);
+    border-color: #b7d9b3;
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.08);
 }
 
-/* Container para posicionar a setinha */
-.top {
-    position: relative;
-    display: inline-block;
-}
 
-/* Setinha personalizada */
+/* Seta */
+
 .top::after {
     content: "▼";
-    font-size: 12px;
-    color: #000000;
 
     position: absolute;
     right: 12px;
     top: 50%;
+
     transform: translateY(-50%);
+
+    font-size: 9px;
+    color: #555;
+
     pointer-events: none;
 }
 
- 
 
-.header .logo img { 
+/* =========================================================
+   GRID DE PLANTAS
+========================================================= */
 
-    width: 80px; 
-
-} 
-
- 
-
-.buttons { 
-
-    display: flex; 
-
-    gap: 20px; 
-
-} 
-
- 
-
-.btn { 
-
-    background: transparent; 
-
-    border: none; 
-
-    font-size: 20px; 
-
-    cursor: pointer; 
-
-    transition: 0.3s; 
-
-} 
-
- 
-
-.btn:hover { 
-
-    color: #2f6f2f; 
-
-} 
-
-
-:root {
-    --primary-green: #2d5a27;
-    --light-green: #e9f5e8;
-    --text-dark: #333;
-    --tag-b: #c9e4c5;
-    --border-color: #ddd;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    background-color: #fff;
-    color: var(--text-dark);
-}
-
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 60px;
-    border-bottom: 3px solid var(--primary-green);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo-img {
-    height: 150px;       
-    width: auto;        
-    display: block;
-    object-fit: contain; 
-}
-
-
-
-.search-bar input {
-    padding: 8px 15px;
-    width: 300px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    background-color: #f9f9f9;
-}
-
-.user-account { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.user-icon { width: 35px; height: 35px; background: #ccc; border-radius: 50%; }
-
-/* Main Content */
-.container { padding: 40px 50px; }
-
-.page-header h1 { font-size: 50px; margin-bottom: 5px; }
-.page-header h1 span { color: var(--primary-green); }
-
-.filter-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 49px;
-}
-
-
-/* Grid de Plantas */
 .plant-grid {
+    width: 100%;
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
+
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(210px, 1fr)
+    );
+
+    gap: 22px;
 }
+
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .plant-card {
+    min-width: 0;
+    background: #fff;
     border: 1px solid var(--border-color);
-    border-radius: 15px;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
-.plant-card:hover { transform: translateY(-5px); }
+.plant-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================================================
+   USUÁRIO DO CARD
+========================================================= */
 
 .card-user {
+    height: 42px;
+
     display: flex;
     align-items: center;
-    padding: 10px;
+
+    padding: 8px 12px;
+
     gap: 8px;
 }
 
-.user-avatar { width: 25px; height: 25px; background: #556080; border-radius: 50%; }
-.username { font-size: 14px; font-weight: 600; }
+.user-avatar {
+    width: 27px;
+    height: 27px;
 
-.plant-image {
-    height: 140px;
-    background-size: cover;
-    background-position: center;
-    margin: 0 10px;
-    border-radius: 10px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #7ed957,
+        #3aa655
+    );
 }
 
-.card-info { padding: 15px; }
-.card-info h3 { margin: 0; font-size: 16px; }
-.card-info .species { font-size: 12px; color: #666; margin: 5px 0; }
+.username {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+/* =========================================================
+   TIPOGRAFIA DOS CARDS
+========================================================= */
+
+.card-info {
+    padding: 16px 17px 18px;
+    gap: 7px;
+}
+
+/* Nome da planta */
+.card-info h3 {
+    margin: 0;
+
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+
+    color: #243524;
+
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+}
+
+/* Espécie científica */
+.card-info .species {
+    margin: 0;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+
+    color: #7a7a7a;
+
+    line-height: 1.5;
+}
+
+/* Tags */
+.tag {
+    margin-top: 5px;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    width: fit-content;
+
+    transition: 0.2s ease;
+}
+
+/* Tag espécie */
+.tag-species {
+    background: #e5f2e2;
+    color: #376333;
+}
+
+/* Tag categoria */
+.tag-ornamental,
+.tag-frutifera,
+.data-species,
+.data-categoria {
+    background: #e5f2e2;
+    color: #376333;
+}
+
+/* Efeito ao passar o mouse */
+.plant-card:hover .card-info h3 {
+    color: #2d6a27;
+}
+
+.card-info h3 {
+    font-size: 20px;
+}
+
+.card-info .species {
+    font-size: 50px;
+}
 
 .tag {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-top: 10px;
+    font-size: 50px;
 }
 
-.data-species { background-color: var(--tag-b); color: #2d5a27; }
-.data-categoria { background-color: var(--tag-b); color: #2d5a27; }
+.username {
+    font-size: 12px;
+}
 
-/* ================= FOOTER ================= */ 
+/* =========================================================
+   USUÁRIO DO CARD
+========================================================= */
 
- 
+.card-user {
+    padding: 10px 13px;
 
-.footer { 
+    gap: 8px;
+}
 
-    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
+.username {
+    font-family: 'Inter', sans-serif;
 
-    color: white; 
+    font-size: 12px;
+    font-weight: 500;
 
-    display: flex; 
+    color: #555;
 
-    justify-content: space-between; 
+    letter-spacing: 0.1px;
+}
 
-    align-items: center; 
 
-    padding: 15px 40px; 
 
-    margin-top: auto; 
+/* =========================================================
+   IMAGEM DA PLANTA
+========================================================= */
 
-} 
+/*
+   IMPORTANTE:
 
- 
+   Essa regra funciona se sua imagem estiver dentro de
+   .plant-image.
 
-.footer div { 
+   Exemplo:
 
-    display: flex; 
+   <div class="plant-image">
+       <img src="URL_DA_API">
+   </div>
+*/
 
-    align-items: center; 
+.plant-image {
+    width: 100%;
+    height: 190px;
 
-    gap: 10px; 
+    margin: 0;
 
-} 
+    overflow: hidden;
 
- 
+    background: #f5f5f5;
 
-.footer p { 
+    border-radius: 0;
+}
 
-    font-size: 13px; 
 
-} 
+/* Caso seja <img> dentro do .plant-image */
 
-/* ================= IMAGENS SEM FUNDO ================= */ 
+.plant-image img {
+    width: 100%;
+    height: 100%;
 
- 
+    display: block;
 
-.contact img, 
+    object-fit: cover;
+    object-position: center;
+}
 
-.social img { 
 
-    background: transparent; 
+/*
+   Caso seu HTML coloque a imagem diretamente
+   dentro do card, sem .plant-image.
+*/
 
-    mix-blend-mode: multiply; 
+.plant-card > img {
+    width: 100%;
+    height: 190px;
 
-} 
+    display: block;
 
-/* container das tags (espécie + categoria) */
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO CARD
+========================================================= */
+
 .card-info {
+    padding: 14px 15px 16px;
+
     display: flex;
     flex-direction: column;
+
     gap: 6px;
 }
 
-/* estilo geral das tags */
+.card-info h3 {
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.3;
+
+    font-weight: 600;
+
+    color: #222;
+}
+
+.card-info .species {
+    margin: 0;
+
+    font-size: 12px;
+
+    color: #777;
+}
+
+
+/* =========================================================
+   TAGS
+========================================================= */
+
 .tag {
-    display: inline-block;
-    padding: 5px 12px;
+    width: fit-content;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 11px;
+
     border-radius: 20px;
+
     font-size: 11px;
     font-weight: 600;
-    width: fit-content;
+
+    margin-top: 3px;
 }
 
-/* espécie (nova) */
 .tag-species {
-    background-color: #c9e4c5;
-    color: #161616;
+    background: #c9e4c5;
+    color: #244c20;
 }
 
-/* categoria */
 .tag-ornamental,
-.tag-frutifera {
-    background-color: #c9e4c5;
+.tag-frutifera,
+.data-species,
+.data-categoria {
+    background: #c9e4c5;
     color: #2d5a27;
 }
 
+
+/* =========================================================
+   MENSAGEM QUANDO NÃO HÁ PLANTAS
+========================================================= */
+
 #mensagemVazia {
     display: none;
+
     position: absolute;
+
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
-    
-    font-size: 20px;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 16px;
+
     color: #777;
-    text-align: center;
 }
 
-.container {
-    position: relative;
-}
 
-.search-bar input {
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    width: 250px;
-    outline: none;
-    transition: 0.3s;
-}
+/* =========================================================
+   FOOTER
+========================================================= */
 
-.search-bar input:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-}
-
-/* MODAL */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+.footer {
     width: 100%;
-    height: 100%;
 
-    background: rgba(0,0,0,0.6);
+    background: linear-gradient(
+        90deg,
+        #0f2f0f,
+        #1f4d1f
+    );
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 999;
-}
-
-.hidden {
-    display: none;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    width: 400px;
-    text-align: center;
-    position: relative;
-}
-
-.modal-content img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-#fechar {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    border: none;
-    background: red;
     color: white;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
 
-    cursor: pointer;
-}
-
-/* FUNDO ESCURO */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0,0,0,0.5);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 999;
-}
-
-.hidden {
-    display: none;
-}
-
-/* CAIXA */
-.modal-content {
-    background: #f4f4f4;
-    width: 400px;
-    border-radius: 15px;
-    padding: 15px;
-}
-
-/* HEADER */
-.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+
+    padding: 15px 40px;
+
+    margin-top: auto;
 }
 
-.user-info {
+.footer div {
     display: flex;
     align-items: center;
+
     gap: 10px;
 }
 
-.avatar {
-    width: 35px;
-    height: 35px;
-    background: #ccc;
-    border-radius: 50%;
+.footer p {
+    margin: 0;
+
+    font-size: 13px;
 }
 
-/* BOTÃO X */
-#fechar {
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+
+/* Imagens do footer */
+
+.contact img,
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
 }
 
-/* IMAGEM */
-.modal-img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
 
-/* INPUTS */
-.input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
+/* =========================================================
+   MODAL
+========================================================= */
 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #eaeaea;
-}
-
-/* TEXTAREA */
-.textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #eaeaea;
-
-    resize: none;
-}
-
-/* FUNDO ESCURO COM BLUR */
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.6);
+
     backdrop-filter: blur(5px);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    z-index: 999;
+    padding: 20px;
+
+    z-index: 9999;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-/* CAIXA PRINCIPAL */
+
+/* Caixa */
+
 .modal-content {
-    background: #ffffff;
-    width: 420px;
+    width: min(420px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+
     border-radius: 20px;
+
     padding: 18px;
 
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
 
     animation: aparecer 0.25s ease;
 }
 
-/* ANIMAÇÃO */
+
 @keyframes aparecer {
+
     from {
-        transform: translateY(20px) scale(0.95);
         opacity: 0;
+        transform: translateY(20px) scale(0.95);
     }
+
     to {
-        transform: translateY(0) scale(1);
         opacity: 1;
+        transform: translateY(0) scale(1);
     }
+
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER DO MODAL
+========================================================= */
+
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 15px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
+
     gap: 10px;
 }
 
-/* AVATAR MELHOR */
 .avatar {
     width: 38px;
     height: 38px;
+
+    flex-shrink: 0;
+
     border-radius: 50%;
-    background: linear-gradient(135deg, #7ed957, #3aa655);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+    background: linear-gradient(
+        135deg,
+        #7ed957,
+        #3aa655
+    );
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* NOME */
 #detalheUsuario {
-    font-weight: 600;
     font-size: 14px;
+    font-weight: 600;
 }
 
-/* BOTÃO FECHAR */
-#fechar {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 50%;
 
+/* =========================================================
+   BOTÃO FECHAR
+========================================================= */
+
+#fechar {
     width: 32px;
     height: 32px;
 
+    border: none;
+    border-radius: 50%;
+
+    background: #ff4d4d;
+
+    color: white;
+
     font-size: 16px;
+
     cursor: pointer;
 
     transition: 0.2s;
@@ -601,47 +816,119 @@ body {
 
 #fechar:hover {
     background: #e60000;
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
-/* IMAGEM */
+
+/* =========================================================
+   IMAGEM DO MODAL
+========================================================= */
+
 .modal-img {
     width: 100%;
-    height: 200px;
+    height: 220px;
+
+    display: block;
+
     object-fit: cover;
 
     border-radius: 12px;
+
     margin-bottom: 12px;
 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
-/* INPUTS */
-.input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 10px;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
+/* =========================================================
+   INFORMAÇÕES DO MODAL
+========================================================= */
 
-    background: #f7f7f7;
+.info {
+    margin-top: 10px;
+}
+
+.nome,
+#detalheNome {
+    margin: 0 0 5px;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.especie,
+#detalheEspecie {
+    margin: 0 0 10px;
+
+    font-size: 13px;
+
+    color: #888;
+}
+
+.descricao,
+#detalheDescricao {
+    margin: 0;
 
     font-size: 14px;
-    font-weight: 500;
+    line-height: 1.5;
+
+    color: #333;
+
+    resize: none;
+}
+
+#detalheCategoria {
+    font-size: 13px;
+    color: #888;
+}
+
+
+/* =========================================================
+   INPUTS DO MODAL
+========================================================= */
+
+.input {
+    width: 100%;
+
+    padding: 0;
+
+    margin-bottom: 8px;
+
+    border: none;
+
+    background: transparent;
+
+    font-family: inherit;
 
     outline: none;
 }
 
-/* LABEL FAKE (tipo Instagram) */
+.input:focus {
+    outline: none;
+}
+
 .input::placeholder {
     color: #888;
 }
 
-/* TEXTAREA */
+input[readonly],
+textarea[readonly] {
+    border: none;
+    background: transparent;
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
 .textarea {
     width: 100%;
     height: 110px;
+
     padding: 12px;
 
     border: 1px solid #ddd;
@@ -649,19 +936,20 @@ body {
 
     background: #f7f7f7;
 
+    font-family: inherit;
     font-size: 14px;
+
     line-height: 1.4;
 
     resize: none;
+
+    outline: none;
 }
 
-/* HOVER NOS CAMPOS */
-.input:hover,
 .textarea:hover {
     border-color: #7ed957;
 }
 
-/* SCROLL BONITO (se precisar) */
 .textarea::-webkit-scrollbar {
     width: 6px;
 }
@@ -671,82 +959,108 @@ body {
     border-radius: 10px;
 }
 
-/* CONTAINER DOS TEXTOS */
-.info {
-    margin-top: 10px;
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .header,
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .container {
+        padding: 35px 25px 50px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    .plant-grid {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(190px, 1fr)
+        );
+    }
+
 }
 
-/* NOME */
-.nome {
-    font-size: 20px;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 4px;
+
+@media (max-width: 600px) {
+
+    .header,
+    .navbar {
+        height: auto;
+        min-height: 65px;
+
+        padding: 10px 15px;
+    }
+
+    .search-bar {
+        position: static;
+        transform: none;
+
+        margin: 0 10px;
+    }
+
+    .search-bar input {
+        width: 180px;
+    }
+
+    .container {
+        padding: 25px 15px 40px;
+    }
+
+    .page-header h1 {
+        font-size: 26px;
+    }
+
+    .page-header p {
+        font-size: 13px;
+    }
+
+    .plant-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .plant-image,
+    .plant-card > img {
+        height: 150px;
+    }
+
+    .card-info {
+        padding: 11px;
+    }
+
+    .card-info h3 {
+        font-size: 14px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 15px 20px;
+
+        text-align: center;
+    }
+
 }
 
-/* ESPÉCIE */
-.especie {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 12px;
+
+@media (max-width: 400px) {
+
+    .plant-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .plant-image,
+    .plant-card > img {
+        height: 200px;
+    }
+
 }
-
-/* DESCRIÇÃO */
-.descricao {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-}
-
-/* REMOVE CARA DE INPUT */
-.input {
-    width: 100%;
-    border: none;
-    background: transparent;
-
-    padding: 0;
-    margin-bottom: 8px;
-
-    font-family: 'Poppins', sans-serif;
-}
-
-/* NOME */
-#detalheNome {
-    font-size: 20px;
-    font-weight: 600;
-    color: #222;
-}
-
-/* ESPÉCIE */
-#detalheEspecie {
-    font-size: 13px;
-    color: #888;
-}
-
-/* DESCRIÇÃO */
-#detalheDescricao {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-
-    resize: none;
-}
-
-/* CATEGORIA */
-#detalheCategoria{
-    font-size: 13px;
-    color: #888;
-}
-
-/* REMOVE FOCO FEIO */
-.input:focus {
-    outline: none;
-}
-
-/* REMOVE BORDA AUTOMÁTICA EM ALGUNS NAVEGADORES */
-input[readonly],
-textarea[readonly] {
-    border: none;
-    background: transparent;
-}
-
