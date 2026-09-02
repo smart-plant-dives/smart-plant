@@ -20,7 +20,7 @@
 <main>
   <section class="login-box">
 
-    <!-- Botão X movido para DENTRO da modal -->
+    <!-- Botão X mantido na modal -->
     <a href="../index.html" class="close-global-btn" title="Fechar">&times;</a>
 
     <form id="form-login" class="login-form">
@@ -44,13 +44,16 @@
 
       <a href="esqueciSenha.html" class="forgot-password">Esqueceu a senha?</a>
 
-      <button type="submit" class="btn-submit">Entrar</button>
+      <!-- Redireciona direto no HTML sem alterar a tag button -->
+      <button type="submit" class="btn-submit" formaction="galeriaPlantas.html">Entrar</button>
     </form>
 
     <div class="register-promo">
       <h3>Ainda não possui conta?</h3>
       <p>Crie sua conta e comece a cuidar ainda melhor das suas plantas.</p>
-      <a href="cadastroEntrar.html" class="btn-outline">Criar conta</a>
+      
+      <!-- Link direto para criarConta -->
+      <a href="criarConta.html" class="btn-outline">Criar conta</a>
     </div>
 
   </section>
