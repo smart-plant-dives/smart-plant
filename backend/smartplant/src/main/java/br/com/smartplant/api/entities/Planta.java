@@ -28,6 +28,9 @@ public class Planta {
 
 	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
+	
+	@Column(name = "descricao", nullable = false, length = 150)
+	private String descricao;
 
 	@ManyToOne
     @JoinColumn(name = "nome_categoria")
@@ -42,15 +45,18 @@ public class Planta {
 
 	}
 
-	public Planta(String nomePlanta, String url, Categoria nomeCategoria, String especie) {
 
+	public Planta(Long id, String nomePlanta, String url, String especie, String descricao, Categoria nomeCategoria, Usuario usuario) {
+		this.id = id;
 		this.nomePlanta = nomePlanta;
 		this.url = url;
-		this.nomeCategoria = nomeCategoria;
 		this.especie = especie;
+		this.descricao = descricao;
+		this.nomeCategoria = nomeCategoria;
+		this.usuario = usuario;
 	}
 
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -98,6 +104,15 @@ public class Planta {
 	public void setUsuario(Usuario usuario) {
 	    this.usuario = usuario;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	
 	
 
