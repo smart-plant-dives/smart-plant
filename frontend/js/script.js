@@ -1,53 +1,18 @@
-let slides = document.querySelectorAll('.slide'); 
+// Carrossel de imagens da home
+let slides = document.querySelectorAll('.slide');
+let index = 0;
 
-let dots = document.querySelectorAll('.dot'); 
+function showSlide(i) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[i].classList.add('active');
+}
 
-let index = 0; 
+function nextSlide() {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+}
 
- 
-
-function showSlide(i) { 
-
-    slides.forEach(slide => slide.classList.remove('active')); 
-
-    dots.forEach(dot => dot.classList.remove('active')); 
-
- 
-
-    slides[i].classList.add('active'); 
-
-    dots[i].classList.add('active'); 
-
-} 
-
- 
-
-function nextSlide() { 
-
-    index = (index + 1) % slides.length; 
-
-    showSlide(index); 
-
-} 
-
- 
-
-// automático 
-
-setInterval(nextSlide, 3000); 
-
- 
-
-// clique nos dots 
-
-dots.forEach((dot, i) => { 
-
-    dot.addEventListener("click", () => { 
-
-        index = i; 
-
-        showSlide(index); 
-
-    }); 
-
-}); 
+// avança automaticamente
+if (slides.length > 0) {
+    setInterval(nextSlide, 3000);
+}

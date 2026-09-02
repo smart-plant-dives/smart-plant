@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #2e7d32;
+}
+
+.logo-img {
+    height: 60px;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    border-top: 5px solid #2e7d32;
+    position: relative; 
+}
+
+.close-global-btn {
+    position: absolute;
+    top: 15px;           
+    left: 20px;          
+    font-size: 22px;
+    font-weight: bold;
+    color: #666;
+    text-decoration: none;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.close-global-btn:hover {
+    color: #ff4d4d;
+}
+
+.login-form h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.login-form p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input input {
+    width: 100%;
+    padding-right: 35px;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    color: #888;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #1f4d1f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+}
+
+.btn-submit:hover {
+    background-color: #1b5e20;
+}

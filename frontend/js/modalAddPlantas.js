@@ -5,7 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');
     const inputFoto = document.getElementById('inputFoto');
     const dropzone = document.getElementById('dropzone');
-    
+    const btnCancelar = document.getElementById("btnCancelar");
+
+btnCancelar.onclick = () => {
+    modal.classList.remove("active");
+    limparCamposModal();
+};
+
     // Elementos da Busca Manual
     const inputBuscaEspecie = document.querySelector('.api-search');
     const containerResultados = document.getElementById('resEspecies');

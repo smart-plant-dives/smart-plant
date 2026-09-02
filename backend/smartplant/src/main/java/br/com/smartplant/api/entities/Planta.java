@@ -1,5 +1,7 @@
 package br.com.smartplant.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,10 +17,14 @@ public class Planta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_planta")
 	private Long id;
 
 	@Column(name = "nome_planta", nullable = false, length = 70)
 	private String nomePlanta;
+	
+	@Column(name = "url")
+	private String url;
 
 	@Column(name = "especie", nullable = false, length = 30)
 	private String especie;
@@ -26,14 +32,20 @@ public class Planta {
 	@ManyToOne
     @JoinColumn(name = "nome_categoria")
 	private Categoria nomeCategoria;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	@JsonBackReference
+	private Usuario usuario;
 
 	public Planta() {
 
 	}
 
-	public Planta(String nomePlanta, Categoria nomeCategoria, String especie) {
+	public Planta(String nomePlanta, String url, Categoria nomeCategoria, String especie) {
 
 		this.nomePlanta = nomePlanta;
+		this.url = url;
 		this.nomeCategoria = nomeCategoria;
 		this.especie = especie;
 	}
@@ -70,5 +82,23 @@ public class Planta {
 	public void setEspecie(String especie) {
 		this.especie = especie;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	public Usuario getUsuario() {
+	    return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+	    this.usuario = usuario;
+	}
+	
+	
 
 }

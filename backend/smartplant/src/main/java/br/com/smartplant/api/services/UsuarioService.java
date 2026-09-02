@@ -1,8 +1,10 @@
+
 package br.com.smartplant.api.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.smartplant.api.entities.Usuario;
@@ -10,40 +12,69 @@ import br.com.smartplant.api.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	
 	@Autowired
-	private UsuarioRepository repository;
+    private UsuarioRepository repository;
 
-	public List<Usuario> listarTodos() {
-		return repository.findAll();
-	}
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-	public Usuario buscarPorID(Long id) {
-		Usuario usuario = repository.findById(id).orElse(null);
+    public Usuario salvar(Usuario usuario) {
+        String senhaCriptografia = passwordEncoder.encode(usuario.getSenha());
 
-		return usuario;
-	}
+        usuario.setSenha(senhaCriptografia);
 
-	public Usuario salvar(Usuario usuario) {
-		return repository.save(usuario);
-	}
+        return repository.save(usuario);
+    }
 
-	public Usuario atualizar(Long id, Usuario usuarioAtualizado) {
-		Usuario usuarioVelho = repository.findById(id).get();
+    public Usuario autenticar(String login, String senha) {
 
-		usuarioVelho.setNomeUsuario(usuarioAtualizado.getNomeUsuario());
-		usuarioVelho.setEmail(usuarioAtualizado.getEmail());
-		usuarioVelho.setSenha(usuarioAtualizado.getSenha());
+        Usuario usuario = repository.findByLogin(login);
 
-		return repository.save(usuarioVelho);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario não encontrado");
+        }
 
-	}
+        boolean senhaValida = passwordEncoder.matches(senha, usuario.getSenha());
 
-	public String deletar(Long id) {
-		Usuario usuario = buscarPorID(id);
+        if (!senhaValida) {
+            throw new RuntimeException("Senha inválida");
+        }
 
-		repository.delete(usuario);
+        return usuario;
+    }
 
-		return "O usuário" + usuario + "foi excluído";
-	}
+    public List<Usuario> listarTodos() {
+        return repository.findAll();
+    }
+
+    public Usuario buscarPorId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+    }
+
+    public Usuario atualizar(Long id, Usuario usuarioNovo) {
+        Usuario usuarioAntigo = buscarPorId(id);
+
+        usuarioAntigo.setLogin(usuarioNovo.getLogin());
+        usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
+        usuarioAntigo.setEmail(usuarioNovo.getEmail());
+        usuarioAntigo.setNome(usuarioNovo.getNome());
+
+        if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
+
+            String senhaCriptografada = passwordEncoder.encode(usuarioNovo.getSenha());
+
+            usuarioAntigo.setSenha(senhaCriptografada);
+        }
+
+        return repository.save(usuarioAntigo);
+
+    }
+
+    public void deletar(Long id) {
+        Usuario usuario = buscarPorId(id);
+
+        repository.delete(usuario);
+    }
 
 }

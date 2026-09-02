@@ -14,36 +14,46 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository;
 	
+	public Categoria salvar(Categoria categoria) {
+		
+	Categoria categoriaExistente = repository.findByNomeCategoria(categoria.getNomeCategoria());
+	
+	if (categoriaExistente != null) {
+		throw new RuntimeException("Categoria já existente");
+		
+	}
+	
+	return repository.save(categoria);
+	}
+	
 	public List<Categoria> listarTodos(){
 		return repository.findAll();
 	}
 	
+	
+	
 	public Categoria buscarPorID(Long id) {
-		Categoria categoria = repository.findById(id).orElse(null);
-		
-		return categoria;
+		return repository.findById(id).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 	}
 	
-	public Categoria salvar(Categoria categoria) {
-		return repository.save(categoria);
-	}
-		
 	
-		public Categoria atualizar(Long id, Categoria cNova) {
-		    Categoria cVelha = repository.findById(id).get();
-
-		   cVelha.setNomeCategoria(cNova.getNomeCategoria());
-
-		    return repository.save(cVelha);
+	public Categoria atualizar(Long id, Categoria categoriaNova) {
+		Categoria categoriaAntiga = buscarPorID(id);
 		
+		if (categoriaNova.getNomeCategoria() != null && ! categoriaNova.getNomeCategoria().isBlank()) {
+			categoriaAntiga.setNomeCategoria(categoriaNova.getNomeCategoria());
+		}
+		
+		return repository.save(categoriaAntiga);
 	}
+
 		
-		public String deletar(Long id) {
+		public void deletar(Long id) {
 			Categoria categoria = buscarPorID(id);
 			
 			repository.delete(categoria);
-			
-			return "Categoria" + id + "foi excluída";
 		}
 
 }
+	
+

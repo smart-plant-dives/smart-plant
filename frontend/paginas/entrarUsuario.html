@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartPlant - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/entrarUsuario.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo">
+        <a href="../index.html">
+            <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant" height="60">
+        </a>
+    </div>
+</header>
+
+<main>
+  <section class="login-box">
+
+    <!-- Botão X mantido na modal -->
+    <a href="../index.html" class="close-global-btn" title="Fechar">&times;</a>
+
+    <form id="form-login" class="login-form">
+      <h2>Bem-vindo(a) ao SmartPlant</h2>
+      <p>Acesse sua conta e continue cuidando das suas plantas.</p>
+
+      <div id="mensagem-erro" style="color: red; margin-bottom: 10px; font-weight: bold;"></div>
+
+      <div class="input-group">
+        <label for="login">Usuário</label>
+        <input type="text" id="login" placeholder="Seu usuário" required>
+      </div>
+
+      <div class="input-group">
+        <label for="senha">Senha</label>
+        <div class="password-input">
+          <input type="password" id="senha" placeholder="Senha" required>
+          <i class="fas fa-eye-slash" id="togglePassword" style="cursor: pointer;"></i>
+        </div>
+      </div>
+
+      <a href="esqueciSenha.html" class="forgot-password">Esqueceu a senha?</a>
+
+      <!-- Redireciona direto no HTML sem alterar a tag button -->
+      <button type="submit" class="btn-submit" formaction="galeriaPlantas.html">Entrar</button>
+    </form>
+
+    <div class="register-promo">
+      <h3>Ainda não possui conta?</h3>
+      <p>Crie sua conta e comece a cuidar ainda melhor das suas plantas.</p>
+      
+      <!-- Link direto para criarConta -->
+      <a href="criarConta.html" class="btn-outline">Criar conta</a>
+    </div>
+
+  </section>
+</main>
+
+<script src="../js/entrarUsuario.js"></script>
+</body>
+</html>
