@@ -1,20 +1,11 @@
-// ===========================================================
-// Tela "Suas Plantas" (addPlantas.html)
-// Lista, cria, edita e apaga as plantas do usuário logado.
-// Edita também um "perfil extra" (foto/instagram/facebook/bio)
-// que fica só no navegador, pois o backend não guarda isso hoje.
-// ===========================================================
-
 const API_BASE = "http://localhost:8080/api";
 
-// -----------------------------------------------------------
-// 1. SESSÃO
-// -----------------------------------------------------------
+//secao
 const usuarioSessao = JSON.parse(localStorage.getItem("usuarioSessao") || "null");
 
 if (!usuarioSessao) {
-    window.location.href = "cadastroUsuario.html";
-    throw new Error("Sem sessão ativa — redirecionando para o login.");
+    window.location.href = "cadastroUsuarioo.html";
+    throw new Error("Voce não possui uma conta!");
 }
 
 let perfilExtra = JSON.parse(localStorage.getItem("perfilExtra") || "null") || {
@@ -29,9 +20,7 @@ let categorias = [];      // [{id, nomeCategoria}]
 let plantas = [];         // cache da última listagem
 let categoriaFiltroAtual = "todas";
 
-// -----------------------------------------------------------
-// 2. ELEMENTOS
-// -----------------------------------------------------------
+//elementos
 const cardsContainer = document.getElementById("cards");
 const abrirModalBtn = document.getElementById("abrirModal");
 const mensagemVazia = document.getElementById("mensagemVazia");
@@ -73,9 +62,7 @@ const btnTrocarFoto = document.getElementById("btnTrocarFoto");
 const fotoPreview = document.getElementById("fotoPreview");
 const textoPlaceholder = document.getElementById("textoPlaceholder");
 
-// -----------------------------------------------------------
-// 3. PERFIL (exibição)
-// -----------------------------------------------------------
+//mostra perfil
 function renderizarPerfil() {
     nomeUsuarioSpan.innerText = usuarioSessao.nome || "";
     usernameH2.innerText = perfilExtra.username || "";
@@ -88,9 +75,7 @@ function renderizarPerfil() {
 
 renderizarPerfil();
 
-// -----------------------------------------------------------
-// 4. CATEGORIAS (vem do backend)
-// -----------------------------------------------------------
+//mostra as categorias
 async function carregarCategorias() {
     try {
         const resposta = await fetch(`${API_BASE}/categoria`);
@@ -119,9 +104,7 @@ async function carregarCategorias() {
     }
 }
 
-// -----------------------------------------------------------
-// 5. LISTAR PLANTAS
-// -----------------------------------------------------------
+//mostra as plantas
 function nomeDaCategoria(planta) {
     return planta.nomeCategoria ? planta.nomeCategoria.nomeCategoria : "Sem categoria";
 }
@@ -183,9 +166,7 @@ selectFiltro.addEventListener("change", () => {
     renderizarCards();
 });
 
-// -----------------------------------------------------------
-// 6. ADICIONAR PLANTA
-// -----------------------------------------------------------
+//add planta
 abrirModalBtn.addEventListener("click", () => {
     inputNomePlanta.value = "";
     inputEspecie.value = "";
@@ -236,9 +217,7 @@ btnSalvarPlanta.addEventListener("click", async () => {
     }
 });
 
-// -----------------------------------------------------------
-// 7. EDITAR PLANTA
-// -----------------------------------------------------------
+//editra planta
 function abrirEdicao(id) {
     const planta = plantas.find(p => p.id === id);
     if (!planta) return;
@@ -288,9 +267,7 @@ salvarEdicaoBtn.addEventListener("click", async () => {
     }
 });
 
-// -----------------------------------------------------------
-// 8. APAGAR PLANTA
-// -----------------------------------------------------------
+// apaga planta
 async function apagarPlanta(id) {
     if (!confirm("Deseja apagar essa planta?")) return;
 
@@ -309,9 +286,7 @@ async function apagarPlanta(id) {
     }
 }
 
-// -----------------------------------------------------------
-// 9. PERFIL (edição local — backend não guarda esses campos hoje)
-// -----------------------------------------------------------
+//edit perfil
 btnAbrirPerfil.addEventListener("click", () => {
     inputNomePerfil.value = usuarioSessao.nome || "";
     inputInstaPerfil.value = perfilExtra.instagram || "";
@@ -372,9 +347,7 @@ inputFotoPerfil.addEventListener("change", () => {
     leitor.readAsDataURL(arquivo);
 });
 
-// -----------------------------------------------------------
-// 10. INÍCIO
-// -----------------------------------------------------------
+//carrega categoruas e plantas logo que abrir
 (async function iniciar() {
     await carregarCategorias();
     await carregarPlantas();

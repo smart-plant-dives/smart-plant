@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f6f4f4;
 }
 
 .main-header {
@@ -16,11 +16,36 @@ body {
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-bottom: 4px solid #2e7d32;
+    border-bottom: 2px solid #2e7d32;
 }
 
-.logo-img {
-    height: 60px;
+/* Opcional: ajustar posição */ 
+.logo { 
+    display: flex;
+    align-items: center; 
+    padding: 2px 4px;
+    mix-blend-mode: multiply;
+    background: transparent;
+} 
+
+.logo h2 {
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.header .logo img{ 
+    width: 60px;   
+    height: 60px; 
+} 
+
+.logo {
+    margin-left: 40px; /* aumenta conforme quiser */
+}
+
+.header .logo{
+    width: 40;
+    height: 40;
 }
 
 .login-container {
@@ -33,12 +58,11 @@ body {
 
 .login-box {
     background-color: #fff;
-    padding: 30px;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
-    border-top: 5px solid #2e7d32;
+    max-width: 450px;
     position: relative; 
 }
 

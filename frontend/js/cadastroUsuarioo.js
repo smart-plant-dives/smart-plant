@@ -1,17 +1,12 @@
-// ===========================================================
-// Configurações Globais
-// ===========================================================
+
 const API_CADASTRO_URL = "http://localhost:8080/api/usuario/cadastrar";
 
-// Elementos do DOM
 const form = document.getElementById("formCadastro");
 const inputEmail = document.getElementById("email");
 const inputSenha = document.getElementById("senha");
 const togglePassword = document.getElementById("togglePassword");
 
-// ===========================================================
-// 1. Funcionalidade de Mostrar / Ocultar Senha
-// ===========================================================
+//mostra e oculta senha
 if (togglePassword && inputSenha) {
     togglePassword.addEventListener("click", () => {
         const tipoAtual = inputSenha.getAttribute("type");
@@ -23,9 +18,7 @@ if (togglePassword && inputSenha) {
     });
 }
 
-// ===========================================================
-// 2. Envio do Formulário para o Spring Boot
-// ===========================================================
+//manda form pro spring
 if (form) {
     form.addEventListener("submit", async (event) => {
         event.preventDefault(); // Impede o recarregamento padrão da página
@@ -33,7 +26,6 @@ if (form) {
         const email = inputEmail.value.trim();
         const senha = inputSenha.value.trim();
 
-        // --- VALIDAÇÕES ---
         if (email === "" || senha === "") {
             alert("Por favor, preencha todos os campos!");
             return;
@@ -45,13 +37,11 @@ if (form) {
             return;
         }
 
-        // --- OBJETO PARA O BACKEND ---
         const dadosUsuario = {
             email: email,
             senha: senha
         };
 
-        // --- REQUISIÇÃO API ---
         try {
             const response = await fetch(API_CADASTRO_URL, {
                 method: "POST",
