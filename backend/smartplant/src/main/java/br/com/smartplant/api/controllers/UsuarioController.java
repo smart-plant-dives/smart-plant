@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.smartplant.api.entities.Usuario;
 import br.com.smartplant.api.services.UsuarioService;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
