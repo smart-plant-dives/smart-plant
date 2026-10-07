@@ -19,7 +19,7 @@ if (togglePassword && inputSenha) {
     });
 }
 
-// IGUAL AO SEU MODELO ↓↓↓
+
 document.getElementById('form-login').addEventListener('submit', async (event) => {
     event.preventDefault(); // impede reload
 
@@ -41,7 +41,6 @@ document.getElementById('form-login').addEventListener('submit', async (event) =
     }
 
     try {
-        // POST IGUAL AO SEU EXEMPLO
         const response = await fetch(API_LOGIN_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -5,9 +5,7 @@ const inputEmail = document.getElementById("email");
 const inputSenha = document.getElementById("senha");
 const togglePassword = document.getElementById("togglePassword");
 
-// ==========================
-// MOSTRAR / OCULTAR SENHA
-// ==========================
+// mostra e oculta senha
 
 if (togglePassword && inputSenha) {
     togglePassword.addEventListener("click", () => {
@@ -30,9 +28,7 @@ if (togglePassword && inputSenha) {
 }
 
 
-// ==========================
-// CADASTRO
-// ==========================
+// cadastro
 
 if (form) {
 
@@ -88,10 +84,6 @@ if (form) {
             }
 
             alert("Conta criada com sucesso! Seja bem-vindo(a).");
-
-            form.reset();
-
-            window.location.href = "../index.html";
 
         } catch (error) {
 

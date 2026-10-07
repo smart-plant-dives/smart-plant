@@ -4,7 +4,7 @@ const API_BASE = "http://localhost:8080/api";
 const usuarioSessao = JSON.parse(localStorage.getItem("usuarioSessao") || "null");
 
 if (!usuarioSessao) {
-    window.location.href = "cadastroUsuarioo.html";
+   
     throw new Error("Voce não possui uma conta!");
 }
 

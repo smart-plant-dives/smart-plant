@@ -6,10 +6,6 @@ const cancelar = document.querySelector(".cancelar");
 let imagem = "";
 
 
-// ===============================
-// FOTO DE PERFIL
-// ===============================
-
 foto.addEventListener("change", () => {
 
     const arquivo = foto.files[0];
@@ -69,10 +65,7 @@ foto.addEventListener("change", () => {
 
 
 
-// ===============================
-// CRIAR CONTA
-// ===============================
-
+//criar conta
 form.addEventListener("submit", (e) => {
 
     e.preventDefault();
@@ -110,9 +103,8 @@ form.addEventListener("submit", (e) => {
 
 
 
-    // ===============================
-    // VALIDAÇÕES
-    // ===============================
+   
+
 
     if (nome === "") {
 
@@ -136,9 +128,8 @@ form.addEventListener("submit", (e) => {
     }
 
 
-    // ===============================
-    // USERNAME AUTOMÁTICO
-    // ===============================
+   
+
 
     if (username === "") {
 
@@ -164,9 +155,6 @@ form.addEventListener("submit", (e) => {
 
 
 
-    // ===============================
-    // INSTAGRAM
-    // ===============================
 
     if (
         instagram !== "" &&
@@ -185,9 +173,7 @@ form.addEventListener("submit", (e) => {
 
 
 
-    // ===============================
-    // FACEBOOK
-    // ===============================
+
 
     if (
         facebook !== "" &&
@@ -206,9 +192,7 @@ form.addEventListener("submit", (e) => {
 
 
 
-    // ===============================
-    // SALVAR PERFIL
-    // ===============================
+    
 
     const perfil = {
 
