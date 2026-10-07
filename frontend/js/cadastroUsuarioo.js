@@ -1,7 +1,9 @@
-const API_CADASTRO_URL = "http://localhost:8080/api/usuario/cadastrar";
+const API_CADASTRO_URL = "http://localhost:8080/api/usuario";
 
 const form = document.getElementById("formCadastro");
 const inputEmail = document.getElementById("email");
+const inputNome = document.getElementById("nome");
+const inputLogin = document.getElementById("login");
 const inputSenha = document.getElementById("senha");
 const togglePassword = document.getElementById("togglePassword");
 
@@ -37,10 +39,12 @@ if (form) {
         event.preventDefault();
 
         const email = inputEmail.value.trim();
+        const login = inputLogin.value.trim();
+        const nome = inputNome.value.trim();
         const senha = inputSenha.value.trim();
 
         // Verifica campos vazios
-        if (email === "" || senha === "") {
+        if (email === "" || senha === "" || login === "" || nome === "") {
             alert("Por favor, preencha todos os campos!");
             return;
         }
@@ -54,8 +58,11 @@ if (form) {
         }
 
         const dadosUsuario = {
+            login: login,
+            nome: nome,
             email: email,
-            senha: senha
+            senha: senha,
+            tipoUsuario: "USUARIO"
         };
 
         console.log("Enviando para API:", dadosUsuario);
@@ -84,6 +91,7 @@ if (form) {
             }
 
             alert("Conta criada com sucesso! Seja bem-vindo(a).");
+            window.location.href = "criarConta.html";
 
         } catch (error) {
 
