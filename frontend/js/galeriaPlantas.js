@@ -3,118 +3,315 @@ const API_URL = "http://localhost:8080/api/planta";
 
 let plantas = [];
 
-const usuarioSessao =
-JSON.parse(localStorage.getItem("perfil"));
-
 const grid = document.querySelector(".plant-grid");
 const mensagemVazia = document.getElementById("mensagemVazia");
 const searchInput = document.getElementById("searchInput");
 const filtro = document.getElementById("opcoes");
+const modal = document.getElementById("modalDetalhes");
+const botaoFechar = document.getElementById("fechar");
 
-//carrega planta
+// Obtém o primeiro campo existente entre os nomes possíveis.
+function obterCampo(objeto, ...campos) {
+    if (!objeto || typeof objeto !== "object") return "";
+
+    for (const campo of campos) {
+        if (objeto[campo] !== undefined && objeto[campo] !== null) {
+            return objeto[campo];
+        }
+    }
+
+    return "";
+}
+
+// Evita mostrar "[object Object]" quando um campo é uma entidade.
+function obterTexto(valor, campos = ["nome", "nomeCategoria", "descricao", "login", "username"]) {
+    if (valor === null || valor === undefined) return "";
+
+    if (typeof valor === "object") {
+        return String(obterCampo(valor, ...campos) || "");
+    }
+
+    return String(valor);
+}
+
+function nomePlanta(planta) {
+    return obterTexto(obterCampo(planta, "nome", "nomePlanta", "nome_planta"));
+}
+
+function especiePlanta(planta) {
+    return obterTexto(
+        obterCampo(planta, "especie", "nomeEspecie", "nome_cientifico"),
+        ["nomeCientifico", "nomeEspecie", "nome", "descricao"]
+    );
+}
+
+function categoriaPlanta(planta) {
+    const categoria = obterCampo(
+        planta,
+        "categoria",
+        "nomeCategoria",
+        "categoriaPlanta"
+    );
+
+    return obterTexto(categoria, [
+        "nomeCategoria",
+        "nome",
+        "descricao",
+        "nome_categoria"
+    ]);
+}
+
+function descricaoPlanta(planta) {
+    return obterTexto(
+        obterCampo(planta, "descricao", "descricaoPlanta", "observacao"),
+        ["descricao", "texto", "conteudo"]
+    );
+}
+
+function imagemPlanta(planta) {
+    const imagem = obterCampo(
+        planta,
+        "imagemUrl",
+        "urlImagem",
+        "url",
+        "imagem",
+        "foto"
+    );
+
+    if (typeof imagem === "object" && imagem !== null) {
+        return obterTexto(imagem, ["url", "imagemUrl", "urlImagem"]);
+    }
+
+    return imagem || "https://via.placeholder.com/400x250?text=Planta";
+}
+
+function usuarioPlanta(planta) {
+    const usuario = obterCampo(
+        planta,
+        "usuario",
+        "dono",
+        "autor",
+        "usuarioPlanta"
+    );
+
+    if (typeof usuario === "object" && usuario !== null) {
+        return obterTexto(usuario, [
+            "login",
+            "username",
+            "nomeUsuario",
+            "nome",
+            "email"
+        ]) || "Usuário";
+    }
+
+    return usuario ? String(usuario) : "Usuário";
+}
+
+function normalizar(texto) {
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+// Carrega as plantas do banco por meio da API.
 async function carregarPlantas() {
-
     try {
         const response = await fetch(API_URL);
-        plantas = await response.json();
+
+        if (!response.ok) {
+            throw new Error(`Erro HTTP ${response.status}`);
+        }
+
+        const dados = await response.json();
+
+        // Aceita uma lista direta ou uma lista dentro de "content".
+        plantas = Array.isArray(dados)
+            ? dados
+            : Array.isArray(dados.content)
+                ? dados.content
+                : Array.isArray(dados.data)
+                    ? dados.data
+                    : [];
+
+        carregarFiltroCategorias();
         renderizarCards();
+
     } catch (erro) {
         console.error("Erro ao carregar plantas:", erro);
+
+        grid.innerHTML = "";
+        mensagemVazia.textContent =
+            "Não foi possível carregar as plantas. Verifique se a API está funcionando.";
+        mensagemVazia.style.display = "block";
     }
 }
 
-//carrega cards
-function renderizarCards() {
+// Preenche o filtro com as categorias que vieram da API.
+function carregarFiltroCategorias() {
+    const categoriaAtual = filtro.value;
 
-    const pesquisa = searchInput.value.toLowerCase();
-    const categoria = filtro.value;
-    grid.innerHTML = "";
-    const filtradas = plantas.filter(planta => {
-        const nome = (planta.nome || planta.nomePlanta || "").toLowerCase();
-        const especie = (planta.especie || "").toLowerCase();
-        const categoriaPlanta = planta.categoria || planta.nomeCategoria || "";
-        const busca =
-            nome.includes(pesquisa) ||
-            especie.includes(pesquisa);
+    const categorias = [
+        ...new Set(
+            plantas
+                .map(planta => categoriaPlanta(planta))
+                .filter(Boolean)
+        )
+    ];
 
-        const filtroCategoria =
-            categoria === "todas" ||
-            categoriaPlanta == categoria;
-        return busca && filtroCategoria;
+    filtro.innerHTML = '<option value="todas">Todas</option>';
 
+    categorias.forEach(categoria => {
+        const opcao = document.createElement("option");
+        opcao.value = categoria;
+        opcao.textContent = categoria;
+        filtro.appendChild(opcao);
     });
 
-    if (filtradas.length === 0) {
-        mensagemVazia.style.display = "block";
-        return;
+    const opcaoExistente = [...filtro.options].find(
+        opcao => normalizar(opcao.value) === normalizar(categoriaAtual)
+    );
+
+    if (opcaoExistente) {
+        filtro.value = opcaoExistente.value;
     }
+}
 
-    mensagemVazia.style.display = "none";
+// Cria os cards da galeria.
+function renderizarCards() {
+    const pesquisa = normalizar(searchInput.value);
+    const categoriaEscolhida = normalizar(filtro.value);
+
+    grid.querySelectorAll(".plant-card").forEach(card => card.remove());
+
+    const filtradas = plantas.filter(planta => {
+        const nome = normalizar(nomePlanta(planta));
+        const especie = normalizar(especiePlanta(planta));
+        const categoria = normalizar(categoriaPlanta(planta));
+
+        const correspondePesquisa =
+            nome.includes(pesquisa) ||
+            especie.includes(pesquisa) ||
+            categoria.includes(pesquisa);
+
+        const correspondeCategoria =
+            categoriaEscolhida === "todas" ||
+            categoria === categoriaEscolhida;
+
+        return correspondePesquisa && correspondeCategoria;
+    });
+
+    mensagemVazia.textContent =
+        "🌱 Nenhuma planta foi encontrada nessa categoria.";
+    mensagemVazia.style.display =
+        filtradas.length === 0 ? "block" : "none";
+
     filtradas.forEach(planta => {
-        const card = document.createElement("div");
+        const card = document.createElement("article");
         card.className = "plant-card";
-        card.innerHTML = `
-            <img src="${planta.imagemUrl || planta.url || 'https://via.placeholder.com/250'}">
-            <div class="plant-info">
-                <h3>${planta.nome || planta.nomePlanta}</h3>
-                <p>${planta.especie}</p>
-            </div>
 
-        `;
+        const imagem = document.createElement("img");
+        imagem.src = imagemPlanta(planta);
+        imagem.alt = nomePlanta(planta) || "Planta";
+        imagem.loading = "lazy";
 
-        card.onclick = () => abrirModal(planta);
+        imagem.onerror = () => {
+            imagem.onerror = null;
+            imagem.src = "https://via.placeholder.com/400x250?text=Planta";
+        };
+
+        const info = document.createElement("div");
+        info.className = "card-info";
+
+        const nome = document.createElement("h3");
+        nome.textContent = nomePlanta(planta) || "Planta sem nome";
+
+        const especie = document.createElement("p");
+        especie.className = "species";
+        especie.textContent = especiePlanta(planta) || "Espécie não informada";
+
+        const categoria = document.createElement("span");
+        categoria.className = "tag";
+        categoria.textContent = categoriaPlanta(planta) || "Sem categoria";
+
+        info.append(nome, especie, categoria);
+        card.append(imagem, info);
+
+        card.addEventListener("click", () => abrirModal(planta));
+
         grid.appendChild(card);
     });
-
 }
 
-//modal
+// Preenche o modal com os dados da planta selecionada.
 function abrirModal(planta) {
-    document.getElementById("detalheUsuario").innerText =
-        planta.usuario || "Usuário";
-    document.getElementById("detalheImg").src =
-        planta.imagemUrl || planta.url || "https://via.placeholder.com/250";
-    document.getElementById("detalheNome").value =
-        planta.nome || planta.nomePlanta;
-    document.getElementById("detalheEspecie").value =
-        planta.especie;
-    document.getElementById("detalheCategoria").value =
-        planta.categoria || planta.nomeCategoria || "";
-    document.getElementById("detalheDescricao").value =
-        planta.descricao || "Sem descrição.";
-    document
-        .getElementById("modalDetalhes")
-        .classList.remove("hidden");
+    document.getElementById("detalheUsuario").textContent =
+        usuarioPlanta(planta);
 
-}
+    const avatar = document.querySelector("#modalDetalhes .avatar");
+    const fotoUsuario = obterCampo(
+        planta.usuario,
+        "fotoPerfil",
+        "foto",
+        "imagem",
+        "urlImagem"
+    );
 
-//fecha modal
-document.getElementById("fechar").onclick = () => {
-    document
-        .getElementById("modalDetalhes")
-        .classList.add("hidden");
-
-};
-
-///apagar
-async function deletarPlanta(id) {
-
-    if (!confirm("Deseja excluir esta planta?")) {
-        return;
+    if (avatar) {
+        if (fotoUsuario && typeof fotoUsuario === "string") {
+            avatar.style.backgroundImage = `url("${fotoUsuario}")`;
+            avatar.style.backgroundSize = "cover";
+            avatar.style.backgroundPosition = "center";
+        } else {
+            avatar.style.backgroundImage = "";
+        }
     }
 
-    await fetch(`${API_URL}/${id}`, {
-        method: "DELETE"
-    });
+    const imagem = document.getElementById("detalheImg");
+    imagem.src = imagemPlanta(planta);
+    imagem.alt = nomePlanta(planta) || "Planta";
 
-    carregarPlantas();
+    imagem.onerror = () => {
+        imagem.onerror = null;
+        imagem.src = "https://via.placeholder.com/400x250?text=Planta";
+    };
+
+    document.getElementById("detalheNome").value =
+        nomePlanta(planta);
+
+    document.getElementById("detalheEspecie").value =
+        especiePlanta(planta);
+
+    document.getElementById("detalheCategoria").value =
+        categoriaPlanta(planta);
+
+    document.getElementById("detalheDescricao").value =
+        descricaoPlanta(planta) || "Sem descrição.";
+
+    modal.classList.remove("hidden");
 }
 
-//pesquisar
-searchInput.addEventListener("input", renderizarCards);
+function fecharModal() {
+    modal.classList.add("hidden");
+}
 
-// filtrar
+botaoFechar.addEventListener("click", fecharModal);
+
+modal.addEventListener("click", evento => {
+    if (evento.target === modal) {
+        fecharModal();
+    }
+});
+
+document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape") {
+        fecharModal();
+    }
+});
+
+searchInput.addEventListener("input", renderizarCards);
 filtro.addEventListener("change", renderizarCards);
 
-// iniciar
+// Inicia a galeria.
 carregarPlantas();

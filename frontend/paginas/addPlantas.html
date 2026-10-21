@@ -24,20 +24,52 @@
 <div class="line"></div>
 <main class="container">
     <aside class="sidebar">
-        <div class="profile">
-            <div class="avatar big">
-                <button class="edit-profile">✏</button>
-            </div>
-            <img id="fotoPerfil" class="foto-perfil">
-            <span id="nomeUsuario"></span>
-            <h2 id="username"></h2>
-            <p id="bioUsuario"></p>
-            <div class="social2">
-                <br>
-                <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
-                <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
-            </div>
-        </div>
+        
+<div class="profile">
+
+    <div class="avatar big">
+        <img
+            id="fotoPerfil"
+            class="foto-perfil"
+            alt="Foto de perfil"
+        >
+
+        <button
+            class="edit-profile"
+            type="button"
+            aria-label="Editar perfil"
+            title="Editar perfil"
+        >✏</button>
+    </div>
+
+    <span id="nomeUsuario"></span>
+    <h2 id="username"></h2>
+    <p id="bioUsuario"></p>
+
+    
+<div class="redes-sociais" id="redesSociais">
+    <a id="linkInstagram"
+       href="#"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Instagram"
+       style="display: none;">
+        <img src="../img/instagram.png" alt="Instagram">
+    </a>
+
+    <a id="linkFacebook"
+       href="#"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Facebook"
+       style="display: none;">
+        <img src="../img/facebook.png" alt="Facebook">
+    </a>
+</div>
+
+
+</div>
+
     </aside>
 
 <div id="modalPerfil" class="modal-overlay hidden">
@@ -63,6 +95,21 @@
                     <label>Nome</label>
                     <input type="text" id="inputNome" value="">
                 </div>
+
+                <div class="campo-perfil">
+    <label for="inputUsername">Nome de usuário</label>
+    <div class="username-input-container">
+        <span class="arroba">@</span>
+        <input
+            type="text"
+            id="inputUsername"
+            placeholder="Seu nome de usuário"
+            maxlength="30"
+            autocomplete="username"
+        >
+    </div>
+    <small>Esse nome aparecerá no seu perfil.</small>
+</div>
 
                 <div class="form-group">
                     <label>Instagram</label>
@@ -90,15 +137,25 @@
     
 <div id="modalEditar" class="modal-overlay hidden">
 
-    <div class="modal-container-post">
-        <div class="post-form">
-            <input type="text" id="editNome" placeholder="Nome da planta">
-            <input type="text" id="editEspecie" placeholder="Espécie">
-            <select id="editCategoria">
-                <option value="">Selecione a categoria</option>
-            </select>
-            <input type="text" id="editUrlImagem" placeholder="Link da imagem (URL)">
-        </div>
+    
+<div class="campo-categoria">
+    <label for="categoria">Categoria da planta</label>
+
+    <input
+        type="text"
+        id="categoria"
+        placeholder="Digite o nome da categoria..."
+        autocomplete="off"
+        required
+    >
+
+    <div id="sugestoesCategorias" class="sugestoes-categorias"></div>
+
+    <small id="erroCategoria" class="erro-categoria">
+        Selecione uma categoria da lista.
+    </small>
+</div>
+
 
         <div class="modal-footer">
             <button id="cancelarEdicao">Cancelar</button>
@@ -133,7 +190,34 @@
             <select id="categoria">
                 <option value="">Selecionar categoria</option>
             </select>
-            <input type="text" id="urlImagem" placeholder="Link da imagem (URL)">
+            
+<div class="campo-imagem">
+    <label for="urlImagem">Foto da planta</label>
+
+    <label for="urlImagem" class="upload-imagem">
+        <img
+            id="previewImagem"
+            class="preview-imagem"
+            alt="Prévia da planta"
+            style="display: none;"
+        >
+
+        <div id="placeholderImagem" class="placeholder-imagem">
+            <span class="icone-upload">↑</span>
+            <strong>Escolher uma imagem</strong>
+            <small>Clique aqui para selecionar uma foto</small>
+            <small>PNG, JPG ou WEBP · Máximo 2 MB</small>
+        </div>
+    </label>
+
+    <input
+        type="file"
+        id="urlImagem"
+        accept="image/png,image/jpeg,image/webp"
+        hidden
+    >
+</div>
+
         </div>
         <div class="modal-footer">
             <button id="fecharModal">Cancelar</button>
@@ -143,20 +227,9 @@
 </div>
 
 <footer class="footer">
-    <div class="contact">
-        <img src="https://thumbnail.imgbin.com/11/3/18/telephone-call-green-phone-icon-with-signal-waves-RrwNw8zN_t.jpg" height="20">
-        <p>Contate-nos: (15) 92809-2649</p>
-    </div>
-
     <div class="copyright">
         <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" height="20">
         <p>© Todos os Direitos Reservados</p>
-    </div>
-
-    <div class="social">
-        <img src="https://cdn.imgbin.com/1/15/4/imgbin-logo-whatsapp-computer-icons-viber-call-icon-rUC3mkCwdZBU8fCG71krgSdfd.jpg" height="20">
-        <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2020/05/Icon-Instagram-PNG.png" height="20">
-        <img src="https://www.citypng.com/public/uploads/preview/outline-round-facebook-fb-icon-logo-701751695134773jn1popsjn6.png" height="20">
     </div>
 </footer>
 

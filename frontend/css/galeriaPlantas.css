@@ -918,6 +918,20 @@ textarea[readonly] {
 }
 
 
+.card-info h3 {
+    font-size: 20px;
+}
+
+.card-info .species {
+    font-size: 13px;
+    font-style: italic;
+}
+
+.card-info .tag {
+    font-size: 11px;
+}
+
+
 /* =========================================================
    RESPONSIVIDADE
 ========================================================= */
@@ -1022,3 +1036,25 @@ textarea[readonly] {
     }
 
 }
+
+
+/* FOOTER */ 
+.footer { 
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
+    color: white; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 40px; 
+    margin-top: 0px; 
+} 
+
+.footer div { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+} 
+
+.footer p { 
+    font-size: 13px; 
+} 

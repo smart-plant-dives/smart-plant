@@ -1494,17 +1494,20 @@ textarea {
     justify-content: space-between; 
     align-items: center; 
     padding: 10px 40px; 
-    margin-top: 0px; 
+    margin-top: 0px;
+    text-align: center;
 } 
 
 .footer div { 
     display: flex; 
     align-items: center; 
     gap: 10px; 
+    text-align: center;
 } 
 
 .footer p { 
     font-size: 13px; 
+    text-align: center;
 } 
 
 /* ===== AJUSTES FINAIS SMARTPLANT: layout, cards e modais ===== */
@@ -1832,3 +1835,522 @@ body {
         flex-direction: column;
     }
 }
+
+
+/* ÁREA DE ADICIONAR FOTO DA PLANTA */
+
+.campo-imagem {
+    width: 100%;
+    margin-top: 2px;
+}
+
+.campo-imagem > label:first-child {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2f3b2f;
+}
+
+/* Caixa para selecionar a imagem */
+.upload-imagem {
+    width: 100%;
+    min-height: 150px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border: 2px dashed #a5c9a5;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fff8, #edf7ed);
+
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    transition: border-color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+}
+
+.upload-imagem:hover {
+    border-color: #2f6f2f;
+    background: #e8f5e8;
+    transform: translateY(-2px);
+}
+
+/* Ícone de upload */
+.icone-upload {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 14px;
+    background: #dcefdc;
+    color: #2f6f2f;
+
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* Texto principal */
+.placeholder-imagem strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #285c2b;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Instruções */
+.placeholder-imagem small {
+    display: block;
+    margin-top: 4px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Prévia da foto escolhida */
+.preview-imagem {
+    display: none;
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Mostrar a imagem quando houver uma prévia */
+.preview-imagem.visivel {
+    display: block;
+}
+
+/* Esconder o texto enquanto a prévia estiver aparecendo */
+.upload-imagem.tem-imagem .placeholder-imagem {
+    display: none;
+}
+
+/* Destaque ao selecionar por teclado */
+.upload-imagem:focus-within {
+    outline: 2px solid #2f6f2f;
+    outline-offset: 3px;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 480px) {
+    .upload-imagem {
+        min-height: 130px;
+        padding: 15px;
+    }
+
+    .icone-upload {
+        width: 42px;
+        height: 42px;
+        font-size: 26px;
+    }
+}
+
+
+/* ===== CORREÇÃO DA FOTO NO MODAL EDITAR PERFIL ===== */
+
+#modalPerfil .coluna-perfil-foto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 180px;
+    min-width: 0;
+}
+
+/* Moldura da foto */
+#modalPerfil .moldura-foto-circular {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf5ed;
+    border: 3px solid #d4e6d4;
+    box-sizing: border-box;
+}
+
+/* Imagem dentro da moldura */
+#modalPerfil #fotoPreview {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Esconder a imagem quando não houver foto */
+#modalPerfil #fotoPreview.hidden {
+    display: none !important;
+}
+
+/* Texto exibido antes de escolher a foto */
+#modalPerfil .texto-placeholder-foto {
+    max-width: 120px;
+    padding: 10px;
+    text-align: center;
+    color: #638063;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Informações abaixo da foto */
+#modalPerfil .regras-foto {
+    margin: 12px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+}
+
+#modalPerfil .btn-trocar-foto {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #e3efe3;
+    color: #285c2b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#modalPerfil .btn-trocar-foto:hover {
+    background: #cfe5cf;
+}
+
+/* Ajuste do modal */
+#modalPerfil > .modal-container {
+    width: 100%;
+    max-width: 650px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+#modalPerfil .modal-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+#modalPerfil .perfil-form-section {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Campos sem ultrapassar o modal */
+#modalPerfil .perfil-form-section input,
+#modalPerfil .perfil-form-section textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsividade */
+@media (max-width: 520px) {
+    #modalPerfil .modal-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #modalPerfil .coluna-perfil-foto {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    #modalPerfil .perfil-form-section {
+        width: 100%;
+    }
+}
+
+
+/* ===== CORRIGIR BOTÃO DE EDITAR FOTO DE PERFIL ===== */
+
+.profile .avatar.big {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 8px auto 14px;
+    overflow: visible;
+    isolation: isolate;
+}
+
+/* Foto de perfil */
+.profile #fotoPerfil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    margin: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Botão do pincel sempre na frente */
+.profile .edit-profile {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    width: 36px;
+    height: 36px;
+    border: 3px solid #ededed;
+    border-radius: 50%;
+    background-color: #2f6f2f;
+    color: #fff;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    pointer-events: auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.profile .edit-profile:hover {
+    background-color: #1f5121;
+    transform: scale(1.08);
+}
+
+
+/* Círculo do perfil */
+.profile .avatar.big {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 8px auto 14px;
+    border-radius: 50%;
+    background: #dcdcdc;
+    overflow: visible;
+}
+
+/* Foto presa dentro do círculo */
+.profile #fotoPerfil {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+/* Pincel acima da foto */
+.profile .edit-profile {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid #ededed;
+
+    background: #2f6f2f;
+    color: white;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+}
+
+/* Esconder foto quando não houver imagem */
+.profile #fotoPerfil:not([src]),
+.profile #fotoPerfil[src=""] {
+    display: none;
+}
+
+
+/* FOTO DE PERFIL PERFEITAMENTE REDONDA */
+.profile .avatar.big {
+    position: relative;
+    width: 150px !important;
+    height: 150px !important;
+    min-width: 150px;
+    min-height: 150px;
+    aspect-ratio: 1 / 1;
+    margin: 8px auto 14px;
+    border-radius: 50%;
+    overflow: visible;
+}
+
+/* A imagem ocupa um círculo perfeito */
+.profile .avatar.big #fotoPerfil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px !important;
+    height: 150px !important;
+    min-width: 150px;
+    min-height: 150px;
+    max-width: none;
+    max-height: none;
+    margin: 0 !important;
+    padding: 0;
+    border-radius: 50% !important;
+    object-fit: cover;
+    object-position: center;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+/* Botão de edição por cima da foto */
+.profile .avatar.big .edit-profile {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    right: -2px;
+    bottom: 5px;
+    z-index: 5;
+    border-radius: 50%;
+}
+
+/* Campo de nome de usuário no modal Editar Perfil */
+.campo-perfil {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.campo-perfil label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.username-input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.username-input-container:focus-within {
+    border-color: #2f6f2f;
+    box-shadow: 0 0 0 3px rgba(47, 111, 47, 0.12);
+}
+
+.username-input-container .arroba {
+    padding-left: 12px;
+    color: #2f6f2f;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.username-input-container input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0 12px 0 5px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.campo-perfil small {
+    display: block;
+    margin-top: 5px;
+    color: #777;
+    font-size: 12px;
+}
+
+
+.campo-categoria {
+    position: relative;
+    width: 100%;
+}
+
+#categoria {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sugestoes-categorias {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.sugestao-categoria {
+    padding: 10px 12px;
+    cursor: pointer;
+    color: #333;
+}
+
+.sugestao-categoria:hover,
+.sugestao-categoria:focus {
+    background: #e7f3e7;
+    outline: none;
+}
+
+.erro-categoria {
+    display: none;
+    color: #c62828;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.erro-categoria.visivel {
+    display: block;
+}
+

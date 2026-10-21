@@ -6,17 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f6f4f4;
-}
-
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-bottom: 2px solid #2e7d32;
 }
 
 /* Opcional: ajustar posição */ 
@@ -27,6 +17,24 @@ body {
     mix-blend-mode: multiply;
     background: transparent;
 } 
+
+/* HEADER */ 
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px 60px; 
+    background: #fff; 
+    height: 65px; /* controla altura */
+    padding: 0 40px;
+    display: flex;
+    border-bottom: 2px solid #2e5e2e;
+    background-color: #fff;
+} 
+
+.main-header {
+  height: 65px;
+}
 
 .logo h2 {
     font-size: 18px;
@@ -40,12 +48,36 @@ body {
 } 
 
 .logo {
-    margin-left: 40px; /* aumenta conforme quiser */
+    margin-left: 70px; /* aumenta conforme quiser */
 }
 
 .header .logo{
     width: 40;
     height: 40;
+}
+
+.contact img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+} 
+
+.social img { 
+    background: transparent; 
+    mix-blend-mode: multiply; 
+} 
+
+.logo span { 
+    color: #3d7c3d; 
+} 
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #2e7d32;
 }
 
 .login-container {
@@ -59,7 +91,7 @@ body {
 .login-box {
     background-color: #fff;
     padding: 50px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 450px;
