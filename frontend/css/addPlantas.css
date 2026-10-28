@@ -2471,18 +2471,3 @@ body {
     color: #666;
     font-size: 12px;
 }
-
-/* Ajustes para telas pequenas */
-@media (max-width: 600px) {
-    .modal-overlay {
-        padding: 10px;
-        align-items: center;
-    }
-
-    .modal-container-post {
-        max-height: calc(100dvh - 20px);
-        padding: 20px;
-        border-radius: 16px;
-    }
-}
-

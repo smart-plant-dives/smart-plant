@@ -13,6 +13,18 @@ const inputDescricaoPlanta =
 const selectVisibilidadePlanta =
     document.getElementById("visibilidadePlanta");
 
+    const botaoVisibilidade =
+    document.getElementById("botaoVisibilidade");
+
+const textoVisibilidade =
+    document.getElementById("textoVisibilidade");
+
+const campoVisibilidade =
+    document.getElementById("visibilidadePlanta");
+
+const ajudaVisibilidade =
+    document.getElementById("ajudaVisibilidade");
+
 const botaoEditarPerfil = document.querySelector(".edit-profile");
 const modalPerfil = document.getElementById("modalPerfil");
 const cancelarPerfil = document.getElementById("cancelarPerfil");
@@ -313,9 +325,11 @@ if (inputFotoPerfil) {
     });
 }
 
+
 // =====================================================
 // MODAL DE ADICIONAR PLANTA
 // =====================================================
+
 if (abrirModal && modalPostagem) {
     abrirModal.addEventListener("click", () => {
         if (inputNomePlanta) inputNomePlanta.value = "";
@@ -330,10 +344,6 @@ if (abrirModal && modalPostagem) {
             selectVisibilidadePlanta.value = "PUBLICA";
         }
 
-        if (selectCategoria) {
-            selectCategoria.value = "";
-        }
-
         imagemSelecionada = "";
 
         if (previewImagem) {
@@ -345,20 +355,20 @@ if (abrirModal && modalPostagem) {
             placeholderImagem.style.display = "flex";
         }
 
-        modalPostagem.classList.remove("hidden");
-    });
-}
-if (abrirModal) {
-    abrirModal.addEventListener("click", () => {
-        inputNomePlanta.value = "";
-        inputEspecie.value = "";
-        selectCategoria.value = "";
-        inputUrlImagem.value = "";
-        imagemSelecionada = "";
+        if (botaoVisibilidade) {
+            botaoVisibilidade.classList.add("publica");
+            botaoVisibilidade.classList.remove("privada");
+            botaoVisibilidade.setAttribute("aria-pressed", "false");
+        }
 
-        previewImagem.removeAttribute("src");
-        previewImagem.style.display = "none";
-        placeholderImagem.style.display = "flex";
+        if (textoVisibilidade) {
+            textoVisibilidade.textContent = "Pública";
+        }
+
+        if (ajudaVisibilidade) {
+            ajudaVisibilidade.textContent =
+                "Sua planta poderá aparecer na galeria.";
+        }
 
         modalPostagem.classList.remove("hidden");
     });
@@ -374,7 +384,7 @@ if (abrirModal) {
     });
 }
 
-if (fecharModal) {
+if (fecharModal && modalPostagem) {
     fecharModal.addEventListener("click", () => {
         modalPostagem.classList.add("hidden");
     });
@@ -618,6 +628,36 @@ if (selectFiltro) {
 // SALVAR NOVA PLANTA
 // =====================================================
 
+
+if (btnSalvarPlanta) {
+    btnSalvarPlanta.addEventListener("click", async () => {
+        const nome = inputNomePlanta?.value.trim() || "";
+        const especie = inputEspecie?.value.trim() || "";
+        const descricao = inputDescricaoPlanta?.value.trim() || "";
+        const visibilidade =
+            selectVisibilidadePlanta?.value || "PUBLICA";
+
+        if (!nome || !especie) {
+            alert("Preencha o nome e a espécie da planta.");
+            return;
+        }
+
+        if (!usuarioSessao || !usuarioSessao.id) {
+            alert("Entre novamente na sua conta para cadastrar plantas.");
+            return;
+        }
+
+        const novaPlanta = {
+            nomePlanta: nome,
+            especie: especie,
+            descricao: descricao,
+            visibilidade: visibilidade,
+            url: imagemSelecionada || ""
+        };
+
+        // Continue aqui com o fetch para a API.
+    });
+}
 if (btnSalvarPlanta) {
     btnSalvarPlanta.addEventListener("click", async () => {
         const nome = inputNomePlanta.value.trim();
@@ -1088,12 +1128,6 @@ document.addEventListener("DOMContentLoaded", function () {
     configurarRede("linkInstagram", perfil.instagram);
     configurarRede("linkFacebook", perfil.facebook);
 });
-
-
-const botaoVisibilidade = document.getElementById("botaoVisibilidade");
-const textoVisibilidade = document.getElementById("textoVisibilidade");
-const campoVisibilidade = document.getElementById("visibilidadePlanta");
-const ajudaVisibilidade = document.getElementById("ajudaVisibilidade");
 
 if (
     botaoVisibilidade &&
