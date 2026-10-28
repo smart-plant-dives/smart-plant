@@ -25,16 +25,13 @@ public class Planta {
 	
 	@Column(name = "url")
 	private String url;
-
-	@Column(name = "especie", nullable = false, length = 30)
-	private String especie;
 	
 	@Column(name = "descricao", nullable = false, length = 150)
 	private String descricao;
 
 	@ManyToOne
-    @JoinColumn(name = "nome_categoria")
-	private Categoria nomeCategoria;
+    @JoinColumn(name = "nome_especie")
+	private Especie nomeEspecie;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
@@ -46,69 +43,75 @@ public class Planta {
 	}
 
 
-	public Planta(Long id, String nomePlanta, String url, String especie, String descricao, Categoria nomeCategoria, Usuario usuario) {
+	public Planta(Long id, String nomePlanta, String url, String descricao, Especie nomeEspecie, Usuario usuario) {
 		this.id = id;
 		this.nomePlanta = nomePlanta;
 		this.url = url;
-		this.especie = especie;
 		this.descricao = descricao;
-		this.nomeCategoria = nomeCategoria;
+		this.nomeEspecie = nomeEspecie;
 		this.usuario = usuario;
 	}
 
-	
+
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+
 	public String getNomePlanta() {
 		return nomePlanta;
 	}
+
 
 	public void setNomePlanta(String nomePlanta) {
 		this.nomePlanta = nomePlanta;
 	}
 
-	public Categoria getNomeCategoria() {
-		return nomeCategoria;
-	}
-
-	public void setNomeCategoria(Categoria nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
-	}
-
-	public String getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(String especie) {
-		this.especie = especie;
-	}
 
 	public String getUrl() {
 		return url;
 	}
 
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	public Usuario getUsuario() {
-	    return usuario;
-	}
 
-	public void setUsuario(Usuario usuario) {
-	    this.usuario = usuario;
-	}
+
 	public String getDescricao() {
 		return descricao;
 	}
 
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+
+	public Especie getNomeEspecie() {
+		return nomeEspecie;
+	}
+
+
+	public void setNomeEspecie(Especie nomeEspecie) {
+		this.nomeEspecie = nomeEspecie;
+	}
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	
+	
 }
