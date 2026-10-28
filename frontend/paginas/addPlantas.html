@@ -45,26 +45,6 @@
     <span id="nomeUsuario"></span>
     <h2 id="username"></h2>
     <p id="bioUsuario"></p>
-
-    
-<div class="redes-sociais" id="redesSociais">
-    <a id="linkInstagram"
-       href="#"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Instagram"
-       style="display: none;">
-        <img src="../img/instagram.png" alt="Instagram">
-    </a>
-
-    <a id="linkFacebook"
-       href="#"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Facebook"
-       style="display: none;">
-        <img src="../img/facebook.png" alt="Facebook">
-    </a>
 </div>
 
 
@@ -112,16 +92,6 @@
 </div>
 
                 <div class="form-group">
-                    <label>Instagram</label>
-                    <input type="url" id="inputInsta">
-                </div>
-
-                <div class="form-group">
-                    <label>Facebook</label>
-                    <input type="url" id="inputFace">
-                </div>
-
-                <div class="form-group">
                     <label>Sobre você</label>
                     <textarea id="inputSobre"></textarea>
                 </div>
@@ -139,12 +109,12 @@
 
     
 <div class="campo-categoria">
-    <label for="categoria">Categoria da planta</label>
+    <label for="categoria">Espécie da planta</label>
 
     <input
         type="text"
         id="categoria"
-        placeholder="Digite o nome da categoria..."
+        placeholder="Digite o nome da espécie..."
         autocomplete="off"
         required
     >
@@ -152,7 +122,7 @@
     <div id="sugestoesCategorias" class="sugestoes-categorias"></div>
 
     <small id="erroCategoria" class="erro-categoria">
-        Selecione uma categoria da lista.
+        Selecione uma espécie da lista.
     </small>
 </div>
 
@@ -186,10 +156,48 @@
         <h2 class="titulo-modal">Adicionar Planta</h2>
         <div class="post-form">
             <input type="text" id="nomePlanta" placeholder="Nome da planta">
-            <input type="text" id="especie" placeholder="Espécie">
-            <select id="categoria">
-                <option value="">Selecionar categoria</option>
+            <select id="categoriaPlanta" required>
+                <option value="">Selecionar Especie</option>
+                <option value="Carnivora">Carnivora</option>
             </select>
+
+            <!-- Descrição da planta -->
+<div class="campo-formulario">
+    <label for="descricaoPlanta">Sobre sua planta</label>
+    <textarea
+        id="descricaoPlanta"
+        placeholder="Conte um pouco sobre sua planta..."
+        maxlength="1000"
+        rows="4"
+    ></textarea>
+</div>
+
+<!-- Visibilidade da planta -->
+
+<div class="campo-formulario">
+    <label>Visibilidade da planta</label>
+
+    <button
+        type="button"
+        id="botaoVisibilidade"
+        class="botao-visibilidade publica"
+        aria-pressed="false"
+    >
+        <span class="indicador-visibilidade"></span>
+        <span id="textoVisibilidade">Pública</span>
+    </button>
+
+    <input
+        type="hidden"
+        id="visibilidadePlanta"
+        value="PUBLICA"
+    />
+    
+    <small id="ajudaVisibilidade">
+        Sua planta poderá aparecer na galeria.
+    </small>
+</div>
+
             
 <div class="campo-imagem">
     <label for="urlImagem">Foto da planta</label>
@@ -228,7 +236,6 @@
 
 <footer class="footer">
     <div class="copyright">
-        <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" height="20">
         <p>© Todos os Direitos Reservados</p>
     </div>
 </footer>

@@ -2354,3 +2354,135 @@ body {
     display: block;
 }
 
+/* FOOTER */
+.footer {
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
+    color: white;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: auto;
+}
+
+.footer .copyright {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.footer .copyright p {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+/* Fundo do modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2500;
+}
+
+/* Caixa do modal */
+.modal-container-post {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100dvh - 40px);
+
+    margin: auto;
+    padding: 24px;
+    box-sizing: border-box;
+
+    background: #fff;
+    border-radius: 20px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    flex-shrink: 0;
+}
+
+/* Modal fechado */
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+/* Botão de visibilidade */
+.botao-visibilidade {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 36px;
+    padding: 8px 15px;
+
+    border: 1px solid #2f6f2f;
+    border-radius: 20px;
+    background: #e8f5e9;
+    color: #245b29;
+
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.botao-visibilidade.privada {
+    color: #555;
+    background: #f0f0f0;
+    border-color: #888;
+}
+
+.indicador-visibilidade {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2f8a3a;
+}
+
+.botao-visibilidade.privada .indicador-visibilidade {
+    background: #777;
+}
+
+#ajudaVisibilidade {
+    display: block;
+    margin-top: 7px;
+    color: #666;
+    font-size: 12px;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 600px) {
+    .modal-overlay {
+        padding: 10px;
+        align-items: center;
+    }
+
+    .modal-container-post {
+        max-height: calc(100dvh - 20px);
+        padding: 20px;
+        border-radius: 16px;
+    }
+}
+

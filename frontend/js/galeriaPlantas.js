@@ -91,20 +91,58 @@ function usuarioPlanta(planta) {
         "usuario",
         "dono",
         "autor",
-        "usuarioPlanta"
+        "usuarioPlanta",
+        "tbUsuario",
+        "usuarioCadastro"
     );
 
     if (typeof usuario === "object" && usuario !== null) {
         return obterTexto(usuario, [
-            "login",
             "username",
             "nomeUsuario",
+            "nome_usuario",
+            "login",
             "nome",
             "email"
         ]) || "Usuário";
     }
 
     return usuario ? String(usuario) : "Usuário";
+}
+
+function fotoUsuarioPlanta(planta) {
+    const usuario = obterCampo(
+        planta,
+        "usuario",
+        "dono",
+        "autor",
+        "usuarioPlanta",
+        "tbUsuario",
+        "usuarioCadastro"
+    );
+
+    if (!usuario || typeof usuario !== "object") {
+        return "";
+    }
+
+    const foto = obterCampo(
+        usuario,
+        "fotoPerfil",
+        "foto_perfil",
+        "urlFoto",
+        "url_foto",
+        "imagemPerfil",
+        "imagem_perfil",
+        "foto",
+        "imagem",
+        "urlImagem"
+    );
+
+    if (typeof foto === "object" && foto !== null) {
+        return obterTexto(foto, ["url", "caminho", "nomeArquivo"]);
+    }
+
+    return typeof foto === "string" ? foto : "";
 }
 
 function normalizar(texto) {
@@ -244,39 +282,41 @@ function renderizarCards() {
     });
 }
 
-// Preenche o modal com os dados da planta selecionada.
 function abrirModal(planta) {
-    document.getElementById("detalheUsuario").textContent =
-        usuarioPlanta(planta);
+    // Nome do usuário que cadastrou a planta
+    const elementoUsuario = document.getElementById("detalheUsuario");
+    elementoUsuario.textContent = usuarioPlanta(planta);
 
+    // Foto de perfil do usuário
     const avatar = document.querySelector("#modalDetalhes .avatar");
-    const fotoUsuario = obterCampo(
-        planta.usuario,
-        "fotoPerfil",
-        "foto",
-        "imagem",
-        "urlImagem"
-    );
+    const fotoUsuario = fotoUsuarioPlanta(planta);
 
     if (avatar) {
-        if (fotoUsuario && typeof fotoUsuario === "string") {
-            avatar.style.backgroundImage = `url("${fotoUsuario}")`;
-            avatar.style.backgroundSize = "cover";
-            avatar.style.backgroundPosition = "center";
-        } else {
-            avatar.style.backgroundImage = "";
+        avatar.style.backgroundImage = "none";
+        avatar.style.backgroundColor = "#4caf50";
+        avatar.style.backgroundSize = "cover";
+        avatar.style.backgroundPosition = "center";
+        avatar.style.backgroundRepeat = "no-repeat";
+
+        if (fotoUsuario) {
+            avatar.style.backgroundImage =
+                `url("${fotoUsuario.replace(/["\\\n\r]/g, "")}")`;
         }
     }
 
+    // Foto da planta
     const imagem = document.getElementById("detalheImg");
+
     imagem.src = imagemPlanta(planta);
     imagem.alt = nomePlanta(planta) || "Planta";
 
-    imagem.onerror = () => {
+    imagem.onerror = function () {
         imagem.onerror = null;
-        imagem.src = "https://via.placeholder.com/400x250?text=Planta";
+        imagem.src =
+            "https://via.placeholder.com/400x250?text=Planta";
     };
 
+    // Informações da planta
     document.getElementById("detalheNome").value =
         nomePlanta(planta);
 
@@ -289,6 +329,7 @@ function abrirModal(planta) {
     document.getElementById("detalheDescricao").value =
         descricaoPlanta(planta) || "Sem descrição.";
 
+    // Abrir o modal
     modal.classList.remove("hidden");
 }
 

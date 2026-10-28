@@ -6,6 +6,13 @@ const API_BASE = "http://localhost:8080/api";
 // =====================================================
 
 // Perfil
+
+const inputDescricaoPlanta =
+    document.getElementById("descricaoPlanta");
+
+const selectVisibilidadePlanta =
+    document.getElementById("visibilidadePlanta");
+
 const botaoEditarPerfil = document.querySelector(".edit-profile");
 const modalPerfil = document.getElementById("modalPerfil");
 const cancelarPerfil = document.getElementById("cancelarPerfil");
@@ -142,56 +149,6 @@ function salvarDadosPerfil() {
 // =====================================================
 // LINKS DAS REDES SOCIAIS
 // =====================================================
-
-function normalizarUrlSocial(valor) {
-    let url = String(valor || "").trim();
-
-    if (!url) {
-        return "";
-    }
-
-    // Adiciona https:// se o usuário não digitou o protocolo.
-    if (!/^https?:\/\//i.test(url)) {
-        url = "https://" + url;
-    }
-
-    try {
-        const endereco = new URL(url);
-
-        if (
-            endereco.protocol !== "https:" &&
-            endereco.protocol !== "http:"
-        ) {
-            return "";
-        }
-
-        return endereco.href;
-    } catch (erro) {
-        return "";
-    }
-}
-
-function atualizarLinkSocial(elemento, valor, rede) {
-    if (!elemento) return;
-
-    const url = normalizarUrlSocial(valor);
-
-    if (url) {
-        elemento.href = url;
-        elemento.target = "_blank";
-        elemento.rel = "noopener noreferrer";
-        elemento.title = `Abrir ${rede}`;
-        elemento.style.display = "inline-flex";
-        elemento.style.cursor = "pointer";
-        elemento.removeAttribute("aria-hidden");
-    } else {
-        elemento.removeAttribute("href");
-        elemento.removeAttribute("target");
-        elemento.style.display = "none";
-        elemento.style.cursor = "default";
-        elemento.setAttribute("aria-hidden", "true");
-    }
-}
 
 function renderizarPerfil() {
     if (nomeUsuario) {
@@ -359,7 +316,38 @@ if (inputFotoPerfil) {
 // =====================================================
 // MODAL DE ADICIONAR PLANTA
 // =====================================================
+if (abrirModal && modalPostagem) {
+    abrirModal.addEventListener("click", () => {
+        if (inputNomePlanta) inputNomePlanta.value = "";
+        if (inputEspecie) inputEspecie.value = "";
+        if (inputUrlImagem) inputUrlImagem.value = "";
 
+        if (inputDescricaoPlanta) {
+            inputDescricaoPlanta.value = "";
+        }
+
+        if (selectVisibilidadePlanta) {
+            selectVisibilidadePlanta.value = "PUBLICA";
+        }
+
+        if (selectCategoria) {
+            selectCategoria.value = "";
+        }
+
+        imagemSelecionada = "";
+
+        if (previewImagem) {
+            previewImagem.removeAttribute("src");
+            previewImagem.style.display = "none";
+        }
+
+        if (placeholderImagem) {
+            placeholderImagem.style.display = "flex";
+        }
+
+        modalPostagem.classList.remove("hidden");
+    });
+}
 if (abrirModal) {
     abrirModal.addEventListener("click", () => {
         inputNomePlanta.value = "";
@@ -635,8 +623,10 @@ if (btnSalvarPlanta) {
         const nome = inputNomePlanta.value.trim();
         const especie = inputEspecie.value.trim();
         const categoriaId = selectCategoria.value;
+        const descricao = inputDescricaoPlanta?.value.trim() || "";
+        const visibilidade = selectVisibilidadePlanta?.value || "PUBLICA";
 
-        if (!nome || !especie || !categoriaId) {
+        if (!nome || !especie ) {
             alert("Preencha o nome, a espécie e a categoria.");
             return;
         }
@@ -645,6 +635,25 @@ if (btnSalvarPlanta) {
             alert("Entre novamente na sua conta para cadastrar plantas.");
             return;
         }
+
+        if (campoVisibilidade) {
+    campoVisibilidade.value = "PUBLICA";
+}
+
+if (textoVisibilidade) {
+    textoVisibilidade.textContent = "Pública";
+}
+
+if (botaoVisibilidade) {
+    botaoVisibilidade.classList.add("publica");
+    botaoVisibilidade.classList.remove("privada");
+    botaoVisibilidade.setAttribute("aria-pressed", "false");
+}
+
+if (ajudaVisibilidade) {
+    ajudaVisibilidade.textContent =
+        "Sua planta poderá aparecer na galeria.";
+}
 
         const novaPlanta = {
             nomePlanta: nome,
@@ -683,6 +692,8 @@ if (btnSalvarPlanta) {
             alert(erro.message);
         }
     });
+
+
 }
 
 // =====================================================
@@ -1013,4 +1024,104 @@ if (document.readyState === "loading") {
 } else {
     iniciarPagina();
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dadosSalvos = localStorage.getItem("smartPlantPerfil");
+
+    if (!dadosSalvos) {
+        return;
+    }
+
+    const perfil = JSON.parse(dadosSalvos);
+
+    // Exibe nome, username e descrição
+    document.getElementById("nomeUsuario").textContent =
+        perfil.nome || "";
+
+    document.getElementById("username").textContent =
+        perfil.username || "";
+
+    document.getElementById("bioUsuario").textContent =
+        perfil.sobre || "";
+
+    // Exibe a foto do perfil
+    const fotoPerfil = document.getElementById("fotoPerfil");
+
+    if (perfil.foto) {
+        fotoPerfil.src = perfil.foto;
+    } else {
+        fotoPerfil.src =
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    }
+
+    // Configura os links das redes sociais
+    function configurarRede(id, endereco) {
+        const link = document.getElementById(id);
+
+        if (!link) return;
+
+        if (endereco && endereco.trim()) {
+            let url = endereco.trim();
+
+            if (!/^https?:\/\//i.test(url)) {
+                url = "https://" + url;
+            }
+
+            try {
+                const urlValidada = new URL(url);
+
+                if (!["https:", "http:"].includes(urlValidada.protocol)) {
+                    throw new Error("URL inválida");
+                }
+
+                link.href = urlValidada.href;
+                link.style.display = "inline-flex";
+            } catch (erro) {
+                link.style.display = "none";
+            }
+        } else {
+            link.style.display = "none";
+        }
+    }
+
+    configurarRede("linkInstagram", perfil.instagram);
+    configurarRede("linkFacebook", perfil.facebook);
+});
+
+
+const botaoVisibilidade = document.getElementById("botaoVisibilidade");
+const textoVisibilidade = document.getElementById("textoVisibilidade");
+const campoVisibilidade = document.getElementById("visibilidadePlanta");
+const ajudaVisibilidade = document.getElementById("ajudaVisibilidade");
+
+if (
+    botaoVisibilidade &&
+    textoVisibilidade &&
+    campoVisibilidade &&
+    ajudaVisibilidade
+) {
+    botaoVisibilidade.addEventListener("click", () => {
+        const agoraPublica = campoVisibilidade.value !== "PUBLICA";
+
+        campoVisibilidade.value = agoraPublica ? "PUBLICA" : "PRIVADA";
+
+        textoVisibilidade.textContent = agoraPublica
+            ? "Pública"
+            : "Privada";
+
+        ajudaVisibilidade.textContent = agoraPublica
+            ? "Sua planta poderá aparecer na galeria."
+            : "Sua planta ficará visível somente para você.";
+
+        botaoVisibilidade.classList.toggle("publica", agoraPublica);
+        botaoVisibilidade.classList.toggle("privada", !agoraPublica);
+
+        botaoVisibilidade.setAttribute(
+            "aria-pressed",
+            String(!agoraPublica)
+        );
+    });
+}
+
 

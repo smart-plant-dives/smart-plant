@@ -260,3 +260,102 @@ if (perfil) {
     document.getElementById("username").value = perfil.username;
 
 }
+
+const inputFoto = document.getElementById("foto");
+
+// Mostra a prévia da foto escolhida
+inputFoto.addEventListener("change", function () {
+    const arquivo = inputFoto.files[0];
+
+    if (!arquivo) return;
+
+    if (arquivo.size > 2 * 1024 * 1024) {
+        alert("A foto deve ter no máximo 2 MB.");
+        inputFoto.value = "";
+        return;
+    }
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
+        alert("Escolha uma imagem JPG, PNG ou WEBP.");
+        inputFoto.value = "";
+        return;
+    }
+
+    const leitor = new FileReader();
+
+    leitor.onload = function () {
+        preview.src = leitor.result;
+    };
+
+    leitor.readAsDataURL(arquivo);
+});
+
+// Salva os dados da conta
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const nome = document.getElementById("nome").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const instagram = document.getElementById("instagram").value.trim();
+    const facebook = document.getElementById("facebook").value.trim();
+    const sobre = document.getElementById("sobre").value.trim();
+    const arquivoFoto = inputFoto.files[0];
+
+    if (!nome || !username) {
+        alert("Preencha seu nome e username.");
+        return;
+    }
+
+    function salvarConta(foto) {
+        const conta = {
+            nome: nome,
+            username: username.startsWith("@")
+                ? username
+                : "@" + username,
+            instagram: instagram,
+            facebook: facebook,
+            sobre: sobre,
+            foto: foto
+        };
+
+        try {
+            localStorage.setItem("smartPlantPerfil", JSON.stringify(conta));
+
+            alert("Conta salva com sucesso!");
+
+            window.location.href = "/paginas/addPlantas.html";
+        } catch (erro) {
+            alert("Não foi possível salvar os dados. Tente usar uma foto menor.");
+        }
+    }
+
+    if (arquivoFoto) {
+        if (arquivoFoto.size > 2 * 1024 * 1024) {
+            alert("A foto deve ter no máximo 2 MB.");
+            return;
+        }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function () {
+            salvarConta(leitor.result);
+        };
+
+        leitor.onerror = function () {
+            alert("Não foi possível carregar a foto.");
+        };
+
+        leitor.readAsDataURL(arquivoFoto);
+    } else {
+        salvarConta(preview.src.includes("149071.png") ? "" : preview.src);
+    }
+});
+
+// Botão Cancelar
+const botaoCancelar = document.querySelector(".cancelar");
+
+if (botaoCancelar) {
+    botaoCancelar.addEventListener("click", function () {
+        window.location.href = "/index.html";
+    });
+}

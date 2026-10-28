@@ -3,7 +3,7 @@ const cors = require('cors');
 app.use(cors());
 
 // URL da API
-const API_LOGIN_URL = "http://localhost:8080/api/usuario";
+const API_LOGIN_URL = "http://localhost:8080/api/usuario/login";
 
 // Mostrar/ocultar senha
 const togglePassword = document.getElementById("togglePassword");
