@@ -186,18 +186,6 @@ function renderizarPerfil() {
             fotoPerfil.style.display = "none";
         }
     }
-
-    atualizarLinkSocial(
-        document.getElementById("linkInstagram"),
-        perfilExtra.instagram,
-        "Instagram"
-    );
-
-    atualizarLinkSocial(
-        document.getElementById("linkFacebook"),
-        perfilExtra.facebook,
-        "Facebook"
-    );
 }
 
 // =====================================================

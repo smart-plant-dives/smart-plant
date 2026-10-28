@@ -282,12 +282,73 @@ function renderizarCards() {
     });
 }
 
-function abrirModal(planta) {
-    // Nome do usuário que cadastrou a planta
-    const elementoUsuario = document.getElementById("detalheUsuario");
-    elementoUsuario.textContent = usuarioPlanta(planta);
+// =====================================================
+// DADOS DO USUÁRIO VINCULADO À PLANTA
+// =====================================================
 
-    // Foto de perfil do usuário
+function obterUsuarioPlanta(planta) {
+    return (
+        planta?.usuario ??
+        planta?.dono ??
+        planta?.autor ??
+        planta?.usuarioCadastro ??
+        planta?.usuarioPlanta ??
+        null
+    );
+}
+
+function usuarioPlanta(planta) {
+    const usuario = obterUsuarioPlanta(planta);
+
+    if (!usuario) {
+        return "Usuário";
+    }
+
+    return (
+        usuario.username ??
+        usuario.nomeUsuario ??
+        usuario.login ??
+        usuario.nome ??
+        usuario.nomeCompleto ??
+        "Usuário"
+    );
+}
+
+function fotoUsuarioPlanta(planta) {
+    const usuario = obterUsuarioPlanta(planta);
+
+    if (!usuario) {
+        return "";
+    }
+
+    return (
+        usuario.fotoPerfil ??
+        usuario.foto ??
+        usuario.urlFoto ??
+        usuario.imagemPerfil ??
+        usuario.avatar ??
+        ""
+    );
+}
+
+// =====================================================
+// ABRIR MODAL DE DETALHES DA PLANTA
+// =====================================================
+
+function abrirModal(planta) {
+    if (!planta) {
+        console.error("Não foi possível carregar os dados da planta.");
+        return;
+    }
+
+    // Nome de usuário vindo do banco de dados
+    const elementoUsuario = document.getElementById("detalheUsuario");
+
+    if (elementoUsuario) {
+        elementoUsuario.textContent = usuarioPlanta(planta);
+    }
+
+    // Foto de perfil vinda do banco de dados
     const avatar = document.querySelector("#modalDetalhes .avatar");
     const fotoUsuario = fotoUsuarioPlanta(planta);
 
@@ -299,57 +360,76 @@ function abrirModal(planta) {
         avatar.style.backgroundRepeat = "no-repeat";
 
         if (fotoUsuario) {
-            avatar.style.backgroundImage =
-                `url("${fotoUsuario.replace(/["\\\n\r]/g, "")}")`;
+            avatar.style.backgroundImage = `url(${JSON.stringify(fotoUsuario)})`;
         }
     }
 
     // Foto da planta
     const imagem = document.getElementById("detalheImg");
 
-    imagem.src = imagemPlanta(planta);
-    imagem.alt = nomePlanta(planta) || "Planta";
+    if (imagem) {
+        imagem.onerror = function () {
+            imagem.onerror = null;
+            imagem.src =
+                "https://placehold.co/400x250?text=Planta";
+        };
 
-    imagem.onerror = function () {
-        imagem.onerror = null;
-        imagem.src =
-            "https://via.placeholder.com/400x250?text=Planta";
-    };
+        imagem.src = imagemPlanta(planta) || 
+            "https://placehold.co/400x250?text=Planta";
+
+        imagem.alt = nomePlanta(planta) || "Planta";
+    }
 
     // Informações da planta
-    document.getElementById("detalheNome").value =
-        nomePlanta(planta);
+    const detalheNome = document.getElementById("detalheNome");
+    const detalheEspecie = document.getElementById("detalheEspecie");
+    const detalheCategoria = document.getElementById("detalheCategoria");
+    const detalheDescricao = document.getElementById("detalheDescricao");
 
-    document.getElementById("detalheEspecie").value =
-        especiePlanta(planta);
+    if (detalheNome) {
+        detalheNome.value = nomePlanta(planta) || "";
+    }
 
-    document.getElementById("detalheCategoria").value =
-        categoriaPlanta(planta);
+    if (detalheEspecie) {
+        detalheEspecie.value = especiePlanta(planta) || "";
+    }
 
-    document.getElementById("detalheDescricao").value =
-        descricaoPlanta(planta) || "Sem descrição.";
+    if (detalheCategoria) {
+        detalheCategoria.value = categoriaPlanta(planta) || "";
+    }
+
+    if (detalheDescricao) {
+        detalheDescricao.value =
+            descricaoPlanta(planta) || "Sem descrição.";
+    }
 
     // Abrir o modal
-    modal.classList.remove("hidden");
+    if (modal) {
+        modal.classList.remove("hidden");
+    }
 }
+
+// =====================================================
+// FECHAR MODAL
+// =====================================================
 
 function fecharModal() {
-    modal.classList.add("hidden");
+    if (modal) {
+        modal.classList.add("hidden");
+    }
 }
 
-botaoFechar.addEventListener("click", fecharModal);
+if (botaoFechar) {
+    botaoFechar.addEventListener("click", fecharModal);
+}
 
-modal.addEventListener("click", evento => {
-    if (evento.target === modal) {
-        fecharModal();
-    }
-});
-
-document.addEventListener("keydown", evento => {
-    if (evento.key === "Escape") {
-        fecharModal();
-    }
-});
+if (modal) {
+    modal.addEventListener("click", evento => {
+        if (evento.target === modal) {
+            fecharModal();
+        }
+    });
+}
 
 searchInput.addEventListener("input", renderizarCards);
 filtro.addEventListener("change", renderizarCards);
