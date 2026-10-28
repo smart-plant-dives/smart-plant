@@ -13,25 +13,25 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_categoria")
-public class Categoria {
+public class Especie {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(mappedBy = "nomeCategoria")
+	@OneToMany(mappedBy = "nomeEspecie")
 	private List<Planta> planta;
 	
-	@NotBlank(message = "O nome de categoria não pode estar vazio.")
-	@Column(name = "nome_categoria", nullable = false, unique = true)
-	private String nomeCategoria;
+	@NotBlank(message = "O nome de espécie não pode estar vazio.")
+	@Column(name = "nome_especie", nullable = false, unique = true)
+	private String nomeEspecie;
 	
-	public Categoria() {
+	public Especie() {
 		
 	}
 	
-	public Categoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
+	public Especie(String nomeEspecie) {
+		this.nomeEspecie = nomeEspecie;
 		
 	}
 
@@ -43,13 +43,25 @@ public class Categoria {
 		this.id = id;
 	}
 
-	public String getNomeCategoria() {
-		return nomeCategoria;
+	public List<Planta> getPlanta() {
+		return planta;
 	}
 
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
+	public void setPlanta(List<Planta> planta) {
+		this.planta = planta;
 	}
+
+	public String getNomeEspecie() {
+		return nomeEspecie;
+	}
+
+	public void setNomeEspecie(String nomeEspecie) {
+		this.nomeEspecie = nomeEspecie;
+	}
+	
+	
+
+
 	
 	
 	

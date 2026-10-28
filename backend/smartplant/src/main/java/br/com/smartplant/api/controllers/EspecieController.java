@@ -13,34 +13,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.smartplant.api.entities.Categoria;
-import br.com.smartplant.api.services.CategoriaService;
+import br.com.smartplant.api.entities.Especie;
+import br.com.smartplant.api.services.EspecieService;
 
 @RestController
-@RequestMapping("/api/categoria")
-public class CategoriaController {
+@RequestMapping("/api/especie")
+public class EspecieController {
 
 	@Autowired
-	public CategoriaService service;
+	public EspecieService service;
 
 	@PostMapping
-	public Categoria cadastrar(@RequestBody Categoria categoria) {
-		return service.salvar(categoria);
+	public Especie cadastrar(@RequestBody Especie especie) {
+		return service.salvar(especie);
 	}
 
 	@GetMapping
-	public List<Categoria> listarTodos() {
+	public List<Especie> listarTodos() {
 		return service.listarTodos();
 	}
 
 	@GetMapping("/{id}")
-	public Categoria buscarPorId(@PathVariable Long id) {
+	public Especie buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
 
 	@PutMapping("/{id}")
-	public Categoria atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
-		return service.atualizar(id, categoria);
+	public Especie atualizar(@PathVariable Long id, @RequestBody Especie especie) {
+		return service.atualizar(id, especie);
 	}
 
 	@DeleteMapping("/{id}")
