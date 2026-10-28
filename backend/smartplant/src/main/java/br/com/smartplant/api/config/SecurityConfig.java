@@ -54,7 +54,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/usuario/**").permitAll()
                 .requestMatchers("/api/planta/**").permitAll()
-                .requestMatchers("/api/categoria/**").permitAll()
+                .requestMatchers("/api/especie/**").permitAll()
                 .anyRequest().authenticated()
             );
 

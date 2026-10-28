@@ -1,4 +1,3 @@
-
 package br.com.smartplant.api.services;
 
 import java.util.List;
@@ -59,6 +58,8 @@ public class UsuarioService {
         usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
         usuarioAntigo.setEmail(usuarioNovo.getEmail());
         usuarioAntigo.setNome(usuarioNovo.getNome());
+        usuarioAntigo.setFotoPerfil(usuarioNovo.getFotoPerfil());
+        
 
         if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
 

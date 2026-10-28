@@ -17,7 +17,7 @@ import br.com.smartplant.api.entities.Especie;
 import br.com.smartplant.api.services.EspecieService;
 
 @RestController
-@RequestMapping("/api/categoria")
+@RequestMapping("/api/especie")
 public class EspecieController {
 
 	@Autowired

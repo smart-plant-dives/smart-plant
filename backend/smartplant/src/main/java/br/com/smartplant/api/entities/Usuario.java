@@ -40,6 +40,9 @@ public class Usuario {
     @NotBlank(message = "A senha é obrigatória.")
     @Column(nullable = false)
     private String senha;
+        
+    @Column(nullable = false)
+    private String fotoPerfil;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_usuario", nullable = false)
@@ -53,11 +56,12 @@ public class Usuario {
         
     }
     
-    public Usuario(String nome, String login, String email, String senha, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String login, String email, String senha, String fotoPerfil, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.login = login;
         this.email = email;
         this.senha = senha;
+        this.fotoPerfil = fotoPerfil;
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -116,9 +120,14 @@ public class Usuario {
 	public void setPlantas(List<Planta> plantas) {
 	    this.plantas = plantas;
 	}
-    
-    
-    
-    
 
+
+	public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
+	}
+	
 }

@@ -25,12 +25,9 @@ public class PlantaService {
 			throw new RuntimeException("O nome da planta é obrigatório.");
 		}
 
-		if (planta.getEspecie() == null || planta.getEspecie().isBlank()) {
-			throw new RuntimeException("A espécie da planta é obrigatória.");
-		}
 
-		if (planta.getNomeCategoria() == null) {
-			throw new RuntimeException("A categoria da planta é obrigatória.");
+		if (planta.getNomeEspecie() == null) {
+			throw new RuntimeException("A especie da planta é obrigatória.");
 		}
 		
 		if (planta.getDescricao() == null) {
@@ -69,17 +66,13 @@ public class PlantaService {
 		if (plantaNova.getNomePlanta() != null && !plantaNova.getNomePlanta().isBlank()) {
 			plantaAntiga.setNomePlanta(plantaNova.getNomePlanta());
 		}
-
-		if (plantaNova.getEspecie() != null && !plantaNova.getEspecie().isBlank()) {
-			plantaAntiga.setEspecie(plantaNova.getEspecie());
-		}
 		
 		if (plantaNova.getDescricao()!= null && !plantaNova.getDescricao().isBlank()) {
 			plantaAntiga.setDescricao(plantaNova.getDescricao());
 		}
 
-		if (plantaNova.getNomeCategoria() != null) {
-			plantaAntiga.setNomeCategoria(plantaNova.getNomeCategoria());
+		if (plantaNova.getNomeEspecie() != null) {
+			plantaAntiga.setNomeEspecie(plantaNova.getNomeEspecie());
 		}
 		
 		if (plantaNova.getUrl() != null) {
