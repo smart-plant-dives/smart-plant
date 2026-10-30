@@ -6,25 +6,6 @@ const API_BASE = "http://localhost:8080/api";
 // =====================================================
 
 // Perfil
-
-const inputDescricaoPlanta =
-    document.getElementById("descricaoPlanta");
-
-const selectVisibilidadePlanta =
-    document.getElementById("visibilidadePlanta");
-
-    const botaoVisibilidade =
-    document.getElementById("botaoVisibilidade");
-
-const textoVisibilidade =
-    document.getElementById("textoVisibilidade");
-
-const campoVisibilidade =
-    document.getElementById("visibilidadePlanta");
-
-const ajudaVisibilidade =
-    document.getElementById("ajudaVisibilidade");
-
 const botaoEditarPerfil = document.querySelector(".edit-profile");
 const modalPerfil = document.getElementById("modalPerfil");
 const cancelarPerfil = document.getElementById("cancelarPerfil");
@@ -32,63 +13,159 @@ const salvarPerfil = document.getElementById("salvarPerfil");
 
 const inputNome = document.getElementById("inputNome");
 const inputUsername = document.getElementById("inputUsername");
-const inputInsta = document.getElementById("inputInsta");
-const inputFace = document.getElementById("inputFace");
 const inputSobre = document.getElementById("inputSobre");
-
+const inputFotoPerfil = document.getElementById("inputFotoPerfil");
 const fotoPerfil = document.getElementById("fotoPerfil");
 const fotoPreview = document.getElementById("fotoPreview");
 const textoPlaceholder = document.getElementById("textoPlaceholder");
-const inputFotoPerfil = document.getElementById("inputFotoPerfil");
 const btnTrocarFoto = document.getElementById("btnTrocarFoto");
 
 const nomeUsuario = document.getElementById("nomeUsuario");
 const username = document.getElementById("username");
 const bioUsuario = document.getElementById("bioUsuario");
 
-// Adicionar planta
+// Cadastro de planta
 const abrirModal = document.getElementById("abrirModal");
 const modalPostagem = document.getElementById("modalPostagem");
 const fecharModal = document.getElementById("fecharModal");
 const btnSalvarPlanta = document.getElementById("btnSalvarPlanta");
 
 const inputNomePlanta = document.getElementById("nomePlanta");
-const inputEspecie = document.getElementById("especie");
-const selectCategoria = document.getElementById("categoria");
+
+// CORREÇÃO: o campo de espécie no HTML chama-se categoriaPlanta.
+const inputEspecie = document.getElementById("categoriaPlanta");
+
+const inputDescricaoPlanta = document.getElementById("descricaoPlanta");
 const inputUrlImagem = document.getElementById("urlImagem");
 const previewImagem = document.getElementById("previewImagem");
 const placeholderImagem = document.getElementById("placeholderImagem");
 
-// Editar planta
-const modalEditar = document.getElementById("modalEditar");
-const cancelarEdicao = document.getElementById("cancelarEdicao");
-const salvarEdicao = document.getElementById("salvarEdicao");
-
-const inputEditNome = document.getElementById("editNome");
-const inputEditEspecie = document.getElementById("editEspecie");
-const selectEditCategoria = document.getElementById("editCategoria");
-const inputEditUrlImagem = document.getElementById("editUrlImagem");
+const campoVisibilidade = document.getElementById("visibilidadePlanta");
+const botaoVisibilidade = document.getElementById("botaoVisibilidade");
+const textoVisibilidade = document.getElementById("textoVisibilidade");
+const ajudaVisibilidade = document.getElementById("ajudaVisibilidade");
 
 // Lista e filtro
 const cardsContainer = document.getElementById("cards");
 const mensagemVazia = document.getElementById("mensagemVazia");
 const selectFiltro = document.getElementById("opcoes");
 
+// Alertas personalizados
+const modalAlerta = document.getElementById("modalAlerta");
+const tituloAlerta = document.getElementById("tituloAlerta");
+const mensagemAlerta = document.getElementById("mensagemAlerta");
+const btnFecharAlerta = document.getElementById("btnFecharAlerta");
+
 // =====================================================
 // VARIÁVEIS
 // =====================================================
 
-let categorias = [];
 let plantas = [];
 let categoriaFiltroAtual = "todas";
-let idPlantaEmEdicao = null;
 let imagemSelecionada = "";
+let alertaAberto = false;
+let filaAlertas = [];
+let focoAnteriorAlerta = null;
 
 // =====================================================
-// LOCALSTORAGE E PERFIL
+// ALERTAS PERSONALIZADOS
 // =====================================================
 
-function lerJSON(chave, padrao = null) {
+function mostrarAlerta(texto, titulo = "Atenção") {
+    return new Promise(resolve => {
+        filaAlertas.push({
+            texto: String(texto),
+            titulo,
+            resolve
+        });
+
+        processarFilaAlertas();
+    });
+}
+
+function processarFilaAlertas() {
+    if (alertaAberto || filaAlertas.length === 0) {
+        return;
+    }
+
+    if (!modalAlerta || !btnFecharAlerta) {
+        const alerta = filaAlertas.shift();
+
+        // Fallback se o modal não existir no HTML.
+        window.alertOriginal?.(alerta.texto);
+        alerta.resolve();
+        processarFilaAlertas();
+        return;
+    }
+
+    alertaAberto = true;
+
+    const alerta = filaAlertas.shift();
+    focoAnteriorAlerta = document.activeElement;
+
+    tituloAlerta.textContent = alerta.titulo;
+    mensagemAlerta.textContent = alerta.texto;
+
+    modalAlerta.hidden = false;
+    btnFecharAlerta.focus();
+
+    modalAlerta.dataset.alertaAtual = "aberto";
+    modalAlerta._resolverAtual = alerta.resolve;
+}
+
+function fecharAlerta() {
+    if (!alertaAberto) return;
+
+    modalAlerta.hidden = true;
+    alertaAberto = false;
+
+    const resolver = modalAlerta._resolverAtual;
+    modalAlerta._resolverAtual = null;
+
+    if (typeof resolver === "function") {
+        resolver();
+    }
+
+    if (
+        focoAnteriorAlerta &&
+        typeof focoAnteriorAlerta.focus === "function"
+    ) {
+        focoAnteriorAlerta.focus();
+    }
+
+    processarFilaAlertas();
+}
+
+if (btnFecharAlerta) {
+    btnFecharAlerta.addEventListener("click", fecharAlerta);
+}
+
+if (modalAlerta) {
+    modalAlerta.addEventListener("click", evento => {
+        if (evento.target === modalAlerta) {
+            fecharAlerta();
+        }
+    });
+}
+
+document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape" && alertaAberto) {
+        fecharAlerta();
+    }
+});
+
+// Substitui alert() para que as mensagens existentes usem o modal.
+if (!window.alertOriginal) {
+    window.alertOriginal = window.alert.bind(window);
+}
+
+window.alert = texto => mostrarAlerta(texto);
+
+// =====================================================
+// LEITURA E ARMAZENAMENTO DO PERFIL
+// =====================================================
+
+function lerJSON(chave, padrao = {}) {
     try {
         const valor = localStorage.getItem(chave);
         return valor ? JSON.parse(valor) : padrao;
@@ -99,14 +176,13 @@ function lerJSON(chave, padrao = null) {
 }
 
 let usuarioSessao =
-    lerJSON("usuarioSessao") ||
-    lerJSON("perfil") ||
-    {};
+    lerJSON("usuarioSessao", null) ||
+    lerJSON("perfil", {});
 
 const perfilAnterior =
-    lerJSON("perfilExtra") ||
-    lerJSON("perfil") ||
-    {};
+    lerJSON("perfilExtra", null) ||
+    lerJSON("smartPlantPerfil", null) ||
+    lerJSON("perfil", {});
 
 function normalizarUsername(valor) {
     return String(valor || "")
@@ -120,13 +196,13 @@ let perfilExtra = {
     username: normalizarUsername(
         perfilAnterior.username ||
         perfilAnterior.nomeUsuario ||
-        usuarioSessao.login ||
         usuarioSessao.username ||
+        usuarioSessao.login ||
         ""
     ),
+    sobre: perfilAnterior.sobre || "",
     instagram: perfilAnterior.instagram || "",
     facebook: perfilAnterior.facebook || "",
-    sobre: perfilAnterior.sobre || "",
     foto: perfilAnterior.foto || ""
 };
 
@@ -136,31 +212,25 @@ function salvarDadosPerfil() {
         JSON.stringify(perfilExtra)
     );
 
-    const perfilAntigo = lerJSON("perfil", {}) || {};
-
-    localStorage.setItem(
-        "perfil",
-        JSON.stringify({
-            ...perfilAntigo,
-            nome: usuarioSessao.nome || "",
-            username: perfilExtra.username,
-            nomeUsuario: perfilExtra.username,
-            instagram: perfilExtra.instagram,
-            facebook: perfilExtra.facebook,
-            sobre: perfilExtra.sobre,
-            foto: perfilExtra.foto
-        })
-    );
-
     localStorage.setItem(
         "usuarioSessao",
         JSON.stringify(usuarioSessao)
     );
-}
 
-// =====================================================
-// LINKS DAS REDES SOCIAIS
-// =====================================================
+    localStorage.setItem(
+        "perfil",
+        JSON.stringify({
+            ...lerJSON("perfil"),
+            ...usuarioSessao,
+            username: perfilExtra.username,
+            nomeUsuario: perfilExtra.username,
+            sobre: perfilExtra.sobre,
+            instagram: perfilExtra.instagram,
+            facebook: perfilExtra.facebook,
+            foto: perfilExtra.foto
+        })
+    );
+}
 
 function renderizarPerfil() {
     if (nomeUsuario) {
@@ -170,7 +240,7 @@ function renderizarPerfil() {
     if (username) {
         username.textContent = perfilExtra.username
             ? `@${perfilExtra.username}`
-            : "@usuario";
+            : "";
     }
 
     if (bioUsuario) {
@@ -186,40 +256,28 @@ function renderizarPerfil() {
             fotoPerfil.style.display = "none";
         }
     }
-
-    atualizarLinkSocial(
-        document.getElementById("linkInstagram"),
-        perfilExtra.instagram,
-        "Instagram"
-    );
-
-    atualizarLinkSocial(
-        document.getElementById("linkFacebook"),
-        perfilExtra.facebook,
-        "Facebook"
-    );
 }
 
 // =====================================================
-// MODAL DO PERFIL
+// EDITAR PERFIL
 // =====================================================
 
 if (botaoEditarPerfil && modalPerfil) {
     botaoEditarPerfil.addEventListener("click", () => {
         inputNome.value = usuarioSessao.nome || "";
         inputUsername.value = perfilExtra.username || "";
-        inputInsta.value = perfilExtra.instagram || "";
-        inputFace.value = perfilExtra.facebook || "";
         inputSobre.value = perfilExtra.sobre || "";
 
-        if (perfilExtra.foto) {
-            fotoPreview.src = perfilExtra.foto;
-            fotoPreview.classList.remove("hidden");
-            textoPlaceholder.style.display = "none";
-        } else {
-            fotoPreview.removeAttribute("src");
-            fotoPreview.classList.add("hidden");
-            textoPlaceholder.style.display = "block";
+        if (fotoPreview && textoPlaceholder) {
+            if (perfilExtra.foto) {
+                fotoPreview.src = perfilExtra.foto;
+                fotoPreview.classList.remove("hidden");
+                textoPlaceholder.style.display = "none";
+            } else {
+                fotoPreview.removeAttribute("src");
+                fotoPreview.classList.add("hidden");
+                textoPlaceholder.style.display = "block";
+            }
         }
 
         modalPerfil.classList.remove("hidden");
@@ -233,20 +291,18 @@ if (cancelarPerfil) {
 }
 
 if (salvarPerfil) {
-    salvarPerfil.addEventListener("click", () => {
+    salvarPerfil.addEventListener("click", async () => {
         const nome = inputNome.value.trim();
-        const novoUsername = normalizarUsername(
-            inputUsername.value
-        );
+        const novoUsername = normalizarUsername(inputUsername.value);
 
         if (!nome) {
-            alert("Digite seu nome.");
+            await mostrarAlerta("Digite seu nome.");
             inputNome.focus();
             return;
         }
 
         if (!novoUsername) {
-            alert("Digite um nome de usuário.");
+            await mostrarAlerta("Digite um nome de usuário.");
             inputUsername.focus();
             return;
         }
@@ -257,8 +313,6 @@ if (salvarPerfil) {
         };
 
         perfilExtra.username = novoUsername;
-        perfilExtra.instagram = inputInsta.value.trim();
-        perfilExtra.facebook = inputFace.value.trim();
         perfilExtra.sobre = inputSobre.value.trim();
 
         salvarDadosPerfil();
@@ -266,7 +320,7 @@ if (salvarPerfil) {
 
         modalPerfil.classList.add("hidden");
 
-        alert("Perfil atualizado com sucesso!");
+        await mostrarAlerta("Perfil atualizado com sucesso!", "Sucesso");
     });
 }
 
@@ -274,15 +328,15 @@ if (salvarPerfil) {
 // FOTO DO PERFIL
 // =====================================================
 
-if (btnTrocarFoto) {
+if (btnTrocarFoto && inputFotoPerfil) {
     btnTrocarFoto.addEventListener("click", () => {
         inputFotoPerfil.click();
     });
 }
 
 if (inputFotoPerfil) {
-    inputFotoPerfil.addEventListener("change", () => {
-        const arquivo = inputFotoPerfil.files[0];
+    inputFotoPerfil.addEventListener("change", async () => {
+        const arquivo = inputFotoPerfil.files?.[0];
 
         if (!arquivo) return;
 
@@ -293,83 +347,103 @@ if (inputFotoPerfil) {
         ];
 
         if (!tiposPermitidos.includes(arquivo.type)) {
-            alert("Selecione uma imagem JPG, PNG ou WEBP.");
+            await mostrarAlerta("Selecione uma imagem JPG, PNG ou WEBP.");
             inputFotoPerfil.value = "";
             return;
         }
 
         if (arquivo.size > 2 * 1024 * 1024) {
-            alert("A imagem deve ter no máximo 2 MB.");
+            await mostrarAlerta("A imagem deve ter no máximo 2 MB.");
             inputFotoPerfil.value = "";
             return;
         }
 
         const leitor = new FileReader();
 
-        leitor.onload = evento => {
+        leitor.onload = async evento => {
             perfilExtra.foto = evento.target.result;
 
             salvarDadosPerfil();
             renderizarPerfil();
 
-            fotoPreview.src = perfilExtra.foto;
-            fotoPreview.classList.remove("hidden");
-            textoPlaceholder.style.display = "none";
+            if (fotoPreview) {
+                fotoPreview.src = perfilExtra.foto;
+                fotoPreview.classList.remove("hidden");
+            }
+
+            if (textoPlaceholder) {
+                textoPlaceholder.style.display = "none";
+            }
         };
 
-        leitor.onerror = () => {
-            alert("Não foi possível carregar a foto.");
+        leitor.onerror = async () => {
+            await mostrarAlerta("Não foi possível carregar a foto.");
         };
 
         leitor.readAsDataURL(arquivo);
     });
 }
 
+// =====================================================
+// ABRIR E FECHAR MODAL DE PLANTA
+// =====================================================
 
-// =====================================================
-// MODAL DE ADICIONAR PLANTA
-// =====================================================
+function resetarFormularioPlanta() {
+    if (inputNomePlanta) inputNomePlanta.value = "";
+    if (inputEspecie) inputEspecie.value = "";
+    if (inputDescricaoPlanta) inputDescricaoPlanta.value = "";
+    if (inputUrlImagem) inputUrlImagem.value = "";
+
+    if (campoVisibilidade) {
+        campoVisibilidade.value = "PUBLICA";
+    }
+
+    imagemSelecionada = "";
+
+    if (previewImagem) {
+        previewImagem.removeAttribute("src");
+        previewImagem.style.display = "none";
+    }
+
+    if (placeholderImagem) {
+        placeholderImagem.style.display = "flex";
+    }
+
+    atualizarVisibilidade();
+}
+
+function atualizarVisibilidade() {
+    const publica = !campoVisibilidade ||
+        campoVisibilidade.value !== "PRIVADA";
+
+    if (campoVisibilidade) {
+        campoVisibilidade.value = publica ? "PUBLICA" : "PRIVADA";
+    }
+
+    if (textoVisibilidade) {
+        textoVisibilidade.textContent = publica ? "Pública" : "Privada";
+    }
+
+    if (ajudaVisibilidade) {
+        ajudaVisibilidade.textContent = publica
+            ? "Sua planta poderá aparecer na galeria."
+            : "Sua planta ficará visível somente para você.";
+    }
+
+    if (botaoVisibilidade) {
+        botaoVisibilidade.classList.toggle("publica", publica);
+        botaoVisibilidade.classList.toggle("privada", !publica);
+
+        botaoVisibilidade.setAttribute(
+            "aria-pressed",
+            String(!publica)
+        );
+    }
+}
 
 if (abrirModal && modalPostagem) {
     abrirModal.addEventListener("click", () => {
-        if (inputNomePlanta) inputNomePlanta.value = "";
-        if (inputEspecie) inputEspecie.value = "";
-        if (inputUrlImagem) inputUrlImagem.value = "";
-
-        if (inputDescricaoPlanta) {
-            inputDescricaoPlanta.value = "";
-        }
-
-        if (selectVisibilidadePlanta) {
-            selectVisibilidadePlanta.value = "PUBLICA";
-        }
-
-        imagemSelecionada = "";
-
-        if (previewImagem) {
-            previewImagem.removeAttribute("src");
-            previewImagem.style.display = "none";
-        }
-
-        if (placeholderImagem) {
-            placeholderImagem.style.display = "flex";
-        }
-
-        if (botaoVisibilidade) {
-            botaoVisibilidade.classList.add("publica");
-            botaoVisibilidade.classList.remove("privada");
-            botaoVisibilidade.setAttribute("aria-pressed", "false");
-        }
-
-        if (textoVisibilidade) {
-            textoVisibilidade.textContent = "Pública";
-        }
-
-        if (ajudaVisibilidade) {
-            ajudaVisibilidade.textContent =
-                "Sua planta poderá aparecer na galeria.";
-        }
-
+        resetarFormularioPlanta();
         modalPostagem.classList.remove("hidden");
     });
 
@@ -390,13 +464,24 @@ if (fecharModal && modalPostagem) {
     });
 }
 
+if (botaoVisibilidade) {
+    botaoVisibilidade.addEventListener("click", () => {
+        campoVisibilidade.value =
+            campoVisibilidade.value === "PUBLICA"
+                ? "PRIVADA"
+                : "PUBLICA";
+
+        atualizarVisibilidade();
+    });
+}
+
 // =====================================================
 // PRÉ-VISUALIZAÇÃO DA FOTO DA PLANTA
 // =====================================================
 
 if (inputUrlImagem) {
-    inputUrlImagem.addEventListener("change", () => {
-        const arquivo = inputUrlImagem.files[0];
+    inputUrlImagem.addEventListener("change", async () => {
+        const arquivo = inputUrlImagem.files?.[0];
 
         if (!arquivo) return;
 
@@ -407,13 +492,13 @@ if (inputUrlImagem) {
         ];
 
         if (!tiposPermitidos.includes(arquivo.type)) {
-            alert("Selecione uma imagem JPG, PNG ou WEBP.");
+            await mostrarAlerta("Selecione uma imagem JPG, PNG ou WEBP.");
             inputUrlImagem.value = "";
             return;
         }
 
         if (arquivo.size > 2 * 1024 * 1024) {
-            alert("A imagem deve ter no máximo 2 MB.");
+            await mostrarAlerta("A imagem deve ter no máximo 2 MB.");
             inputUrlImagem.value = "";
             return;
         }
@@ -422,13 +507,19 @@ if (inputUrlImagem) {
 
         leitor.onload = evento => {
             imagemSelecionada = evento.target.result;
-            previewImagem.src = imagemSelecionada;
-            previewImagem.style.display = "block";
-            placeholderImagem.style.display = "none";
+
+            if (previewImagem) {
+                previewImagem.src = imagemSelecionada;
+                previewImagem.style.display = "block";
+            }
+
+            if (placeholderImagem) {
+                placeholderImagem.style.display = "none";
+            }
         };
 
-        leitor.onerror = () => {
-            alert("Não foi possível carregar a imagem.");
+        leitor.onerror = async () => {
+            await mostrarAlerta("Não foi possível carregar a imagem.");
         };
 
         leitor.readAsDataURL(arquivo);
@@ -436,102 +527,62 @@ if (inputUrlImagem) {
 }
 
 // =====================================================
-// CARREGAR CATEGORIAS
+// CARREGAR PLANTAS
 // =====================================================
 
-async function carregarCategorias() {
-    try {
-        const resposta = await fetch(`${API_BASE}/categoria`);
-
-        if (!resposta.ok) {
-            throw new Error(
-                `Erro ao carregar categorias: HTTP ${resposta.status}`
-            );
-        }
-
-        const dados = await resposta.json();
-
-        categorias = Array.isArray(dados)
-            ? dados
-            : Array.isArray(dados.content)
-                ? dados.content
-                : [];
-
-        selectCategoria.innerHTML =
-            '<option value="">Selecionar categoria</option>';
-
-        selectEditCategoria.innerHTML =
-            '<option value="">Selecione a categoria</option>';
-
-        selectFiltro.innerHTML =
-            '<option value="todas">Todas</option>';
-
-        categorias.forEach(cat => {
-            const id = cat.idCategoria ?? cat.id_categoria ?? cat.id;
-            const nome = cat.nomeCategoria ??
-                cat.nome ??
-                cat.descricao ??
-                "";
-
-            const opcaoNova = new Option(nome, id);
-            const opcaoEdicao = new Option(nome, id);
-            const opcaoFiltro = new Option(nome, id);
-
-            selectCategoria.add(opcaoNova);
-            selectEditCategoria.add(opcaoEdicao);
-            selectFiltro.add(opcaoFiltro);
-        });
-
-    } catch (erro) {
-        console.error("Erro ao carregar categorias:", erro);
-    }
+function obterIdUsuario() {
+    return usuarioSessao.id ??
+        usuarioSessao.idUsuario ??
+        usuarioSessao.id_usuario ??
+        null;
 }
 
-// =====================================================
-// FUNÇÕES AUXILIARES DAS PLANTAS
-// =====================================================
-
 function nomeDaCategoria(planta) {
+    if (typeof planta.nomeCategoria === "string") {
+        return planta.nomeCategoria;
+    }
+
     return planta.nomeCategoria?.nomeCategoria ||
+        planta.categoria?.nome ||
         "Sem categoria";
 }
 
 function idDaCategoria(planta) {
-    return planta.nomeCategoria?.id ?? "";
+    return planta.nomeCategoria?.idCategoria ??
+        planta.nomeCategoria?.id ??
+        planta.categoria?.id ??
+        "";
 }
 
-// =====================================================
-// CARREGAR PLANTAS DO USUÁRIO
-// =====================================================
-
 async function carregarPlantas() {
-    if (!usuarioSessao || !usuarioSessao.id) {
+    const idUsuario = obterIdUsuario();
+
+    if (!idUsuario) {
         plantas = [];
         renderizarCards();
 
-        console.warn(
-            "ID do usuário não encontrado. Entre novamente na sua conta."
-        );
-
+        console.warn("ID do usuário não encontrado na sessão.");
         return;
     }
 
     try {
         const resposta = await fetch(
-            `${API_BASE}/planta/usuario/${usuarioSessao.id}`
+            `${API_BASE}/planta/usuario/${idUsuario}`
         );
 
         if (!resposta.ok) {
             throw new Error(
-                `Erro ao carregar plantas: HTTP ${resposta.status}`
+                `Não foi possível carregar as plantas (HTTP ${resposta.status}).`
             );
         }
 
-        plantas = await resposta.json();
-        renderizarCards();
+        const dados = await resposta.json();
 
+        plantas = Array.isArray(dados) ? dados : [];
+        renderizarCards();
     } catch (erro) {
         console.error("Erro ao carregar plantas:", erro);
+        await mostrarAlerta(erro.message);
     }
 }
 
@@ -546,13 +597,12 @@ function renderizarCards() {
         .querySelectorAll(".card:not(.add)")
         .forEach(card => card.remove());
 
-    const filtradas =
-        categoriaFiltroAtual === "todas"
-            ? plantas
-            : plantas.filter(planta =>
-                String(idDaCategoria(planta)) ===
-                String(categoriaFiltroAtual)
-            );
+    const filtradas = categoriaFiltroAtual === "todas"
+        ? plantas
+        : plantas.filter(planta =>
+            String(idDaCategoria(planta)) ===
+            String(categoriaFiltroAtual)
+        );
 
     filtradas.forEach(planta => {
         const card = document.createElement("div");
@@ -561,7 +611,7 @@ function renderizarCards() {
 
         const imagem = document.createElement("img");
         imagem.src = planta.url ||
-            "https://via.placeholder.com/300?text=Sem+imagem";
+            "https://placehold.co/300x200?text=Planta";
         imagem.alt = planta.nomePlanta || "Planta";
 
         const nome = document.createElement("h3");
@@ -571,8 +621,7 @@ function renderizarCards() {
         categoria.textContent = nomeDaCategoria(planta);
 
         const especie = document.createElement("p");
-        especie.textContent =
-            planta.especie || "Espécie não informada";
+        especie.textContent = planta.especie || "Espécie não informada";
 
         const acoes = document.createElement("div");
         acoes.className = "actions";
@@ -583,8 +632,10 @@ function renderizarCards() {
         editar.textContent = "✏";
         editar.title = "Editar planta";
 
-        editar.addEventListener("click", () => {
-            abrirEdicao(planta.id);
+        editar.addEventListener("click", async () => {
+            await mostrarAlerta(
+                "Para editar uma planta, é necessário configurar os campos de edição no HTML e confirmar o formato aceito pela API."
+            );
         });
 
         const excluir = document.createElement("button");
@@ -614,7 +665,7 @@ function renderizarCards() {
 }
 
 // =====================================================
-// FILTRO DE CATEGORIAS
+// FILTRO
 // =====================================================
 
 if (selectFiltro) {
@@ -625,25 +676,40 @@ if (selectFiltro) {
 }
 
 // =====================================================
-// SALVAR NOVA PLANTA
+// SALVAR NOVA PLANTA — UM ÚNICO EVENTO
 // =====================================================
 
-
 if (btnSalvarPlanta) {
-    btnSalvarPlanta.addEventListener("click", async () => {
-        const nome = inputNomePlanta?.value.trim() || "";
-        const especie = inputEspecie?.value.trim() || "";
-        const descricao = inputDescricaoPlanta?.value.trim() || "";
-        const visibilidade =
-            selectVisibilidadePlanta?.value || "PUBLICA";
+    btnSalvarPlanta.addEventListener("click", async evento => {
+        evento.preventDefault();
 
+        // Lê os valores diretamente dos campos corretos.
+        const nome = (inputNomePlanta?.value || "").trim();
+        const especie = (inputEspecie?.value || "").trim();
+        const descricao = (inputDescricaoPlanta?.value || "").trim();
+        const visibilidade = campoVisibilidade?.value || "PUBLICA";
+
+        // VALIDAÇÃO CORRIGIDA
         if (!nome || !especie) {
-            alert("Preencha o nome e a espécie da planta.");
+            await mostrarAlerta(
+                "Preencha o nome e a espécie da planta."
+            );
+
+            if (!nome) {
+                inputNomePlanta?.focus();
+            } else {
+                inputEspecie?.focus();
+            }
+
             return;
         }
 
-        if (!usuarioSessao || !usuarioSessao.id) {
-            alert("Entre novamente na sua conta para cadastrar plantas.");
+        const idUsuario = obterIdUsuario();
+
+        if (!idUsuario) {
+            await mostrarAlerta(
+                "Entre novamente na sua conta para cadastrar plantas."
+            );
             return;
         }
 
@@ -655,58 +721,11 @@ if (btnSalvarPlanta) {
             url: imagemSelecionada || ""
         };
 
-        // Continue aqui com o fetch para a API.
-    });
-}
-if (btnSalvarPlanta) {
-    btnSalvarPlanta.addEventListener("click", async () => {
-        const nome = inputNomePlanta.value.trim();
-        const especie = inputEspecie.value.trim();
-        const categoriaId = selectCategoria.value;
-        const descricao = inputDescricaoPlanta?.value.trim() || "";
-        const visibilidade = selectVisibilidadePlanta?.value || "PUBLICA";
-
-        if (!nome || !especie ) {
-            alert("Preencha o nome, a espécie e a categoria.");
-            return;
-        }
-
-        if (!usuarioSessao || !usuarioSessao.id) {
-            alert("Entre novamente na sua conta para cadastrar plantas.");
-            return;
-        }
-
-        if (campoVisibilidade) {
-    campoVisibilidade.value = "PUBLICA";
-}
-
-if (textoVisibilidade) {
-    textoVisibilidade.textContent = "Pública";
-}
-
-if (botaoVisibilidade) {
-    botaoVisibilidade.classList.add("publica");
-    botaoVisibilidade.classList.remove("privada");
-    botaoVisibilidade.setAttribute("aria-pressed", "false");
-}
-
-if (ajudaVisibilidade) {
-    ajudaVisibilidade.textContent =
-        "Sua planta poderá aparecer na galeria.";
-}
-
-        const novaPlanta = {
-            nomePlanta: nome,
-            especie,
-            nomeCategoria: {
-                id: Number(categoriaId)
-            },
-            url: imagemSelecionada || ""
-        };
+        btnSalvarPlanta.disabled = true;
 
         try {
             const resposta = await fetch(
-                `${API_BASE}/planta/usuario/${usuarioSessao.id}`,
+                `${API_BASE}/planta/usuario/${idUsuario}`,
                 {
                     method: "POST",
                     headers: {
@@ -717,111 +736,30 @@ if (ajudaVisibilidade) {
             );
 
             if (!resposta.ok) {
+                const detalhe = await resposta.text();
+
                 throw new Error(
-                    `Erro ao salvar planta: HTTP ${resposta.status}`
+                    detalhe ||
+                    `Não foi possível cadastrar a planta (HTTP ${resposta.status}).`
                 );
             }
 
             modalPostagem.classList.add("hidden");
+
             await carregarPlantas();
 
-            alert("Planta cadastrada com sucesso!");
-
-        } catch (erro) {
-            console.error("Erro ao salvar planta:", erro);
-            alert(erro.message);
-        }
-    });
-
-
-}
-
-// =====================================================
-// ABRIR MODAL DE EDIÇÃO DA PLANTA
-// =====================================================
-
-function abrirEdicao(id) {
-    const planta = plantas.find(
-        item => String(item.id) === String(id)
-    );
-
-    if (!planta) return;
-
-    idPlantaEmEdicao = id;
-
-    inputEditNome.value = planta.nomePlanta || "";
-    inputEditEspecie.value = planta.especie || "";
-    selectEditCategoria.value = idDaCategoria(planta);
-    inputEditUrlImagem.value = planta.url || "";
-
-    modalEditar.classList.remove("hidden");
-}
-
-// =====================================================
-// CANCELAR EDIÇÃO
-// =====================================================
-
-if (cancelarEdicao) {
-    cancelarEdicao.addEventListener("click", () => {
-        modalEditar.classList.add("hidden");
-        idPlantaEmEdicao = null;
-    });
-}
-
-// =====================================================
-// SALVAR EDIÇÃO
-// =====================================================
-
-if (salvarEdicao) {
-    salvarEdicao.addEventListener("click", async () => {
-        if (idPlantaEmEdicao === null) return;
-
-        const nome = inputEditNome.value.trim();
-        const especie = inputEditEspecie.value.trim();
-        const categoriaId = selectEditCategoria.value;
-
-        if (!nome || !especie || !categoriaId) {
-            alert("Preencha o nome, a espécie e a categoria.");
-            return;
-        }
-
-        const plantaAtualizada = {
-            nomePlanta: nome,
-            especie,
-            nomeCategoria: {
-                id: Number(categoriaId)
-            },
-            url: inputEditUrlImagem.value.trim()
-        };
-
-        try {
-            const resposta = await fetch(
-                `${API_BASE}/planta/${idPlantaEmEdicao}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(plantaAtualizada)
-                }
+            await mostrarAlerta(
+                "Planta cadastrada com sucesso!",
+                "Sucesso"
             );
-
-            if (!resposta.ok) {
-                throw new Error(
-                    `Erro ao atualizar planta: HTTP ${resposta.status}`
-                );
-            }
-
-            modalEditar.classList.add("hidden");
-            idPlantaEmEdicao = null;
-
-            await carregarPlantas();
-
-            alert("Planta atualizada com sucesso!");
-
         } catch (erro) {
-            console.error("Erro ao atualizar planta:", erro);
-            alert(erro.message);
+            console.error("Erro ao cadastrar planta:", erro);
+
+            await mostrarAlerta(
+                erro.message || "Ocorreu um erro ao cadastrar a planta."
+            );
+        } finally {
+            btnSalvarPlanta.disabled = false;
         }
     });
 }
@@ -831,331 +769,48 @@ if (salvarEdicao) {
 // =====================================================
 
 async function apagarPlanta(id) {
-    if (!confirm("Deseja realmente excluir esta planta?")) {
-        return;
-    }
+    const confirmado = window.confirm(
+        "Deseja realmente excluir esta planta?"
+    );
+
+    if (!confirmado) return;
 
     try {
-        const resposta = await fetch(
-            `${API_BASE}/planta/${id}`,
-            {
-                method: "DELETE"
-            }
-        );
+        const resposta = await fetch(`${API_BASE}/planta/${id}`, {
+            method: "DELETE"
+        });
 
         if (!resposta.ok) {
             throw new Error(
-                `Erro ao excluir planta: HTTP ${resposta.status}`
+                `Não foi possível excluir a planta (HTTP ${resposta.status}).`
             );
         }
 
         await carregarPlantas();
 
-        alert("Planta excluída com sucesso!");
-
+        await mostrarAlerta(
+            "Planta excluída com sucesso!",
+            "Sucesso"
+        );
     } catch (erro) {
         console.error("Erro ao excluir planta:", erro);
-        alert(erro.message);
+        await mostrarAlerta(erro.message);
     }
 }
 
 // =====================================================
-// CATEGORIAS COM AUTOCOMPLETE
-// =====================================================
-
-const campoCategoria = document.getElementById("categoria");
-const sugestoesCategorias = document.getElementById("sugestoesCategorias");
-const erroCategoria = document.getElementById("erroCategoria");
-
-const API_CATEGORIAS_URL = "http://localhost:8080/api/categoria";
-
-let categoriasDisponiveis = [];
-let categoriaSelecionada = null;
-
-function obterNomeCategoria(categoria) {
-    if (typeof categoria === "string") {
-        return categoria;
-    }
-
-    return (
-        categoria.nomeCategoria ??
-        categoria.nome ??
-        categoria.descricao ??
-        categoria.nome_categoria ??
-        ""
-    );
-}
-
-function obterIdCategoria(categoria) {
-    if (typeof categoria === "string") {
-        return null;
-    }
-
-    return (
-        categoria.idCategoria ??
-        categoria.id_categoria ??
-        categoria.id ??
-        null
-    );
-}
-
-// Carrega as categorias disponíveis para o autocomplete.
-// Usa a lista carregada anteriormente quando possível.
-async function carregarCategoriasAutocomplete() {
-    try {
-        const resposta = await fetch(API_CATEGORIAS_URL);
-
-        if (!resposta.ok) {
-            throw new Error(
-                "Não foi possível carregar as categorias."
-            );
-        }
-
-        const dados = await resposta.json();
-
-        categoriasDisponiveis = Array.isArray(dados)
-            ? dados
-            : Array.isArray(dados.content)
-                ? dados.content
-                : [];
-
-    } catch (erro) {
-        console.error("Erro ao carregar categorias:", erro);
-
-        categoriasDisponiveis = [];
-
-        if (sugestoesCategorias) {
-            sugestoesCategorias.innerHTML = `
-                <div class="sugestao-categoria">
-                    Não foi possível carregar as categorias.
-                </div>
-            `;
-        }
-    }
-}
-
-function mostrarSugestoesCategorias() {
-    if (!campoCategoria || !sugestoesCategorias) return;
-
-    const texto = campoCategoria.value.trim().toLowerCase();
-
-    categoriaSelecionada = null;
-    campoCategoria.removeAttribute("data-categoria-selecionada");
-
-    if (erroCategoria) {
-        erroCategoria.classList.remove("visivel");
-    }
-
-    if (!texto) {
-        sugestoesCategorias.innerHTML = "";
-        sugestoesCategorias.style.display = "none";
-        return;
-    }
-
-    const resultados = categoriasDisponiveis.filter(categoria =>
-        obterNomeCategoria(categoria).toLowerCase().includes(texto)
-    );
-
-    sugestoesCategorias.innerHTML = "";
-
-    if (resultados.length === 0) {
-        sugestoesCategorias.innerHTML = `
-            <div class="sugestao-categoria">
-                Nenhuma categoria encontrada.
-            </div>
-        `;
-        sugestoesCategorias.style.display = "block";
-        return;
-    }
-
-    resultados.forEach(categoria => {
-        const nome = obterNomeCategoria(categoria);
-
-        const opcao = document.createElement("div");
-        opcao.className = "sugestao-categoria";
-        opcao.textContent = nome;
-        opcao.tabIndex = 0;
-        opcao.setAttribute("role", "option");
-
-        function selecionar() {
-            campoCategoria.value = nome;
-            categoriaSelecionada = categoria;
-
-            sugestoesCategorias.innerHTML = "";
-            sugestoesCategorias.style.display = "none";
-
-            if (erroCategoria) {
-                erroCategoria.classList.remove("visivel");
-            }
-        }
-
-        opcao.addEventListener("click", selecionar);
-
-        opcao.addEventListener("keydown", evento => {
-            if (evento.key === "Enter" || evento.key === " ") {
-                evento.preventDefault();
-                selecionar();
-            }
-        });
-
-        sugestoesCategorias.appendChild(opcao);
-    });
-
-    sugestoesCategorias.style.display = "block";
-}
-
-if (campoCategoria && sugestoesCategorias) {
-    campoCategoria.addEventListener(
-        "input",
-        mostrarSugestoesCategorias
-    );
-
-    document.addEventListener("click", evento => {
-        if (
-            !campoCategoria.contains(evento.target) &&
-            !sugestoesCategorias.contains(evento.target)
-        ) {
-            sugestoesCategorias.style.display = "none";
-        }
-    });
-}
-
-function validarCategoriaSelecionada() {
-    if (!categoriaSelecionada) {
-        if (erroCategoria) {
-            erroCategoria.classList.add("visivel");
-        }
-
-        if (campoCategoria) {
-            campoCategoria.focus();
-        }
-
-        return false;
-    }
-
-    return true;
-}
-
-function obterCategoriaSelecionada() {
-    if (!validarCategoriaSelecionada()) {
-        return null;
-    }
-
-    return categoriaSelecionada;
-}
-
-// =====================================================
-// INICIALIZAR
+// INICIALIZAÇÃO
 // =====================================================
 
 async function iniciarPagina() {
     renderizarPerfil();
-
-    await carregarCategorias();
-    await carregarCategoriasAutocomplete();
+    atualizarVisibilidade();
     await carregarPlantas();
 }
 
 if (document.readyState === "loading") {
-    document.addEventListener(
-        "DOMContentLoaded",
-        iniciarPagina
-    );
+    document.addEventListener("DOMContentLoaded", iniciarPagina);
 } else {
     iniciarPagina();
 }
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const dadosSalvos = localStorage.getItem("smartPlantPerfil");
-
-    if (!dadosSalvos) {
-        return;
-    }
-
-    const perfil = JSON.parse(dadosSalvos);
-
-    // Exibe nome, username e descrição
-    document.getElementById("nomeUsuario").textContent =
-        perfil.nome || "";
-
-    document.getElementById("username").textContent =
-        perfil.username || "";
-
-    document.getElementById("bioUsuario").textContent =
-        perfil.sobre || "";
-
-    // Exibe a foto do perfil
-    const fotoPerfil = document.getElementById("fotoPerfil");
-
-    if (perfil.foto) {
-        fotoPerfil.src = perfil.foto;
-    } else {
-        fotoPerfil.src =
-            "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-    }
-
-    // Configura os links das redes sociais
-    function configurarRede(id, endereco) {
-        const link = document.getElementById(id);
-
-        if (!link) return;
-
-        if (endereco && endereco.trim()) {
-            let url = endereco.trim();
-
-            if (!/^https?:\/\//i.test(url)) {
-                url = "https://" + url;
-            }
-
-            try {
-                const urlValidada = new URL(url);
-
-                if (!["https:", "http:"].includes(urlValidada.protocol)) {
-                    throw new Error("URL inválida");
-                }
-
-                link.href = urlValidada.href;
-                link.style.display = "inline-flex";
-            } catch (erro) {
-                link.style.display = "none";
-            }
-        } else {
-            link.style.display = "none";
-        }
-    }
-
-    configurarRede("linkInstagram", perfil.instagram);
-    configurarRede("linkFacebook", perfil.facebook);
-});
-
-if (
-    botaoVisibilidade &&
-    textoVisibilidade &&
-    campoVisibilidade &&
-    ajudaVisibilidade
-) {
-    botaoVisibilidade.addEventListener("click", () => {
-        const agoraPublica = campoVisibilidade.value !== "PUBLICA";
-
-        campoVisibilidade.value = agoraPublica ? "PUBLICA" : "PRIVADA";
-
-        textoVisibilidade.textContent = agoraPublica
-            ? "Pública"
-            : "Privada";
-
-        ajudaVisibilidade.textContent = agoraPublica
-            ? "Sua planta poderá aparecer na galeria."
-            : "Sua planta ficará visível somente para você.";
-
-        botaoVisibilidade.classList.toggle("publica", agoraPublica);
-        botaoVisibilidade.classList.toggle("privada", !agoraPublica);
-
-        botaoVisibilidade.setAttribute(
-            "aria-pressed",
-            String(!agoraPublica)
-        );
-    });
-}
-
 

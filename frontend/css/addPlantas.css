@@ -2471,3 +2471,244 @@ body {
     color: #666;
     font-size: 12px;
 }
+
+
+/* MODAL ADICIONAR PLANTA — VERSÃO MAIS COMPACTA */
+
+#modalPostagem {
+    padding: 10px;
+}
+
+#modalPostagem .modal-container-post {
+    width: 88%;
+    max-width: 410px;
+    max-height: 88vh;
+    padding: 16px 20px;
+    gap: 9px;
+    border-radius: 20px;
+}
+
+/* Título */
+#modalPostagem .titulo-modal {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+/* Campos */
+#modalPostagem #nomePlanta,
+#modalPostagem #categoriaPlanta {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+    border-radius: 12px;
+}
+
+#modalPostagem .post-form {
+    gap: 9px;
+}
+
+/* Descrição */
+#modalPostagem .campo-formulario > label,
+#modalPostagem .campo-imagem > label:first-child {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+#modalPostagem #descricaoPlanta {
+    height: 78px;
+    min-height: 78px;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 12px;
+}
+
+/* Upload da imagem */
+#modalPostagem .upload-imagem {
+    height: 100px;
+    min-height: 100px;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+#modalPostagem .placeholder-imagem {
+    gap: 7px;
+}
+
+#modalPostagem .icone-upload {
+    width: 30px;
+    height: 36px;
+    font-size: 21px;
+}
+
+#modalPostagem .placeholder-imagem strong {
+    max-width: 85px;
+    font-size: 12px;
+}
+
+#modalPostagem .placeholder-imagem small {
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+#modalPostagem .preview-imagem {
+    max-height: 85px;
+}
+
+/* Visibilidade */
+#modalPostagem .botao-visibilidade {
+    padding: 7px 11px;
+    font-size: 13px;
+}
+
+#modalPostagem #ajudaVisibilidade {
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+/* Botões */
+#modalPostagem .modal-footer {
+    gap: 8px;
+    margin-top: 8px;
+}
+
+#modalPostagem .modal-footer button {
+    min-height: 34px;
+    padding: 7px 15px;
+    font-size: 13px;
+    border-radius: 9px;
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    #modalPostagem .modal-container-post {
+        width: 100%;
+        max-width: 340px;
+        padding: 15px;
+    }
+}
+
+
+/* =====================================
+   MODAL PERSONALIZADO DE ALERTAS
+===================================== */
+
+.alerta-overlay[hidden] {
+    display: none !important;
+}
+
+.alerta-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(15, 30, 15, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+.alerta-container {
+    width: 100%;
+    max-width: 380px;
+    padding: 30px 26px 24px;
+
+    background: #fff;
+    border: 1px solid #e2eadf;
+    border-radius: 20px;
+
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.18);
+
+    animation: aparecerAlerta 0.22s ease-out;
+}
+
+.alerta-icone {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #edf5e9;
+    color: #28652d;
+
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.alerta-container h2 {
+    margin: 0 0 10px;
+    color: #244b27;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.alerta-container p {
+    margin: 0 0 24px;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.alerta-container button {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #24582a;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.2s;
+}
+
+.alerta-container button:hover {
+    background: #173f1c;
+}
+
+.alerta-container button:active {
+    transform: scale(0.98);
+}
+
+.alerta-container button:focus-visible {
+    outline: 3px solid #8fbd88;
+    outline-offset: 3px;
+}
+
+@keyframes aparecerAlerta {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .alerta-container {
+        max-width: 330px;
+        padding: 24px 20px 20px;
+    }
+
+    .alerta-container h2 {
+        font-size: 20px;
+    }
+}
+

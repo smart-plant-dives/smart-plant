@@ -177,3 +177,113 @@ main {
   text-align: center;
   width: 180px;
 }
+
+
+/* ================================
+   MODAL DE ALERTA
+================================ */
+
+.modal-alerta-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.modal-alerta-overlay.ativo {
+    display: flex;
+}
+
+.modal-alerta {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    padding: 35px 28px 28px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    animation: aparecerAlerta 0.25s ease;
+}
+
+.fechar-alerta {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    color: #777;
+    cursor: pointer;
+}
+
+.fechar-alerta:hover {
+    color: #2d5a27;
+}
+
+.icone-alerta {
+    font-size: 55px;
+    color: #c0392b;
+    margin-bottom: 15px;
+}
+
+.icone-alerta.sucesso {
+    color: #2d5a27;
+}
+
+.icone-alerta.conexao {
+    color: #d99a16;
+}
+
+.modal-alerta h2 {
+    color: #2d5a27;
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.modal-alerta p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.btn-alerta {
+    width: 100%;
+    padding: 12px;
+    background: #2d5a27;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-alerta:hover {
+    background: #1f4d1f;
+}
+
+@keyframes aparecerAlerta {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-alerta {
+        padding: 32px 22px 24px;
+    }
+}
+

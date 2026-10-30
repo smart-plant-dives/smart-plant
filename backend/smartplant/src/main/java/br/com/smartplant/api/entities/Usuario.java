@@ -56,7 +56,7 @@ public class Usuario {
         
     }
     
-    public Usuario(String nome, String login, String email, String senha, String fotoPerfil, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String login, String email, String senha, String fo5toPerfil, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.login = login;
         this.email = email;

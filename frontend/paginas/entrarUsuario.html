@@ -26,8 +26,6 @@
       <h2>Bem-vindo(a) ao SmartPlant</h2>
       <p>Acesse sua conta e continue cuidando das suas plantas.</p>
 
-      <div id="mensagem-erro" style="color: red; margin-bottom: 10px; font-weight: bold;"></div>
-
       <div class="input-group">
         <label for="login">Usuário</label>
         <input type="text" id="login" placeholder="Seu usuário" required>
@@ -57,6 +55,28 @@
 
   </section>
 </main>
+
+
+<!-- Modal de alerta -->
+<div id="modalAlerta" class="modal-alerta-overlay">
+    <div class="modal-alerta">
+        <button type="button" class="fechar-alerta" id="fecharAlerta" aria-label="Fechar">
+            &times;
+        </button>
+
+        <div class="icone-alerta" id="iconeAlerta">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+
+        <h2 id="tituloAlerta">Atenção!</h2>
+
+        <p id="textoAlerta">Ocorreu um erro.</p>
+
+        <button type="button" class="btn-alerta" id="confirmarAlerta">
+            Entendi
+        </button>
+    </div>
+</div>
 
 <script src="../js/entrarUsuario.js"></script>
 </body>
