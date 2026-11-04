@@ -2,6 +2,8 @@ package br.com.smartplant.api.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class Especie {
 	private Long id;
 	
 	@OneToMany(mappedBy = "nomeEspecie")
+	@JsonIgnore
 	private List<Planta> planta;
 	
 	@NotBlank(message = "O nome de espécie não pode estar vazio.")
