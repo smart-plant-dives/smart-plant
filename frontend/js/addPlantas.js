@@ -1,4 +1,3 @@
-
 const API_BASE = "http://localhost:8080/api";
 
 // =====================================================
@@ -31,10 +30,7 @@ const fecharModal = document.getElementById("fecharModal");
 const btnSalvarPlanta = document.getElementById("btnSalvarPlanta");
 
 const inputNomePlanta = document.getElementById("nomePlanta");
-
-// CORREÇÃO: o campo de espécie no HTML chama-se categoriaPlanta.
 const inputEspecie = document.getElementById("categoriaPlanta");
-
 const inputDescricaoPlanta = document.getElementById("descricaoPlanta");
 const inputUrlImagem = document.getElementById("urlImagem");
 const previewImagem = document.getElementById("previewImagem");
@@ -91,7 +87,6 @@ function processarFilaAlertas() {
     if (!modalAlerta || !btnFecharAlerta) {
         const alerta = filaAlertas.shift();
 
-        // Fallback se o modal não existir no HTML.
         window.alertOriginal?.(alerta.texto);
         alerta.resolve();
         processarFilaAlertas();
@@ -340,18 +335,8 @@ if (inputFotoPerfil) {
 
         if (!arquivo) return;
 
-        const tiposPermitidos = [
-            "image/jpeg",
-            "image/png",
-            "image/webp"
-        ];
-
-        if (!tiposPermitidos.includes(arquivo.type)) {
-            await mostrarAlerta("Selecione uma imagem JPG, PNG ou WEBP.");
-            inputFotoPerfil.value = "";
-            return;
-        }
-
+        // Não restringe o formato da imagem.
+        // Mantém somente o limite de tamanho de 2 MB.
         if (arquivo.size > 2 * 1024 * 1024) {
             await mostrarAlerta("A imagem deve ter no máximo 2 MB.");
             inputFotoPerfil.value = "";
@@ -485,18 +470,8 @@ if (inputUrlImagem) {
 
         if (!arquivo) return;
 
-        const tiposPermitidos = [
-            "image/jpeg",
-            "image/png",
-            "image/webp"
-        ];
-
-        if (!tiposPermitidos.includes(arquivo.type)) {
-            await mostrarAlerta("Selecione uma imagem JPG, PNG ou WEBP.");
-            inputUrlImagem.value = "";
-            return;
-        }
-
+        // Não restringe o formato da imagem.
+        // Mantém somente o limite de tamanho de 2 MB.
         if (arquivo.size > 2 * 1024 * 1024) {
             await mostrarAlerta("A imagem deve ter no máximo 2 MB.");
             inputUrlImagem.value = "";
@@ -683,13 +658,11 @@ if (btnSalvarPlanta) {
     btnSalvarPlanta.addEventListener("click", async evento => {
         evento.preventDefault();
 
-        // Lê os valores diretamente dos campos corretos.
         const nome = (inputNomePlanta?.value || "").trim();
         const especie = (inputEspecie?.value || "").trim();
         const descricao = (inputDescricaoPlanta?.value || "").trim();
         const visibilidade = campoVisibilidade?.value || "PUBLICA";
 
-        // VALIDAÇÃO CORRIGIDA
         if (!nome || !especie) {
             await mostrarAlerta(
                 "Preencha o nome e a espécie da planta."
@@ -813,4 +786,3 @@ if (document.readyState === "loading") {
 } else {
     iniciarPagina();
 }
-
