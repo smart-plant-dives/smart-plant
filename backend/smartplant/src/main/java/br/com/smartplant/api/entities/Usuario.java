@@ -1,9 +1,8 @@
 package br.com.smartplant.api.entities;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.smartplant.api.enuns.TipoUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,10 +37,11 @@ public class Usuario {
     private String email;
     
     @NotBlank(message = "A senha é obrigatória.")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String senha;
         
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String fotoPerfil;
     
     @Enumerated(EnumType.STRING)
@@ -49,14 +49,14 @@ public class Usuario {
     private TipoUsuario tipoUsuario;
     
     @OneToMany(mappedBy = "usuario")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Planta> plantas;
     
     public Usuario() {
         
     }
     
-    public Usuario(String nome, String login, String email, String senha, String fo5toPerfil, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String login, String email, String senha, String fotoPerfil, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.login = login;
         this.email = email;

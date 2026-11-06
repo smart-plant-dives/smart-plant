@@ -61,13 +61,4 @@ public class Especie {
 	public void setNomeEspecie(String nomeEspecie) {
 		this.nomeEspecie = nomeEspecie;
 	}
-	
-	
-
-
-	
-	
-	
-	
-
 }

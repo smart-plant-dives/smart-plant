@@ -8,8 +8,10 @@ import br.com.smartplant.api.entities.Planta;
 
 public interface PlantaRepository extends JpaRepository<Planta, Long> {
 
-	Planta findByNomePlanta(String nomePlanta);
+    Planta findByNomePlanta(String nomePlanta);
 	
 	List<Planta> findByUsuarioId(Long idUsuario);
+
+    List<Planta> findByPublicaTrueOrPublicaIsNull();
 
 }
