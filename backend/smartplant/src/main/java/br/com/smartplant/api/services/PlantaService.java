@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import br.com.smartplant.api.entities.Planta;
 import br.com.smartplant.api.entities.Usuario;
 import br.com.smartplant.api.repositories.PlantaRepository;
+import br.com.smartplant.api.repositories.EspecieRepository;
+import br.com.smartplant.api.entities.Especie;
 import br.com.smartplant.api.repositories.UsuarioRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class PlantaService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private EspecieRepository especieRepository;
+
 	public Planta salvar(Planta planta) {
 
 		if (planta.getNomePlanta() == null || planta.getNomePlanta().isBlank()) {
@@ -26,20 +31,36 @@ public class PlantaService {
 		}
 
 
-		if (planta.getNomeEspecie() == null) {
-			throw new RuntimeException("A especie da planta é obrigatória.");
-		}
-		
-		if (planta.getDescricao() == null) {
-			throw new RuntimeException("A descrição da planta é obrigatória.");
-		}
+        if (planta.getNomeEspecie() == null ||
+                planta.getNomeEspecie().getNomeEspecie() == null ||
+                planta.getNomeEspecie().getNomeEspecie().isBlank()) {
+            throw new RuntimeException("A espécie da planta é obrigatória.");
+        }
 
-		return repository.save(planta);
+        String nomeEspecie = planta.getNomeEspecie().getNomeEspecie().trim();
+        Especie especie = especieRepository.findByNomeEspecie(nomeEspecie);
+        if (especie == null) {
+            especie = especieRepository.save(new Especie(nomeEspecie));
+        }
+        planta.setNomeEspecie(especie);
+
+        if (planta.getDescricao() == null) {
+            planta.setDescricao("");
+        }
+        if (planta.getDescricao().length() > 150) {
+            throw new RuntimeException("A descrição deve ter no máximo 150 caracteres.");
+        }
+
+        return repository.save(planta);
 	}
 
 	public List<Planta> listarTodos() {
 		return repository.findAll();
 	}
+
+    public List<Planta> listarPublicas() {
+        return repository.findByPublicaTrueOrPublicaIsNull();
+    }
 
 	public Planta salvarParaUsuario(Long usuarioId, Planta planta) {
 		Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -71,13 +92,23 @@ public class PlantaService {
 			plantaAntiga.setDescricao(plantaNova.getDescricao());
 		}
 
-		if (plantaNova.getNomeEspecie() != null) {
-			plantaAntiga.setNomeEspecie(plantaNova.getNomeEspecie());
-		}
+        if (plantaNova.getNomeEspecie() != null &&
+                plantaNova.getNomeEspecie().getNomeEspecie() != null &&
+                !plantaNova.getNomeEspecie().getNomeEspecie().isBlank()) {
+            String nomeEspecie = plantaNova.getNomeEspecie().getNomeEspecie().trim();
+            Especie especie = especieRepository.findByNomeEspecie(nomeEspecie);
+            if (especie == null) {
+                especie = especieRepository.save(new Especie(nomeEspecie));
+            }
+            plantaAntiga.setNomeEspecie(especie);
+        }
 		
 		if (plantaNova.getUrl() != null) {
 			plantaAntiga.setUrl(plantaNova.getUrl());
 		}
+        if (plantaNova.getPublica() != null) {
+            plantaAntiga.setPublica(plantaNova.getPublica());
+        }
 
 		return repository.save(plantaAntiga);
 
