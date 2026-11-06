@@ -1,3 +1,4 @@
+
 const API_BASE = "http://localhost:8080/api";
 
 // =====================================================
@@ -198,7 +199,7 @@ let perfilExtra = {
     sobre: perfilAnterior.sobre || "",
     instagram: perfilAnterior.instagram || "",
     facebook: perfilAnterior.facebook || "",
-    foto: perfilAnterior.foto || ""
+    foto: perfilAnterior.foto || usuarioSessao.fotoPerfil || ""
 };
 
 function salvarDadosPerfil() {
@@ -302,20 +303,44 @@ if (salvarPerfil) {
             return;
         }
 
-        usuarioSessao = {
-            ...usuarioSessao,
-            nome
+        const idUsuario = obterIdUsuario();
+        if (!idUsuario) {
+            await mostrarAlerta("Não foi possível identificar sua conta. Entre novamente.");
+            return;
+        }
+
+        const dadosAtualizados = {
+            nome,
+            fotoPerfil: perfilExtra.foto || usuarioSessao.fotoPerfil || ""
         };
 
-        perfilExtra.username = novoUsername;
-        perfilExtra.sobre = inputSobre.value.trim();
+        try {
+            const resposta = await fetch(`${API_BASE}/usuario/${idUsuario}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dadosAtualizados)
+            });
 
-        salvarDadosPerfil();
-        renderizarPerfil();
+            if (!resposta.ok) {
+                const detalhe = await resposta.text();
+                throw new Error(detalhe || `Falha ao atualizar o perfil (HTTP ${resposta.status}).`);
+            }
 
-        modalPerfil.classList.add("hidden");
+            const usuarioAtualizado = await resposta.json();
+            usuarioSessao = { ...usuarioSessao, ...usuarioAtualizado, nome };
 
-        await mostrarAlerta("Perfil atualizado com sucesso!", "Sucesso");
+            perfilExtra.username = novoUsername;
+            perfilExtra.sobre = inputSobre.value.trim();
+
+            salvarDadosPerfil();
+            renderizarPerfil();
+            modalPerfil.classList.add("hidden");
+
+            await mostrarAlerta("Perfil atualizado com sucesso!", "Sucesso");
+        } catch (erro) {
+            console.error("Erro ao atualizar perfil:", erro);
+            await mostrarAlerta(erro.message || "Não foi possível atualizar o perfil.");
+        }
     });
 }
 
@@ -513,17 +538,16 @@ function obterIdUsuario() {
 }
 
 function nomeDaCategoria(planta) {
-    if (typeof planta.nomeCategoria === "string") {
-        return planta.nomeCategoria;
-    }
-
-    return planta.nomeCategoria?.nomeCategoria ||
+    return planta.nomeEspecie?.nomeEspecie ||
+        planta.nomeCategoria?.nomeCategoria ||
         planta.categoria?.nome ||
+        (typeof planta.especie === "string" ? planta.especie : "") ||
         "Sem categoria";
 }
 
 function idDaCategoria(planta) {
-    return planta.nomeCategoria?.idCategoria ??
+    return planta.nomeEspecie?.id ??
+        planta.nomeCategoria?.idCategoria ??
         planta.nomeCategoria?.id ??
         planta.categoria?.id ??
         "";
@@ -554,10 +578,40 @@ async function carregarPlantas() {
         const dados = await resposta.json();
 
         plantas = Array.isArray(dados) ? dados : [];
+        atualizarOpcoesFiltro();
         renderizarCards();
     } catch (erro) {
         console.error("Erro ao carregar plantas:", erro);
         await mostrarAlerta(erro.message);
+    }
+}
+
+// =====================================================
+// ATUALIZAR CATEGORIAS DO FILTRO
+// =====================================================
+
+function atualizarOpcoesFiltro() {
+    if (!selectFiltro) return;
+
+    const valorAtual = selectFiltro.value || "todas";
+    const categorias = [...new Set(
+        plantas.map(nomeDaCategoria).filter(Boolean)
+    )];
+
+    selectFiltro.innerHTML = '<option value="todas">Todas</option>';
+    categorias.forEach(categoria => {
+        const opcao = document.createElement("option");
+        opcao.value = categoria;
+        opcao.textContent = categoria;
+        selectFiltro.appendChild(opcao);
+    });
+
+    if (categorias.includes(valorAtual)) {
+        selectFiltro.value = valorAtual;
+        categoriaFiltroAtual = valorAtual;
+    } else {
+        selectFiltro.value = "todas";
+        categoriaFiltroAtual = "todas";
     }
 }
 
@@ -575,8 +629,8 @@ function renderizarCards() {
     const filtradas = categoriaFiltroAtual === "todas"
         ? plantas
         : plantas.filter(planta =>
-            String(idDaCategoria(planta)) ===
-            String(categoriaFiltroAtual)
+            normalizar(nomeDaCategoria(planta)) ===
+            normalizar(categoriaFiltroAtual)
         );
 
     filtradas.forEach(planta => {
@@ -596,7 +650,8 @@ function renderizarCards() {
         categoria.textContent = nomeDaCategoria(planta);
 
         const especie = document.createElement("p");
-        especie.textContent = planta.especie || "Espécie não informada";
+        especie.textContent = planta.nomeEspecie?.nomeEspecie ||
+            planta.especie || "Espécie não informada";
 
         const acoes = document.createElement("div");
         acoes.className = "actions";
@@ -608,9 +663,51 @@ function renderizarCards() {
         editar.title = "Editar planta";
 
         editar.addEventListener("click", async () => {
-            await mostrarAlerta(
-                "Para editar uma planta, é necessário configurar os campos de edição no HTML e confirmar o formato aceito pela API."
-            );
+            const novoNome = window.prompt("Nome da planta:", planta.nomePlanta || "");
+            if (novoNome === null) return;
+            if (!novoNome.trim()) {
+                await mostrarAlerta("O nome da planta não pode ficar vazio.");
+                return;
+            }
+
+            const especieAtual = planta.nomeEspecie?.nomeEspecie || "";
+            const novaEspecie = window.prompt("Espécie (use exatamente uma espécie cadastrada):", especieAtual);
+            if (novaEspecie === null) return;
+            if (!novaEspecie.trim()) {
+                await mostrarAlerta("A espécie da planta é obrigatória.");
+                return;
+            }
+
+            const descricaoAtual = planta.descricao || "";
+            const novaDescricao = window.prompt("Descrição (máximo 150 caracteres):", descricaoAtual);
+            if (novaDescricao === null) return;
+            if (novaDescricao.length > 150) {
+                await mostrarAlerta("A descrição deve ter no máximo 150 caracteres.");
+                return;
+            }
+
+            try {
+                const resposta = await fetch(`${API_BASE}/planta/${planta.id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nomePlanta: novoNome.trim(),
+                        descricao: novaDescricao,
+                        nomeEspecie: { nomeEspecie: novaEspecie.trim() },
+                        url: planta.url || "",
+                        publica: planta.publica !== false
+                    })
+                });
+                if (!resposta.ok) {
+                    const detalhe = await resposta.text();
+                    throw new Error(detalhe || `Falha ao editar (HTTP ${resposta.status}).`);
+                }
+                await carregarPlantas();
+                await mostrarAlerta("Planta atualizada com sucesso!", "Sucesso");
+            } catch (erro) {
+                console.error("Erro ao editar planta:", erro);
+                await mostrarAlerta(erro.message);
+            }
         });
 
         const excluir = document.createElement("button");
@@ -688,10 +785,10 @@ if (btnSalvarPlanta) {
 
         const novaPlanta = {
             nomePlanta: nome,
-            especie: especie,
+            nomeEspecie: { nomeEspecie: especie },
             descricao: descricao,
-            visibilidade: visibilidade,
-            url: imagemSelecionada || ""
+            url: imagemSelecionada || "",
+            publica: visibilidade !== "PRIVADA"
         };
 
         btnSalvarPlanta.disabled = true;

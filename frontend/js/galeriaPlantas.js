@@ -1,4 +1,3 @@
-
 const API_URL = "http://localhost:8080/api/planta";
 
 let plantas = [];
@@ -40,8 +39,8 @@ function nomePlanta(planta) {
 
 function especiePlanta(planta) {
     return obterTexto(
-        obterCampo(planta, "especie", "nomeEspecie", "nome_cientifico"),
-        ["nomeCientifico", "nomeEspecie", "nome", "descricao"]
+        obterCampo(planta, "nomeEspecie", "especie", "nome_cientifico"),
+        ["nomeEspecie", "nomeCientifico", "nome", "descricao"]
     );
 }
 
@@ -50,11 +49,13 @@ function categoriaPlanta(planta) {
         planta,
         "categoria",
         "nomeCategoria",
-        "categoriaPlanta"
+        "categoriaPlanta",
+        "nomeEspecie"
     );
 
     return obterTexto(categoria, [
         "nomeCategoria",
+        "nomeEspecie",
         "nome",
         "descricao",
         "nome_categoria"

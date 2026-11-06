@@ -1,361 +1,136 @@
-const foto = document.getElementById("foto");
-const preview = document.getElementById("preview");
-const form = document.getElementById("form");
-const cancelar = document.querySelector(".cancelar");
+document.addEventListener("DOMContentLoaded", () => {
+    const fotoInput = document.getElementById("foto");
+    const preview = document.getElementById("preview");
+    const form = document.getElementById("form");
+    const botaoCancelar = document.querySelector(".cancelar");
+    const fotoPadrao = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    let imagem = "";
 
-let imagem = "";
+    if (fotoInput) {
+        fotoInput.addEventListener("change", () => {
+            const arquivo = fotoInput.files?.[0];
+            if (!arquivo) return;
 
+            if (arquivo.size > 2 * 1024 * 1024) {
+                alert("A imagem deve ter no máximo 2 MB.");
+                fotoInput.value = "";
+                return;
+            }
+            if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
+                alert("Escolha uma imagem JPG, PNG ou WEBP.");
+                fotoInput.value = "";
+                return;
+            }
 
-foto.addEventListener("change", () => {
-
-    const arquivo = foto.files[0];
-
-    if (!arquivo) {
-        return;
+            const leitor = new FileReader();
+            leitor.onload = event => {
+                imagem = event.target.result;
+                preview.src = imagem;
+            };
+            leitor.onerror = () => alert("Não foi possível carregar a imagem.");
+            leitor.readAsDataURL(arquivo);
+        });
     }
 
+    if (form) {
+        form.addEventListener("submit", async event => {
+            event.preventDefault();
 
-    // Verifica tamanho máximo de 2MB
-    if (arquivo.size > 2 * 1024 * 1024) {
+            const nome = document.getElementById("nome").value.trim();
+            let username = document.getElementById("username").value.trim();
+            const instagram = document.getElementById("instagram").value.trim();
+            const facebook = document.getElementById("facebook").value.trim();
+            const sobre = document.getElementById("sobre").value.trim();
 
-        alert("A imagem deve ter no máximo 2MB.");
+            if (nome.length < 3) {
+                alert("Informe um nome com pelo menos 3 caracteres.");
+                document.getElementById("nome").focus();
+                return;
+            }
 
-        foto.value = "";
-        imagem = "";
+            username = username.replace(/^@+/, "").trim();
+            if (!username) {
+                alert("Informe um nome de usuário.");
+                document.getElementById("username").focus();
+                return;
+            }
+            if (!/^[a-zA-Z0-9._]{3,30}$/.test(username)) {
+                alert("O nome de usuário deve ter de 3 a 30 caracteres e aceitar letras, números, ponto e underline.");
+                return;
+            }
+            if (instagram && !/^(https?:\/\/)?(www\.)?instagram\.com\//i.test(instagram)) {
+                alert("Informe um link válido do Instagram.");
+                return;
+            }
+            if (facebook && !/^(https?:\/\/)?(www\.)?facebook\.com\//i.test(facebook)) {
+                alert("Informe um link válido do Facebook.");
+                return;
+            }
 
-        return;
+            let usuario = {};
+            try {
+                usuario = JSON.parse(localStorage.getItem("usuarioSessao") || "{}");
+            } catch (_) {}
+            if (!usuario.id && !usuario.idUsuario && !usuario.id_usuario) {
+                alert("Não encontrei sua sessão. Entre ou crie sua conta novamente antes de continuar.");
+                return;
+            }
+
+            const perfilExtra = {
+                username, instagram, facebook, sobre, foto: imagem
+            };
+            const dadosUsuario = {
+                nome,
+                fotoPerfil: imagem || usuario.fotoPerfil || ""
+            };
+
+            const botaoSalvar = form.querySelector('[type="submit"]');
+            if (botaoSalvar) {
+                botaoSalvar.disabled = true;
+                botaoSalvar.textContent = "Salvando...";
+            }
+
+            try {
+                const id = usuario.id ?? usuario.idUsuario ?? usuario.id_usuario;
+                const resposta = await fetch(`http://localhost:8080/api/usuario/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dadosUsuario)
+                });
+                if (!resposta.ok) {
+                    const detalhe = await resposta.text();
+                    throw new Error(detalhe || `Falha ao atualizar o perfil (HTTP ${resposta.status}).`);
+                }
+
+                const usuarioAtualizado = await resposta.json();
+                localStorage.setItem("usuarioSessao", JSON.stringify(usuarioAtualizado));
+                localStorage.setItem("perfilExtra", JSON.stringify(perfilExtra));
+                localStorage.setItem("perfil", JSON.stringify({
+                    ...usuarioAtualizado,
+                    ...perfilExtra,
+                    username
+                }));
+
+                alert("Perfil salvo com sucesso!");
+                window.location.href = "addPlantas.html";
+            } catch (erro) {
+                console.error("Erro ao salvar perfil:", erro);
+                alert(erro.message || "Não foi possível salvar seu perfil.");
+            } finally {
+                if (botaoSalvar) {
+                    botaoSalvar.disabled = false;
+                    botaoSalvar.textContent = "Salvar Conta";
+                }
+            }
+        });
     }
 
-
-    // Verifica formato da imagem
-    const formatosPermitidos = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-    ];
-
-
-    if (!formatosPermitidos.includes(arquivo.type)) {
-
-        alert("Use uma imagem JPG, PNG ou WEBP.");
-
-        foto.value = "";
-        imagem = "";
-
-        return;
-    }
-
-
-    // Mostrar preview
-    const leitor = new FileReader();
-
-
-    leitor.onload = function (e) {
-
-        imagem = e.target.result;
-
-        preview.src = imagem;
-
-    };
-
-
-    leitor.readAsDataURL(arquivo);
-
-});
-
-
-
-//criar conta
-form.addEventListener("submit", (e) => {
-
-    e.preventDefault();
-
-
-    // Pegar valores
-    const nome = document
-        .getElementById("nome")
-        .value
-        .trim();
-
-
-    let username = document
-        .getElementById("username")
-        .value
-        .trim();
-
-
-    const instagram = document
-        .getElementById("instagram")
-        .value
-        .trim();
-
-
-    const facebook = document
-        .getElementById("facebook")
-        .value
-        .trim();
-
-
-    const sobre = document
-        .getElementById("sobre")
-        .value
-        .trim();
-
-
-
-   
-
-
-    if (nome === "") {
-
-        alert("Por favor, informe seu nome.");
-
-        document.getElementById("nome").focus();
-
-        return;
-
-    }
-
-
-    if (nome.length < 3) {
-
-        alert("O nome precisa ter pelo menos 3 caracteres.");
-
-        document.getElementById("nome").focus();
-
-        return;
-
-    }
-
-
-   
-
-
-    if (username === "") {
-
-        username =
-            nome
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .replace(/\s+/g, "")
-                .replace(/[^a-z0-9._]/g, "")
-            +
-            Math.floor(Math.random() * 1000);
-
-    }
-
-
-    // Adicionar @ automaticamente
-    if (!username.startsWith("@")) {
-
-        username = "@" + username;
-
-    }
-
-
-
-
-    if (
-        instagram !== "" &&
-        !instagram.includes("instagram.com")
-    ) {
-
-        alert(
-            "Coloque um link válido do Instagram."
-        );
-
-        document.getElementById("instagram").focus();
-
-        return;
-
-    }
-
-
-
-
-
-    if (
-        facebook !== "" &&
-        !facebook.includes("facebook.com")
-    ) {
-
-        alert(
-            "Coloque um link válido do Facebook."
-        );
-
-        document.getElementById("facebook").focus();
-
-        return;
-
-    }
-
-
-
-    
-
-    const perfil = {
-
-        nome: nome,
-
-        username: username,
-
-        instagram: instagram,
-
-        facebook: facebook,
-
-        sobre: sobre,
-
-        foto: imagem
-
-    };
-
-
-    // Salvar no navegador
-    localStorage.setItem(
-        "perfil",
-        JSON.stringify(perfil)
-    );
-
-
-
-    // Mensagem
-    alert(
-        "Conta criada com sucesso, " + nome + "!"
-    );
-
-
-
-    // Ir para próxima página
-    window.location.href = "addPlantas.html";
-
-});
-
-
-
-
-
-cancelar.addEventListener("click", () => {
-
-    // Limpar formulário
-    form.reset();
-
-
-    // Limpar imagem salva
-    imagem = "";
-
-
-    // Voltar imagem padrão
-    preview.src =
-        "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-
-});
-
-// Recupera o perfil salvo
-const perfil = JSON.parse(localStorage.getItem("perfil"));
-
-if (perfil) {
-
-    // Preenche o username
-    document.getElementById("username").value = perfil.username;
-
-}
-
-const inputFoto = document.getElementById("foto");
-
-// Mostra a prévia da foto escolhida
-inputFoto.addEventListener("change", function () {
-    const arquivo = inputFoto.files[0];
-
-    if (!arquivo) return;
-
-    if (arquivo.size > 2 * 1024 * 1024) {
-        alert("A foto deve ter no máximo 2 MB.");
-        inputFoto.value = "";
-        return;
-    }
-
-    if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
-        alert("Escolha uma imagem JPG, PNG ou WEBP.");
-        inputFoto.value = "";
-        return;
-    }
-
-    const leitor = new FileReader();
-
-    leitor.onload = function () {
-        preview.src = leitor.result;
-    };
-
-    leitor.readAsDataURL(arquivo);
-});
-
-// Salva os dados da conta
-form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const nome = document.getElementById("nome").value.trim();
-    const username = document.getElementById("username").value.trim();
-    const instagram = document.getElementById("instagram").value.trim();
-    const facebook = document.getElementById("facebook").value.trim();
-    const sobre = document.getElementById("sobre").value.trim();
-    const arquivoFoto = inputFoto.files[0];
-
-    if (!nome || !username) {
-        alert("Preencha seu nome e username.");
-        return;
-    }
-
-    function salvarConta(foto) {
-        const conta = {
-            nome: nome,
-            username: username.startsWith("@")
-                ? username
-                : "@" + username,
-            instagram: instagram,
-            facebook: facebook,
-            sobre: sobre,
-            foto: foto
-        };
-
-        try {
-            localStorage.setItem("smartPlantPerfil", JSON.stringify(conta));
-
-            alert("Conta salva com sucesso!");
-
-            window.location.href = "/paginas/addPlantas.html";
-        } catch (erro) {
-            alert("Não foi possível salvar os dados. Tente usar uma foto menor.");
-        }
-    }
-
-    if (arquivoFoto) {
-        if (arquivoFoto.size > 2 * 1024 * 1024) {
-            alert("A foto deve ter no máximo 2 MB.");
-            return;
-        }
-
-        const leitor = new FileReader();
-
-        leitor.onload = function () {
-            salvarConta(leitor.result);
-        };
-
-        leitor.onerror = function () {
-            alert("Não foi possível carregar a foto.");
-        };
-
-        leitor.readAsDataURL(arquivoFoto);
-    } else {
-        salvarConta(preview.src.includes("149071.png") ? "" : preview.src);
+    if (botaoCancelar) {
+        botaoCancelar.addEventListener("click", () => {
+            form?.reset();
+            imagem = "";
+            if (preview) preview.src = fotoPadrao;
+            window.location.href = "addPlantas.html";
+        });
     }
 });
-
-// Botão Cancelar
-const botaoCancelar = document.querySelector(".cancelar");
-
-if (botaoCancelar) {
-    botaoCancelar.addEventListener("click", function () {
-        window.location.href = "/index.html";
-    });
-}

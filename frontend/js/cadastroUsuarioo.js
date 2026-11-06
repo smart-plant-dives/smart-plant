@@ -1,107 +1,89 @@
 const API_CADASTRO_URL = "http://localhost:8080/api/usuario";
 
-const form = document.getElementById("formCadastro");
-const inputEmail = document.getElementById("email");
-const inputNome = document.getElementById("nome");
-const inputLogin = document.getElementById("login");
-const inputSenha = document.getElementById("senha");
-const togglePassword = document.getElementById("togglePassword");
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("formCadastro");
+    const inputEmail = document.getElementById("email");
+    const inputNome = document.getElementById("nome");
+    const inputLogin = document.getElementById("login");
+    const inputSenha = document.getElementById("senha");
+    const togglePassword = document.getElementById("togglePassword");
+    const botao = document.getElementById("btnCadastrar");
 
-// mostra e oculta senha
+    if (togglePassword && inputSenha) {
+        togglePassword.addEventListener("click", () => {
+            const mostrar = inputSenha.type === "password";
+            inputSenha.type = mostrar ? "text" : "password";
+            togglePassword.classList.toggle("fa-eye", mostrar);
+            togglePassword.classList.toggle("fa-eye-slash", !mostrar);
+        });
+    }
 
-if (togglePassword && inputSenha) {
-    togglePassword.addEventListener("click", () => {
+    if (!form) return;
 
-        const tipoAtual = inputSenha.getAttribute("type");
-
-        if (tipoAtual === "password") {
-            inputSenha.setAttribute("type", "text");
-
-            togglePassword.classList.remove("fa-eye-slash");
-            togglePassword.classList.add("fa-eye");
-
-        } else {
-            inputSenha.setAttribute("type", "password");
-
-            togglePassword.classList.remove("fa-eye");
-            togglePassword.classList.add("fa-eye-slash");
-        }
-    });
-}
-
-
-// cadastro
-
-if (form) {
-
-    form.addEventListener("submit", async (event) => {
-
+    form.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const email = inputEmail.value.trim();
-        const login = inputLogin.value.trim();
-        const nome = inputNome.value.trim();
-        const senha = inputSenha.value.trim();
-
-        // Verifica campos vazios
-        if (email === "" || senha === "" || login === "" || nome === "") {
-            alert("Por favor, preencha todos os campos!");
-            return;
-        }
-
-        // Verifica e-mail
-        const formatoEmailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!formatoEmailValido.test(email)) {
-            alert("Por favor, insira um e-mail válido.");
-            return;
-        }
-
         const dadosUsuario = {
-            login: login,
-            nome: nome,
-            email: email,
-            senha: senha,
+            nome: inputNome.value.trim(),
+            login: inputLogin.value.trim(),
+            email: inputEmail.value.trim(),
+            senha: inputSenha.value,
             tipoUsuario: "USUARIO"
         };
 
-        console.log("Enviando para API:", dadosUsuario);
+        if (!dadosUsuario.nome || !dadosUsuario.login || !dadosUsuario.email || !dadosUsuario.senha) {
+            alert("Preencha todos os campos.");
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dadosUsuario.email)) {
+            alert("Informe um e-mail válido.");
+            inputEmail.focus();
+            return;
+        }
+        if (dadosUsuario.senha.length < 8) {
+            alert("A senha deve conter pelo menos 8 caracteres.");
+            inputSenha.focus();
+            return;
+        }
+
+        const textoOriginal = botao?.textContent;
+        if (botao) {
+            botao.disabled = true;
+            botao.textContent = "Criando conta...";
+        }
 
         try {
-
             const response = await fetch(API_CADASTRO_URL, {
                 method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dadosUsuario)
             });
 
-            console.log("Status da resposta:", response.status);
-
             if (!response.ok) {
-
-                const mensagem = await response.text();
-
-                throw new Error(
-                    mensagem || "Erro ao criar conta."
-                );
+                const detalhe = await response.text();
+                throw new Error(detalhe || `Não foi possível criar a conta (HTTP ${response.status}).`);
             }
 
-            alert("Conta criada com sucesso! Seja bem-vindo(a).");
+            const usuarioCriado = await response.json();
+            localStorage.setItem("usuarioSessao", JSON.stringify(usuarioCriado));
+            localStorage.setItem("perfilExtra", JSON.stringify({
+                username: usuarioCriado.login || dadosUsuario.login,
+                sobre: "",
+                instagram: "",
+                facebook: "",
+                foto: ""
+            }));
+
+            alert("Conta criada com sucesso! Agora personalize seu perfil.");
             window.location.href = "criarConta.html";
-
         } catch (error) {
-
-            console.error("Erro na requisição:", error);
-
-            alert(
-                "Não foi possível conectar ao servidor.\n\n" +
-                "Verifique se o Spring Boot está rodando."
-            );
+            console.error("Erro no cadastro:", error);
+            alert(error.message || "Não foi possível conectar ao servidor.");
+        } finally {
+            if (botao) {
+                botao.disabled = false;
+                botao.textContent = textoOriginal || "Criar Conta";
+            }
         }
-
     });
-}
+});
