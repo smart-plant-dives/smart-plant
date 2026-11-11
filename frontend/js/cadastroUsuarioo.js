@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }));
 
             alert("Conta criada com sucesso! Agora personalize seu perfil.");
-            window.location.href = "criarConta.html";
+            window.location.href = "addPlantas.html";
         } catch (error) {
             console.error("Erro no cadastro:", error);
             alert(error.message || "Não foi possível conectar ao servidor.");
