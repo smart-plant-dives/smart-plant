@@ -377,122 +377,67 @@ main{
 
 }
 
-
-
 /* ================= CAMPOS ================= */
 
-
 form{
-
     flex:1;
-
 }
-
-
 
 label{
-
     display:block;
-
     font-size:13px;
-
     margin-bottom:5px;
-
     margin-top:12px;
-
 }
-
-
 
 input, textarea{
-
     width:100%;
-
     padding:12px;
-
     border:1px solid #ccc;
-
     border-radius:5px;
-
     font-size:14px;
-
 }
-
-
 
 input::placeholder,
 
 textarea::placeholder{
-
     color:#888;
-
 }
-
-
 
 textarea{
-
     height:80px;
-
     resize:none;
-
 }
-
-
 
 /* ================= BOTÕES ================= */
 
-
 form .buttons{
-
     display:flex;
-
     justify-content:flex-end;
-
     gap:15px;
-
     margin-top:22px;
-
 }
 
-
-
 .cancelar{
-
     background:white;
-
     border:1px solid #ccc;
-
     padding:10px 22px;
-
     border-radius:6px;
-
     font-size:13px;
-
 }
 
 
 
 .salvar{
-
     background:#175d25;
-
     color:white;
-
     border:0;
-
     padding:10px 25px;
-
     border-radius:6px;
-
     font-size:13px;
-
 }
 
-
-
 /* ================= FOOTER ================= */
-
 
 .footer{
 
@@ -671,192 +616,100 @@ form .buttons{
 
 
 .upload{
-
     border:1px solid #398045;
-
     color:#175d25;
-
     padding:6px 10px;
-
     border-radius:5px;
-
     font-size:11px;
-
     cursor:pointer;
-
 }
-
-
 
 .upload input{
-
     display:none;
-
 }
-
-
-
-
 
 form{
-
     flex:1;
-
 }
-
-
 
 label{
-
     font-size:11px;
-
     display:block;
-
     margin-top:9px;
-
 }
-
-
-
 
 input,textarea{
-
-
     width:100%;
-
     border:1px solid #ccc;
-
     border-radius:3px;
-
     padding:7px;
-
     margin-top:4px;
-
     font-size:14px;
-
 }
-
-
 
 textarea{
-
     height:55px;
-
     resize:none;
-
 }
-
-
 
 /* BOTÕES DO FORM */
 
-
 form .buttons{
-
     display:flex;
-
     justify-content:flex-end;
-
     gap:12px;
-
     margin-top:14px;
-
 }
 
 
 
 button{
-
     cursor:pointer;
-
 }
-
-
 
 .cancelar{
-
     background:white;
-
     border:1px solid #ccc;
-
     padding:7px 15px;
-
     border-radius:5px;
-
     font-size:11px;
-
 }
-
-
 
 .salvar{
-
     background:#175d25;
-
     color:white;
-
     border:0;
-
     padding:7px 18px;
-
     border-radius:5px;
-
     font-size:11px;
-
 }
-
-
 
 /* ================= FOOTER ================= */
 
- 
-
 .footer { 
-
     background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
-
     color: white; 
-
     display: flex; 
-
     justify-content: space-between; 
-
     align-items: center; 
-
     padding: 15px 40px; 
-
     margin-top: auto; 
-
 } 
-
- 
 
 .footer div { 
-
     display: flex; 
-
     align-items: center; 
-
     gap: 10px; 
-
 } 
-
- 
 
 .footer p { 
-
     font-size: 13px; 
-
 } 
 
  
-
 .contact img, 
-
 .social img { 
-
     background: transparent; 
-
     mix-blend-mode: multiply; 
 
 } 

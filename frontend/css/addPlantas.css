@@ -1,34 +1,34 @@
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    font-family: "Segoe UI", Arial, sans-serif; 
-} 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
 
-body { 
-    background-color: #fff; 
-    color: #222; 
-} 
- 
-.logo { 
+body {
+    background-color: #fff;
+    color: #222;
+}
+
+.logo {
     display: flex;
-    align-items: center; 
+    align-items: center;
     padding: 2px 4px;
     mix-blend-mode: multiply;
     background: transparent;
-} 
+}
 
-/* HEADER */ 
-.header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 20px 60px; 
-    background: #fff; 
-} 
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: #fff;
+}
 
 .header {
-    height: 70px; 
+    height: 70px;
     padding: 0 40px;
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@ body {
 }
 
 .main-header {
-  height: 65px;
+    height: 65px;
 }
 
 .logo h2 {
@@ -51,933 +51,550 @@ body {
     margin: 0;
 }
 
-.header .logo img{ 
-    width: 60px;   
-    height: 60px; 
-} 
-
-.logo {
-    margin-left: 40px; 
+.header .logo img {
+    width: 60px;
+    height: 60px;
 }
 
-.header .logo{
+.logo {
+    margin-left: 40px;
+}
+
+.header .logo {
     width: 40;
     height: 40;
 }
 
-.contact img { 
-    background: transparent; 
-    mix-blend-mode: multiply; 
-} 
+.contact img {
+    background: transparent;
+    mix-blend-mode: multiply;
+}
+
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
+}
+
+.logo span {
+    color: #3d7c3d;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    color: #2f6f2f;
+
+}
+
+.container {
+    display: flex;
+    gap: 40px;
+    padding: 30px 50px;
+}
+
+.sidebar {
+    width: 280px;
+    background: #e9e9e9;
+    padding: 40px 20px;
+    border-radius: 12px;
+}
+
+.profile {
+    text-align: center;
+}
+
+.avatar.big {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #dcdcdc;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+.edit-profile {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+}
+
+.profile h2 {
+    margin-bottom: 10px;
+}
+
+/* ================= CONTEÚDO ================= */
+
+.content {
+    flex: 1;
+}
+
+/* topo */
+
+.top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.top h1 {
+    color: #2f6f2f;
+    font-size: 32px;
+    flex: 1;
+}
+
+/* SELECT */
+
+#opcoes {
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f2f2f2;
+    border: 1px solid #ffffff;
+    border-radius: 12px;
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    color: #000000;
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s;
+}
+
+/* seta personalizada */
+
+#opcoes {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+}
+
+/* efeito ao clicar */
+
+#opcoes:focus {
+    background-color: #dedede;
+}
+
+/* ================= GRID DE CARDS (CORRETO) ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* CARD INDIVIDUAL */
+
+.card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* imagem */
 
-.social img { 
-    background: transparent; 
-    mix-blend-mode: multiply; 
-} 
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
-.logo span { 
-    color: #3d7c3d; 
-} 
+/* textos */
 
-.buttons { 
-    display: flex; 
-    gap: 20px; 
+.card h3 {
+    margin: 5px 0;
+}
 
-} 
+.card p {
+    font-size: 14px;
+    color: #444;
+}
 
-.btn { 
-    background: transparent; 
-    border: none; 
-    font-size: 18px; 
-    cursor: pointer; 
-    transition: 0.3s; 
-} 
+/* ações */
 
-.btn:hover { 
-    color: #2f6f2f; 
+.actions {
+    display: flex;
+    gap: 8px;
+}
 
-} 
+.actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
 
-.container { 
-    display: flex; 
-    gap: 40px; 
-    padding: 30px 50px; 
-} 
+}
 
-.sidebar { 
-    width: 280px; 
-    background: #e9e9e9; 
-    padding: 40px 20px; 
-    border-radius: 12px; 
-} 
+/* card adicionar */
 
-.profile { 
-    text-align: center; 
-} 
+.add {
+    border: 2px dashed #ccc;
+    color: #777;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 200px;
+    cursor: pointer;
 
-.avatar.big { 
-    position: relative; 
-    width: 120px; 
-    height: 120px; 
-    background: #dcdcdc; 
-    border-radius: 50%; 
-    margin: 0 auto 15px; 
-} 
+}
 
-.edit-profile { 
+.add span {
+    font-size: 40px;
 
-    position: absolute; 
+}
 
-    bottom: 5px; 
+/* ================= FOOTER ================= */
 
-    right: 5px; 
+.footer {
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    margin-top: auto;
 
-    background: #2f6f2f; 
+}
 
-    color: white; 
+.footer div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    border: none; 
+}
 
-    border-radius: 50%; 
+.footer p {
+    font-size: 13px;
 
-    width: 30px; 
+}
 
-    height: 30px; 
+.contact img,
 
-    cursor: pointer; 
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
 
-} 
+}
 
- 
+/* ================= RESPONSIVO ================= */
 
-.profile h2 { 
+@media (max-width: 900px) {
 
-    margin-bottom: 10px; 
+    .container {
+        flex-direction: column;
+    }
 
-} 
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
 
- 
+}
 
-/* ================= CONTEÚDO ================= */ 
+/* overlay escuro */
 
- 
-
-.content { 
-
-    flex: 1; 
-
-} 
-
- 
-
-/* topo */ 
-
-.top { 
-
-    display: flex; 
-
-    align-items: center; 
-
-    margin-bottom: 30px; 
-
-} 
-
- 
-
-.top h1 { 
-
-    color: #2f6f2f; 
-
-    font-size: 32px; 
-
-    flex: 1; 
-
-} 
-
- 
-
-/* SELECT */ 
-
-#opcoes { 
-
-    appearance: none; /* remove estilo padrão do navegador */ 
-
-    -webkit-appearance: none; 
-
-    -moz-appearance: none; 
-
- 
-
-    background-color: #f2f2f2; 
-
-    border: 1px solid #ffffff; 
-
-    border-radius: 12px; 
-
- 
-
-    padding: 10px 40px 10px 15px; 
-
-    font-size: 16px; 
-
-    color: #000000; 
-
- 
-
-    cursor: pointer; 
-
-    outline: none; 
-
- 
-
-    transition: 0.2s; 
-
-} 
-
- 
-
-/* seta personalizada */ 
-
-#opcoes { 
-
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>"); 
-
-    background-repeat: no-repeat; 
-
-    background-position: right 10px center; 
-
-    background-size: 18px; 
-
-} 
-
- 
-
-/* efeito ao clicar */ 
-
-#opcoes:focus { 
-
-    background-color: #dedede; 
-
-} 
-
- 
-
-/* ================= GRID DE CARDS (CORRETO) ================= */ 
-
- 
-
-.cards { 
-
-    display: grid; 
-
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-
-    gap: 25px; 
-
-} 
-
- 
-
-/* CARD INDIVIDUAL */ 
-
-.card { 
-
-    background: #fff; 
-
-    padding: 15px; 
-
-    border-radius: 12px; 
-
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
-
-    transition: 0.3s; 
-
- 
-
-    display: flex; 
-
-    flex-direction: column; 
-
-    gap: 10px; 
-
-} 
-
- 
-
-.card:hover { 
-
-    transform: translateY(-5px); 
-
-} 
-
- 
-
-/* imagem */ 
-
-.card img { 
-
-    width: 100%; 
-
-    height: 160px; 
-
-    object-fit: cover; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-/* textos */ 
-
-.card h3 { 
-
-    margin: 5px 0; 
-
-} 
-
- 
-
-.card p { 
-
-    font-size: 14px; 
-
-    color: #444; 
-
-} 
-
- 
-
-/* ações */ 
-
-.actions { 
-
-    display: flex; 
-
-    gap: 8px; 
-
-} 
-
- 
-
-.actions button { 
-
-    background: transparent; 
-
-    border: none; 
-
-    cursor: pointer; 
-
-    font-size: 14px; 
-
-} 
-
- 
-
-/* card adicionar */ 
-
-.add { 
-
-    border: 2px dashed #ccc; 
-
-    color: #777; 
-
-    background: transparent; 
-
- 
-
-    display: flex; 
-
-    justify-content: center; 
-
-    align-items: center; 
-
-    flex-direction: column; 
-
- 
-
-    min-height: 200px; 
-
-    cursor: pointer; 
-
-} 
-
- 
-
-.add span { 
-
-    font-size: 40px; 
-
-} 
-
- 
-
-/* ================= FOOTER ================= */ 
-
- 
-
-.footer { 
-
-    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
-
-    color: white; 
-
-    display: flex; 
-
-    justify-content: space-between; 
-
-    align-items: center; 
-
-    padding: 15px 40px; 
-
-    margin-top: auto; 
-
-} 
-
- 
-
-.footer div { 
-
-    display: flex; 
-
-    align-items: center; 
-
-    gap: 10px; 
-
-} 
-
- 
-
-.footer p { 
-
-    font-size: 13px; 
-
-} 
-
- 
-
-.contact img, 
-
-.social img { 
-
-    background: transparent; 
-
-    mix-blend-mode: multiply; 
-
-} 
-
- 
-
-/* ================= RESPONSIVO ================= */ 
-
- 
-
-@media (max-width: 900px) { 
-
-    .container { 
-
-        flex-direction: column; 
-
-    } 
-
- 
-
-    .header { 
-
-        flex-direction: column; 
-
-        gap: 15px; 
-
-    } 
-
-} 
-
- 
-
-/* overlay escuro */ 
-
-.modal-overlay { 
-
-    position: fixed; 
-
+.modal-overlay {
+    position: fixed;
     top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* esconder */
+
+.hidden {
+    display: none;
+}
+
+/* caixa do modal */
+
+.modal-container-post {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    width: 350px;
+}
+
+.post-form input,
+
+.post-form select,
+
+.post-form textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+#fecharModal {
+    background: #2f6f2f;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#cancelarPerfil {
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#btnTrocarFoto {
+    background: #d1d1d1;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#cancelarEdicao {
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.btn-save {
+    background: #2f6f2f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.btn-cancel {
+    background: #2f6f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#modalPerfil .modal-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 600px;
+    max-width: 90%;
+
+}
+
+#modalPerfil .modal-body {
+    display: flex;
+    gap: 20px;
+}
 
-    left: 0; 
+#modalPerfil .perfil-form-section {
+    flex: 1;
+}
 
-    width: 100%; 
+#modalPerfil input,
 
-    height: 100%; 
+#modalPerfil textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 
- 
+}
 
-    background: rgba(0,0,0,0.5); 
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
 
-    display: flex; 
+}
 
-    justify-content: center; 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
 
-    align-items: center; 
-
- 
-
-    z-index: 999; 
-
-} 
-
- 
-
-/* esconder */ 
-
-.hidden { 
-
-    display: none; 
-
-} 
-
- 
-
-/* caixa do modal */ 
-
-.modal-container-post { 
-
-    background: #fff; 
-
-    padding: 25px; 
-
-    border-radius: 15px; 
-
-    width: 350px; 
-
-} 
-
- 
-
-/* inputs */ 
-
-.post-form input, 
-
-.post-form select, 
-
-.post-form textarea { 
-
-    width: 100%; 
-
-    margin-top: 10px; 
-
-    padding: 10px; 
-
-    border-radius: 10px; 
-
-    border: 1px solid #ccc; 
-
-} 
-
- 
-
-/* footer */ 
-
-.modal-footer { 
-
-    display: flex; 
-
-    justify-content: space-between; 
-
-    margin-top: 15px; 
-
-     
-
-} 
-
- 
-
-#fecharModal{ 
-
-    background: #2f6f2f; 
-
-    color: rgb(255, 255, 255); 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-#cancelarPerfil{ 
-
-background: #2f6f2f; 
-
-    color: white; 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-#btnTrocarFoto{ 
-
-    background: #d1d1d1; 
-
-    color: rgb(0, 0, 0); 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-#cancelarEdicao{ 
-
-    background: #2f6f2f; 
-
-    color: white; 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-.btn-save { 
-
-    background: #2f6f2f; 
-
-    color: white; 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-} 
-
- 
-
-.btn-cancel{ 
-
-    background: #2f6f2f; 
-
-    color: white; 
-
-    border: none; 
-
-    padding: 10px 15px; 
-
-    border-radius: 10px; 
-
-     
-
-} 
-
- 
-
-/* MODAL EDITAR PERFIL */ 
-
-#modalPerfil .modal-container { 
-
-    background: #ffffff; /* fundo branco */ 
-
-    border-radius: 12px; 
-
-    padding: 20px; 
-
-    width: 600px; 
-
-    max-width: 90%; 
-
-} 
-
- 
-
-/* opcional: melhorar visual */ 
-
-#modalPerfil .modal-body { 
-
-    display: flex; 
-
-    gap: 20px; 
-
-} 
-
- 
-
-#modalPerfil .perfil-form-section { 
-
-    flex: 1; 
-
-} 
-
- 
-
-#modalPerfil input, 
-
-#modalPerfil textarea { 
-
-    width: 100%; 
-
-    padding: 8px; 
-
-    border: 1px solid #ccc; 
-
-    border-radius: 8px; 
-
-} 
-
- 
-
-/* overlay escuro atrás */ 
-
-.modal-overlay { 
-
-    background: rgba(0,0,0,0.5); 
-
-} 
-
- 
-
-/* FUNDO DO MODAL */ 
-
-.modal-overlay { 
-
-    position: fixed; 
-
-    top: 0; 
-
-    left: 0; 
-
-    width: 100%; 
-
-    height: 100%; 
-
- 
-
-    background: rgba(0, 0, 0, 0.5); 
-
-     
-
-    display: flex; 
-
-    align-items: center; 
-
-    justify-content: center; 
-
- 
-
-    z-index: 999; 
-
-} 
-
- 
-
-.hidden { 
-
-    display: none; 
-
-} 
-
- 
-
-/* CAIXA DO MODAL */ 
-
-.modal-container-post { 
-
-    background: #ffffff; 
-
-    padding: 30px; 
-
-    width: 400px; 
-
-    border-radius: 20px; 
-
- 
-
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
-
- 
-
-    animation: aparecer 0.25s ease; 
-
-} 
-
- 
-
-@keyframes aparecer { 
-
-    from { 
-
-        opacity: 0; 
-
-        transform: scale(0.95); 
-
-    } 
-
-    to { 
-
-        opacity: 1; 
-
-        transform: scale(1); 
-
-    } 
-
-} 
-
- 
-
-/* TÍTULO */ 
-
-.titulo-modal { 
-
-    font-size: 26px; 
-
-    font-weight: 600; 
-
-    margin-bottom: 20px; 
-
-} 
-
- 
-
-/* UPLOAD */ 
-
-.upload-area { 
-
-    border: 2px dashed #dcdcdc; 
-
-    border-radius: 15px; 
-
-    padding: 25px; 
-
-    text-align: center; 
-
-    cursor: pointer; 
-
-    margin-bottom: 20px; 
-
-    transition: 0.2s; 
-
-} 
-
- 
-
-.upload-area:hover { 
-
-    border-color: #2e7d32; 
-
-    background: #f6fff6; 
-
-} 
-
- 
-
-.nuvem-icon { 
-
-    font-size: 28px; 
-
-    display: block; 
-
-    margin-bottom: 10px; 
-
-} 
-
- 
-
-/* INPUTS */ 
-
-.post-form input, 
-
-.post-form select, 
-
-.post-form textarea { 
-
-    width: 100%; 
-
-    padding: 12px; 
-
-    margin-bottom: 12px; 
-
- 
-
-    border-radius: 12px; 
-
-    border: 1px solid #ddd; 
-
- 
-
-    font-size: 14px; 
-
-    outline: none; 
-
-    transition: 0.2s; 
-
-} 
-
-.post-form input:focus, 
-.post-form select:focus, 
-.post-form textarea:focus { 
-    border-color: #2e7d32; 
-    box-shadow: 0 0 0 2px rgba(46,125,50,0.15); 
-} 
-
-textarea { 
-    resize: none; 
-    height: 80px; 
-} 
-
-.modal-footer { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-top: 15px; 
-} 
-
-.btn-save { 
-    background: #2e7d32; 
-    color: white; 
-    border: none; 
-    padding: 10px 18px; 
-    border-radius: 12px; 
-    cursor: pointer; 
-    transition: 0.2s; 
-} 
-
-.btn-save:hover { 
-    background: #256428; 
-} 
-
-.btn-cancel { 
-    background: transparent; 
-    border: 1px solid #ccc; 
-    padding: 8px 14px; 
-    border-radius: 10px; 
-    cursor: pointer; 
-} 
-
-.btn-cancel:hover { 
-    background: #f5f5f5; 
-} 
-
-#imgPreview { 
-    width: 100%; 
-    border-radius: 12px; 
-    margin-top: 10px; 
-} 
+
+
+.hidden {
+    display: none;
+}
+
+
+.modal-container-post {
+
+    background: #ffffff;
+    padding: 30px;    width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: aparecer 0.25s ease;
+
+}
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+/* TÍTULO */
+
+.titulo-modal {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* UPLOAD */
+
+.upload-area {
+    border: 2px dashed #dcdcdc;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.2s;
+
+}
+
+.upload-area:hover {
+    border-color: #2e7d32;
+    background: #f6fff6;
+}
+
+.nuvem-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 10px;
+
+}
+
+.post-form input,
+
+.post-form select,
+
+.post-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+
+}
+
+.post-form input:focus,
+.post-form select:focus,
+.post-form textarea:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.15);
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.btn-save {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-save:hover {
+    background: #256428;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: #f5f5f5;
+}
+
+#imgPreview {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+}
 
 .modal-overlay {
     position: fixed;
@@ -1015,8 +632,8 @@ textarea {
     background-color: #ffffff !important;
     width: 90% !important;
     max-width: 440px !important;
-    overflow: hidden !important;  
-    padding: 20px 30px !important; 
+    overflow: hidden !important;
+    padding: 20px 30px !important;
     border-radius: 24px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
     display: flex !important;
@@ -1025,6 +642,7 @@ textarea {
     box-sizing: border-box !important;
     z-index: 2500 !important;
 }
+
 .modal-overlay.hidden {
     display: none !important;
 }
@@ -1135,7 +753,7 @@ textarea {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 10;
     padding: 10px;
     box-sizing: border-box;
@@ -1154,8 +772,9 @@ textarea {
     overflow-y: auto;
 }
 
-.modal-footer button:not(.btn-save), 
-#fecharModal, #cancelarEdicao {
+.modal-footer button:not(.btn-save),
+#fecharModal,
+#cancelarEdicao {
     background-color: #266529;
     color: #ffffff;
 }
@@ -1164,7 +783,8 @@ textarea {
     background-color: #1b491e;
 }
 
-.modal-footer .btn-save, #salvarEdicao {
+.modal-footer .btn-save,
+#salvarEdicao {
     background-color: #266529;
     color: #ffffff;
 }
@@ -1205,7 +825,7 @@ textarea {
     border: none;
 
     cursor: pointer;
-    z-index: 2; 
+    z-index: 2;
 }
 
 .redes {
@@ -1333,7 +953,7 @@ textarea {
     justify-content: center;
     align-items: center;
 
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 2000;
 }
 
@@ -1344,29 +964,29 @@ textarea {
     width: 400px;
 }
 
-/* FOOTER */ 
-.footer { 
-    background: linear-gradient(90deg, #0f2f0f, #1f4d1f); 
-    color: white; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 10px 40px; 
+/* FOOTER */
+.footer {
+    background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
     margin-top: 0px;
     text-align: center;
-} 
+}
 
-.footer div { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
+.footer div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     text-align: center;
-} 
+}
 
-.footer p { 
-    font-size: 13px; 
+.footer p {
+    font-size: 13px;
     text-align: center;
-} 
+}
 
 html {
     min-height: 100%;
@@ -1497,7 +1117,7 @@ body {
     padding: 20px;
     border: 2px dashed #cfcfcf;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
     gap: 14px;
     cursor: pointer;
     user-select: none;
@@ -1559,7 +1179,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow-y: auto;
-    background: rgba(0,0,0,.48);
+    background: rgba(0, 0, 0, .48);
     z-index: 3000;
 }
 
@@ -1575,7 +1195,7 @@ body {
     padding: 26px;
     border-radius: 18px;
     background: #fff;
-    box-shadow: 0 12px 36px rgba(0,0,0,.2);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .2);
     z-index: 3001;
 }
 
@@ -1602,7 +1222,7 @@ body {
 .post-form input:focus,
 .post-form select:focus {
     border-color: #2f6f2f;
-    outline: 2px solid rgba(47,111,47,.12);
+    outline: 2px solid rgba(47, 111, 47, .12);
 }
 
 .modal-footer {
@@ -1698,7 +1318,7 @@ body {
     margin-top: 2px;
 }
 
-.campo-imagem > label:first-child {
+.campo-imagem>label:first-child {
     display: block;
     margin-bottom: 10px;
     font-size: 15px;
@@ -1723,8 +1343,8 @@ body {
     box-sizing: border-box;
     overflow: hidden;
     transition: border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
+        background 0.25s ease,
+        transform 0.25s ease;
 }
 
 .upload-imagem:hover {
@@ -1879,7 +1499,7 @@ body {
     background: #cfe5cf;
 }
 
-#modalPerfil > .modal-container {
+#modalPerfil>.modal-container {
     width: 100%;
     max-width: 650px;
     max-height: calc(100vh - 40px);
@@ -2311,8 +1931,8 @@ body {
     gap: 9px;
 }
 
-#modalPostagem .campo-formulario > label,
-#modalPostagem .campo-imagem > label:first-child {
+#modalPostagem .campo-formulario>label,
+#modalPostagem .campo-imagem>label:first-child {
     font-size: 14px;
     margin-bottom: 5px;
 }
