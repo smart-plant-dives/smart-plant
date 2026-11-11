@@ -1,4 +1,3 @@
-
 * { 
     margin: 0; 
     padding: 0; 
@@ -10,8 +9,7 @@ body {
     background-color: #fff; 
     color: #222; 
 } 
-
-/* Opcional: ajustar posição */ 
+ 
 .logo { 
     display: flex;
     align-items: center; 
@@ -30,7 +28,7 @@ body {
 } 
 
 .header {
-    height: 70px; /* controla altura */
+    height: 70px; 
     padding: 0 40px;
     display: flex;
     align-items: center;
@@ -40,7 +38,7 @@ body {
 }
 
 .header {
-    height: 65px; /* diminua aqui */
+    height: 65px;
 }
 
 .main-header {
@@ -59,7 +57,7 @@ body {
 } 
 
 .logo {
-    margin-left: 40px; /* aumenta conforme quiser */
+    margin-left: 40px; 
 }
 
 .header .logo{
@@ -82,98 +80,49 @@ body {
 } 
 
 .buttons { 
-
     display: flex; 
-
     gap: 20px; 
 
 } 
 
- 
-
 .btn { 
-
     background: transparent; 
-
     border: none; 
-
     font-size: 18px; 
-
     cursor: pointer; 
-
     transition: 0.3s; 
-
 } 
 
- 
-
 .btn:hover { 
-
     color: #2f6f2f; 
 
 } 
 
- 
-
-/* ================= LAYOUT ================= */ 
-
- 
-
 .container { 
-
     display: flex; 
-
     gap: 40px; 
-
     padding: 30px 50px; 
-
 } 
-
- 
-
-/* ================= SIDEBAR ================= */ 
-
- 
 
 .sidebar { 
-
     width: 280px; 
-
     background: #e9e9e9; 
-
     padding: 40px 20px; 
-
     border-radius: 12px; 
-
 } 
-
- 
 
 .profile { 
-
     text-align: center; 
-
 } 
-
- 
 
 .avatar.big { 
-
     position: relative; 
-
     width: 120px; 
-
     height: 120px; 
-
     background: #dcdcdc; 
-
     border-radius: 50%; 
-
     margin: 0 auto 15px; 
-
 } 
-
- 
 
 .edit-profile { 
 
@@ -979,116 +928,57 @@ background: #2f6f2f;
 
 } 
 
- 
-
 .post-form input:focus, 
-
 .post-form select:focus, 
-
 .post-form textarea:focus { 
-
     border-color: #2e7d32; 
-
     box-shadow: 0 0 0 2px rgba(46,125,50,0.15); 
-
 } 
-
- 
-
-/* TEXTAREA */ 
 
 textarea { 
-
     resize: none; 
-
     height: 80px; 
-
 } 
-
- 
-
-/* FOOTER */ 
 
 .modal-footer { 
-
     display: flex; 
-
     justify-content: space-between; 
-
     align-items: center; 
-
     margin-top: 15px; 
-
 } 
-
- 
-
-/* BOTÕES */ 
 
 .btn-save { 
-
     background: #2e7d32; 
-
     color: white; 
-
     border: none; 
-
     padding: 10px 18px; 
-
     border-radius: 12px; 
-
     cursor: pointer; 
-
     transition: 0.2s; 
-
 } 
-
- 
 
 .btn-save:hover { 
-
     background: #256428; 
-
 } 
-
- 
 
 .btn-cancel { 
-
     background: transparent; 
-
     border: 1px solid #ccc; 
-
     padding: 8px 14px; 
-
     border-radius: 10px; 
-
     cursor: pointer; 
-
 } 
-
- 
 
 .btn-cancel:hover { 
-
     background: #f5f5f5; 
-
 } 
-
- 
-
-/* IMAGEM PREVIEW */ 
 
 #imgPreview { 
-
     width: 100%; 
-
     border-radius: 12px; 
-
     margin-top: 10px; 
-
 } 
-/* ================= OVERLAY E CONTAINER DO MODAL ================= */
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1106,9 +996,8 @@ textarea {
     display: flex;
     gap: 40px;
     padding: 30px 50px;
-    align-items: flex-start; /* IMPORTANTE */
+    align-items: flex-start;
 }
-
 
 .avatar.big {
     width: 120px;
@@ -1122,28 +1011,17 @@ textarea {
     object-fit: cover;
 }
 
-
-
-/* O bloco branco do Modal de Adicionar/Editar Planta */
 .modal-overlay .modal-container-post {
     background-color: #ffffff !important;
     width: 90% !important;
-    max-width: 440px !important;  /* Mantém a largura compacta ideal */
-    
-    /* Remove as barras de rolagem de vez */
+    max-width: 440px !important;
     overflow: hidden !important;  
-    
-    /* Reduz levemente os espaçamentos para o conteúdo subir e caber na tela */
     padding: 20px 30px !important; 
     border-radius: 24px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-    
-    /* Centralização perfeita na tela */
-    
-    /* Organização interna */
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important; /* Diminuído de 16px para 12px para compactar o form */
+    gap: 12px !important;
     box-sizing: border-box !important;
     z-index: 2500 !important;
 }
@@ -1151,7 +1029,6 @@ textarea {
     display: none !important;
 }
 
-/* Título */
 .titulo-modal {
     font-family: sans-serif;
     color: #212529;
@@ -1161,7 +1038,6 @@ textarea {
     text-align: left;
 }
 
-/* ================= UPLOAD AREA (Borda Tracejada) ================= */
 .upload-area {
     width: 100%;
     height: 140px;
@@ -1195,16 +1071,14 @@ textarea {
     line-height: 1.4;
 }
 
-/* ================= FORMULÁRIO (COLUNA UNIFICADA) ================= */
 .post-form {
     display: flex;
     flex-direction: column;
-    gap: 14px; /* Espaçamento idêntico entre os inputs */
+    gap: 14px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Reset e padronização de todos os campos de entrada */
 .post-form input[type="text"],
 .post-form select,
 .post-form textarea,
@@ -1225,19 +1099,16 @@ textarea {
     top: auto !important;
 }
 
-/* Borda verde de destaque no campo nome (igual ao primeiro print) */
 #nomePlanta {
     border: 1.5px solid #388e3c;
 }
 
-/* Estilização da Caixa de Texto */
 .post-form textarea {
     height: 110px !important;
     padding: 12px 16px;
-    resize: none; /* Evita que o usuário quebre o layout puxando o canto */
+    resize: none;
 }
 
-/* ================= CUSTOM SELECT (BUSCA API) ================= */
 .custom-select-container {
     width: 100%;
     position: relative;
@@ -1256,7 +1127,6 @@ textarea {
     transform: rotate(90deg);
 }
 
-/* Lista suspensa da API */
 .select-options {
     position: absolute;
     top: 52px;
@@ -1284,8 +1154,6 @@ textarea {
     overflow-y: auto;
 }
 
-
-/* Botão Cancelar (Verde Escuro) */
 .modal-footer button:not(.btn-save), 
 #fecharModal, #cancelarEdicao {
     background-color: #266529;
@@ -1296,7 +1164,6 @@ textarea {
     background-color: #1b491e;
 }
 
-/* Botão Salvar (Verde Escuro) */
 .modal-footer .btn-save, #salvarEdicao {
     background-color: #266529;
     color: #ffffff;
@@ -1306,7 +1173,6 @@ textarea {
     background-color: #1b491e;
 }
 
-/* CONTAINER DO PERFIL */
 .perfil {
     position: relative;
     width: 250px;
@@ -1316,7 +1182,6 @@ textarea {
     text-align: center;
 }
 
-/* FOTO DE PERFIL */
 #fotoPerfil {
     width: 120px;
     height: 120px;
@@ -1327,7 +1192,6 @@ textarea {
     z-index: 1;
 }
 
-/* BOTÃO DE ALTERAR FOTO */
 #btnFoto {
     position: absolute;
     bottom: 95px;
@@ -1341,10 +1205,9 @@ textarea {
     border: none;
 
     cursor: pointer;
-    z-index: 2; /* 🔥 FICA NA FRENTE */
+    z-index: 2; 
 }
 
-/* ÍCONES SOCIAIS */
 .redes {
     margin-top: 10px;
 }
@@ -1355,23 +1218,19 @@ textarea {
     cursor: pointer;
 }
 
-/* CARD DE ADICIONAR PLANTA */
 .add-planta {
     width: 180px;
     height: 260px;
     border: 2px dashed #ccc;
     border-radius: 12px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     cursor: pointer;
     position: relative;
     z-index: 1;
 }
 
-/* BOTÃO + */
 .add-planta button {
     width: 50px;
     height: 50px;
@@ -1385,7 +1244,6 @@ textarea {
     z-index: 2;
 }
 
-/* 🔥 GARANTE QUE NADA FIQUE POR CIMA */
 .add-planta::before {
     content: "";
     position: absolute;
@@ -1510,7 +1368,6 @@ textarea {
     text-align: center;
 } 
 
-/* ===== AJUSTES FINAIS SMARTPLANT: layout, cards e modais ===== */
 html {
     min-height: 100%;
 }
@@ -1836,9 +1693,6 @@ body {
     }
 }
 
-
-/* ÁREA DE ADICIONAR FOTO DA PLANTA */
-
 .campo-imagem {
     width: 100%;
     margin-top: 2px;
@@ -1852,7 +1706,6 @@ body {
     color: #2f3b2f;
 }
 
-/* Caixa para selecionar a imagem */
 .upload-imagem {
     width: 100%;
     min-height: 150px;
@@ -1862,19 +1715,16 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-
     border: 2px dashed #a5c9a5;
     border-radius: 16px;
     background: linear-gradient(135deg, #f8fff8, #edf7ed);
-
     cursor: pointer;
     text-align: center;
     box-sizing: border-box;
     overflow: hidden;
-
     transition: border-color 0.25s ease,
-                background 0.25s ease,
-                transform 0.25s ease;
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .upload-imagem:hover {
@@ -1883,7 +1733,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Ícone de upload */
 .icone-upload {
     width: 48px;
     height: 48px;
@@ -1900,7 +1749,6 @@ body {
     line-height: 1;
 }
 
-/* Texto principal */
 .placeholder-imagem strong {
     display: block;
     margin-bottom: 5px;
@@ -1909,7 +1757,6 @@ body {
     font-weight: 600;
 }
 
-/* Instruções */
 .placeholder-imagem small {
     display: block;
     margin-top: 4px;
@@ -1918,7 +1765,6 @@ body {
     line-height: 1.5;
 }
 
-/* Prévia da foto escolhida */
 .preview-imagem {
     display: none;
     width: 100%;
@@ -1927,23 +1773,19 @@ body {
     border-radius: 12px;
 }
 
-/* Mostrar a imagem quando houver uma prévia */
 .preview-imagem.visivel {
     display: block;
 }
 
-/* Esconder o texto enquanto a prévia estiver aparecendo */
 .upload-imagem.tem-imagem .placeholder-imagem {
     display: none;
 }
 
-/* Destaque ao selecionar por teclado */
 .upload-imagem:focus-within {
     outline: 2px solid #2f6f2f;
     outline-offset: 3px;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 480px) {
     .upload-imagem {
         min-height: 130px;
@@ -1957,9 +1799,6 @@ body {
     }
 }
 
-
-/* ===== CORREÇÃO DA FOTO NO MODAL EDITAR PERFIL ===== */
-
 #modalPerfil .coluna-perfil-foto {
     display: flex;
     flex-direction: column;
@@ -1969,7 +1808,6 @@ body {
     min-width: 0;
 }
 
-/* Moldura da foto */
 #modalPerfil .moldura-foto-circular {
     position: relative;
     width: 150px;
@@ -1987,7 +1825,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Imagem dentro da moldura */
 #modalPerfil #fotoPreview {
     position: absolute;
     inset: 0;
@@ -2006,12 +1843,10 @@ body {
     box-sizing: border-box;
 }
 
-/* Esconder a imagem quando não houver foto */
 #modalPerfil #fotoPreview.hidden {
     display: none !important;
 }
 
-/* Texto exibido antes de escolher a foto */
 #modalPerfil .texto-placeholder-foto {
     max-width: 120px;
     padding: 10px;
@@ -2021,7 +1856,6 @@ body {
     line-height: 1.4;
 }
 
-/* Informações abaixo da foto */
 #modalPerfil .regras-foto {
     margin: 12px 0;
     text-align: center;
@@ -2045,7 +1879,6 @@ body {
     background: #cfe5cf;
 }
 
-/* Ajuste do modal */
 #modalPerfil > .modal-container {
     width: 100%;
     max-width: 650px;
@@ -2065,7 +1898,6 @@ body {
     min-width: 0;
 }
 
-/* Campos sem ultrapassar o modal */
 #modalPerfil .perfil-form-section input,
 #modalPerfil .perfil-form-section textarea {
     width: 100%;
@@ -2090,9 +1922,6 @@ body {
     }
 }
 
-
-/* ===== CORRIGIR BOTÃO DE EDITAR FOTO DE PERFIL ===== */
-
 .profile .avatar.big {
     position: relative;
     width: 150px;
@@ -2102,7 +1931,6 @@ body {
     isolation: isolate;
 }
 
-/* Foto de perfil */
 .profile #fotoPerfil {
     position: absolute;
     top: 0;
@@ -2116,7 +1944,6 @@ body {
     pointer-events: none;
 }
 
-/* Botão do pincel sempre na frente */
 .profile .edit-profile {
     position: absolute;
     right: 0;
@@ -2143,8 +1970,6 @@ body {
     transform: scale(1.08);
 }
 
-
-/* Círculo do perfil */
 .profile .avatar.big {
     position: relative;
     width: 150px;
@@ -2155,7 +1980,6 @@ body {
     overflow: visible;
 }
 
-/* Foto presa dentro do círculo */
 .profile #fotoPerfil {
     position: absolute;
     top: 0;
@@ -2174,7 +1998,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Pincel acima da foto */
 .profile .edit-profile {
     position: absolute;
     right: 0;
@@ -2196,14 +2019,11 @@ body {
     z-index: 2;
 }
 
-/* Esconder foto quando não houver imagem */
 .profile #fotoPerfil:not([src]),
 .profile #fotoPerfil[src=""] {
     display: none;
 }
 
-
-/* FOTO DE PERFIL PERFEITAMENTE REDONDA */
 .profile .avatar.big {
     position: relative;
     width: 150px !important;
@@ -2216,7 +2036,6 @@ body {
     overflow: visible;
 }
 
-/* A imagem ocupa um círculo perfeito */
 .profile .avatar.big #fotoPerfil {
     position: absolute;
     top: 0;
@@ -2236,7 +2055,6 @@ body {
     z-index: 1;
 }
 
-/* Botão de edição por cima da foto */
 .profile .avatar.big .edit-profile {
     position: absolute;
     width: 38px;
@@ -2247,7 +2065,6 @@ body {
     border-radius: 50%;
 }
 
-/* Campo de nome de usuário no modal Editar Perfil */
 .campo-perfil {
     width: 100%;
     margin-bottom: 8px;
@@ -2305,7 +2122,6 @@ body {
     font-size: 12px;
 }
 
-
 .campo-categoria {
     position: relative;
     width: 100%;
@@ -2354,7 +2170,6 @@ body {
     display: block;
 }
 
-/* FOOTER */
 .footer {
     background: linear-gradient(90deg, #0f2f0f, #1f4d1f);
     color: white;
@@ -2385,7 +2200,7 @@ body {
 }
 
 
-/* Fundo do modal */
+/* modal */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -2393,36 +2208,29 @@ body {
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.55);
     z-index: 2500;
 }
 
-/* Caixa do modal */
 .modal-container-post {
     position: relative;
     width: 100%;
     max-width: 500px;
     max-height: calc(100dvh - 40px);
-
     margin: auto;
     padding: 24px;
     box-sizing: border-box;
-
     background: #fff;
     border-radius: 20px;
     overflow-y: auto;
     overscroll-behavior: contain;
-
     flex-shrink: 0;
 }
 
-/* Modal fechado */
 .modal-overlay.hidden {
     display: none !important;
 }
@@ -2472,9 +2280,6 @@ body {
     font-size: 12px;
 }
 
-
-/* MODAL ADICIONAR PLANTA — VERSÃO MAIS COMPACTA */
-
 #modalPostagem {
     padding: 10px;
 }
@@ -2488,13 +2293,11 @@ body {
     border-radius: 20px;
 }
 
-/* Título */
 #modalPostagem .titulo-modal {
     font-size: 24px;
     margin-bottom: 0;
 }
 
-/* Campos */
 #modalPostagem #nomePlanta,
 #modalPostagem #categoriaPlanta {
     height: 40px;
@@ -2508,7 +2311,6 @@ body {
     gap: 9px;
 }
 
-/* Descrição */
 #modalPostagem .campo-formulario > label,
 #modalPostagem .campo-imagem > label:first-child {
     font-size: 14px;
@@ -2523,7 +2325,6 @@ body {
     border-radius: 12px;
 }
 
-/* Upload da imagem */
 #modalPostagem .upload-imagem {
     height: 100px;
     min-height: 100px;
@@ -2555,7 +2356,6 @@ body {
     max-height: 85px;
 }
 
-/* Visibilidade */
 #modalPostagem .botao-visibilidade {
     padding: 7px 11px;
     font-size: 13px;
@@ -2566,7 +2366,6 @@ body {
     font-size: 11px;
 }
 
-/* Botões */
 #modalPostagem .modal-footer {
     gap: 8px;
     margin-top: 8px;
@@ -2579,7 +2378,6 @@ body {
     border-radius: 9px;
 }
 
-/* Celulares */
 @media (max-width: 480px) {
     #modalPostagem .modal-container-post {
         width: 100%;
@@ -2587,11 +2385,6 @@ body {
         padding: 15px;
     }
 }
-
-
-/* =====================================
-   MODAL PERSONALIZADO DE ALERTAS
-===================================== */
 
 .alerta-overlay[hidden] {
     display: none !important;
@@ -2601,11 +2394,9 @@ body {
     position: fixed;
     inset: 0;
     z-index: 10000;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
     background: rgba(15, 30, 15, 0.55);
     backdrop-filter: blur(3px);
@@ -2615,14 +2406,11 @@ body {
     width: 100%;
     max-width: 380px;
     padding: 30px 26px 24px;
-
     background: #fff;
     border: 1px solid #e2eadf;
     border-radius: 20px;
-
     text-align: center;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.18);
-
     animation: aparecerAlerta 0.22s ease-out;
 }
 
@@ -2630,15 +2418,12 @@ body {
     width: 52px;
     height: 52px;
     margin: 0 auto 16px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
     background: #edf5e9;
     color: #28652d;
-
     font-size: 28px;
     font-weight: bold;
 }
@@ -2662,17 +2447,13 @@ body {
     width: 100%;
     min-height: 44px;
     padding: 11px 20px;
-
     border: none;
     border-radius: 10px;
-
     background: #24582a;
     color: white;
-
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-
     transition: background 0.2s, transform 0.2s;
 }
 
@@ -2711,4 +2492,3 @@ body {
         font-size: 20px;
     }
 }
-
