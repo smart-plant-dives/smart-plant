@@ -1,3 +1,8 @@
+
+/* ========================================
+   CONFIGURAÇÕES GERAIS
+======================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,113 +12,112 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #fff;
+    color: #333;
 }
 
-/* Opcional: ajustar posição */ 
-.logo { 
+/* ========================================
+   LOGO
+======================================== */
+
+.logo {
     display: flex;
-    align-items: center; 
+    align-items: center;
+    gap: 8px;
     padding: 2px 4px;
-    mix-blend-mode: multiply;
+    margin-left: 70px;
     background: transparent;
-} 
-
-/* HEADER */ 
-.header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 20px 60px; 
-    background: #fff; 
-    height: 65px; /* controla altura */
-    padding: 0 40px;
-    display: flex;
-    border-bottom: 2px solid #2e5e2e;
-    background-color: #fff;
-} 
-
-.main-header {
-  height: 65px;
+    mix-blend-mode: multiply;
 }
 
 .logo h2 {
+    margin: 0;
     font-size: 18px;
     line-height: 18px;
-    margin: 0;
 }
 
-.header .logo img{ 
-    width: 60px;   
-    height: 60px; 
-} 
-
-.logo {
-    margin-left: 70px; /* aumenta conforme quiser */
+.logo span {
+    color: #3d7c3d;
 }
 
-.header .logo{
-    width: 40;
-    height: 40;
+.header .logo img,
+.main-header .logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
 }
 
-.contact img { 
-    background: transparent; 
-    mix-blend-mode: multiply; 
-} 
+/* ========================================
+   CABEÇALHO
+======================================== */
 
-.social img { 
-    background: transparent; 
-    mix-blend-mode: multiply; 
-} 
-
-.logo span { 
-    color: #3d7c3d; 
-} 
-
+.header,
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    width: 100%;
+    height: 65px;
+    padding: 0 40px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid #2e7d32;
 }
+
+.main-header {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact img,
+.social img {
+    background: transparent;
+    mix-blend-mode: multiply;
+}
+
+/* ========================================
+   CONTAINER DE LOGIN
+======================================== */
 
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 65px);
     padding: 20px;
 }
 
 .login-box {
-    background-color: #fff;
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
     width: 100%;
     max-width: 450px;
-    position: relative; 
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* ========================================
+   BOTÃO DE FECHAR
+======================================== */
 
 .close-global-btn {
     position: absolute;
-    top: 15px;           
-    left: 20px;          
+    top: 15px;
+    left: 20px;
+    z-index: 10;
     font-size: 22px;
     font-weight: bold;
+    line-height: 1;
     color: #666;
     text-decoration: none;
-    line-height: 1;
     cursor: pointer;
-    z-index: 10;
 }
 
 .close-global-btn:hover {
     color: #ff4d4d;
 }
+
+/* ========================================
+   FORMULÁRIO
+======================================== */
 
 .login-form h2 {
     margin-bottom: 10px;
@@ -130,6 +134,7 @@ body {
 }
 
 .input-group {
+    width: 100%;
     margin-bottom: 15px;
 }
 
@@ -141,17 +146,29 @@ body {
 }
 
 .input-group input {
+    display: block;
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: inherit;
     font-size: 14px;
+    outline: none;
 }
+
+.input-group input:focus {
+    border-color: #286b32;
+}
+
+/* ========================================
+   CAMPO DE SENHA
+======================================== */
 
 .password-input {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .password-input input {
@@ -163,10 +180,83 @@ body {
     position: absolute;
     right: 10px;
     color: #888;
+    cursor: pointer;
 }
 
-.btn-submit {
+/* ========================================
+   CAMPO DE NOME DE USUÁRIO
+   @ INTEGRADO À CAIXA
+======================================== */
+
+.username-container {
+    display: flex;
+    align-items: center;
     width: 100%;
+    height: 54px;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    transition: border-color 0.2s ease;
+}
+
+.username-container:focus-within {
+    border-color: #286b32;
+}
+
+/* Símbolo @ */
+
+.username-container .arroba {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 100%;
+    padding: 0 12px 0 16px;
+    background-color: transparent;
+    border: none;
+    color: #286b32;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Campo de texto sem borda interna */
+
+.username-container input,
+.input-group .username-container input {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0 12px 0 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Impede que o foco crie uma segunda borda */
+
+.username-container input:focus,
+.input-group .username-container input:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* ========================================
+   BOTÃO DE ENTRAR
+======================================== */
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
     padding: 12px;
     background-color: #1f4d1f;
     color: #fff;
@@ -174,12 +264,40 @@ body {
     border-radius: 4px;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    display: block;
     text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .btn-submit:hover {
     background-color: #1b5e20;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 600px) {
+    .header,
+    .main-header {
+        padding: 0 15px;
+    }
+
+    .logo {
+        margin-left: 0;
+    }
+
+    .header .logo img,
+    .main-header .logo img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .login-container {
+        padding: 15px;
+    }
+
+    .login-box {
+        padding: 40px 25px;
+    }
 }
