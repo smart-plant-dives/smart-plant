@@ -24,13 +24,18 @@ public class UsuarioController {
 	private UsuarioService service;
 
 	@PostMapping("/login")
-	public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
-		
-		Usuario usuarioAutenticado = service.autenticar(usuario.getLogin(), usuario.getSenha());
-		
-		return ResponseEntity.ok(usuarioAutenticado);
+	public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+		try {
+			Usuario usuarioAutenticado = service.autenticar(usuario.getLogin(), usuario.getSenha());
+
+			return ResponseEntity.ok(usuarioAutenticado);
+
+		} catch (org.springframework.web.server.ResponseStatusException erro) {
+			return ResponseEntity.status(erro.getStatusCode())
+					.body(java.util.Map.of("mensagem", "Usuário ou senha inválidos."));
+		}
 	}
-	
+
 	@PostMapping
 	public Usuario salvar(@RequestBody Usuario usuario) {
 		return service.salvar(usuario);
@@ -39,7 +44,7 @@ public class UsuarioController {
 	@GetMapping
 	public List<Usuario> listarTodos() {
 		return service.listarTodos();
-		}
+	}
 
 	@PutMapping("/{id}")
 	public Usuario atualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
@@ -48,7 +53,7 @@ public class UsuarioController {
 
 	@DeleteMapping("/{id}")
 	public void deletar(@PathVariable Long id) {
-		 service.deletar(id);
+		service.deletar(id);
 	}
 
 }

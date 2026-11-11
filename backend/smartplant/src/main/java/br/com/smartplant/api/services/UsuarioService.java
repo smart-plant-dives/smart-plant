@@ -11,99 +11,117 @@ import br.com.smartplant.api.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
-    private UsuarioRepository repository;
+	private UsuarioRepository repository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
-    public Usuario salvar(Usuario usuario) {
-        if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
-            throw new IllegalArgumentException("A senha é obrigatória.");
-        }
-        if (usuario.getLogin() == null || usuario.getLogin().isBlank()) {
-            throw new IllegalArgumentException("O login é obrigatório.");
-        }
-        if (repository.existsByLogin(usuario.getLogin().trim())) {
-            throw new IllegalArgumentException("Este login já está cadastrado.");
-        }
-        usuario.setLogin(usuario.getLogin().trim());
-        if (usuario.getFotoPerfil() == null) {
-            usuario.setFotoPerfil("");
-        }
-        String senhaCriptografia = passwordEncoder.encode(usuario.getSenha());
-        usuario.setSenha(senhaCriptografia);
-        return repository.save(usuario);
-    }
+	public Usuario salvar(Usuario usuario) {
+		if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
+			throw new IllegalArgumentException("A senha é obrigatória.");
+		}
+		if (usuario.getLogin() == null || usuario.getLogin().isBlank()) {
+			throw new IllegalArgumentException("O login é obrigatório.");
+		}
+		if (repository.existsByLogin(usuario.getLogin().trim())) {
+			throw new IllegalArgumentException("Este login já está cadastrado.");
+		}
+		usuario.setLogin(usuario.getLogin().trim());
+		if (usuario.getFotoPerfil() == null) {
+			usuario.setFotoPerfil("");
+		}
+		String senhaCriptografia = passwordEncoder.encode(usuario.getSenha());
+		usuario.setSenha(senhaCriptografia);
+		return repository.save(usuario);
+	}
 
-    public Usuario autenticar(String login, String senha) {
+	public Usuario autenticar(String login, String senha) {
 
-        Usuario usuario = repository.findByLogin(login);
+		if (login == null || login.isBlank() || senha == null || senha.isEmpty()) {
+			throw new org.springframework.web.server.ResponseStatusException(
+					org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
+		}
 
-        if (usuario == null) {
-            throw new org.springframework.web.server.ResponseStatusException(
-                org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
-        }
+		String loginNormalizado = login.trim();
 
-        String senhaArmazenada = usuario.getSenha();
-        boolean senhaValida;
-        if (senhaArmazenada != null && senhaArmazenada.startsWith("$2")) {
-            senhaValida = passwordEncoder.matches(senha, senhaArmazenada);
-        } else {
-            senhaValida = senha != null && senha.equals(senhaArmazenada);
-            if (senhaValida) {
-                usuario.setSenha(passwordEncoder.encode(senha));
-                repository.save(usuario);
-            }
-        }
+		Usuario usuario = repository.findByLogin(loginNormalizado);
 
-        if (!senhaValida) {
-            throw new org.springframework.web.server.ResponseStatusException(
-                org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
-        }
+		if (usuario == null) {
+			throw new org.springframework.web.server.ResponseStatusException(
+					org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
+		}
 
-        return usuario;
-    }
+		String senhaArmazenada = usuario.getSenha();
 
-    public List<Usuario> listarTodos() {
-        return repository.findAll();
-    }
+		if (senhaArmazenada == null || senhaArmazenada.isBlank()) {
+			throw new org.springframework.web.server.ResponseStatusException(
+					org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
+		}
 
-    public Usuario buscarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-    }
+		boolean senhaValida;
 
-    public Usuario atualizar(Long id, Usuario usuarioNovo) {
-        Usuario usuarioAntigo = buscarPorId(id);
+		if (senhaArmazenada.startsWith("$2")) {
 
-        if (usuarioNovo.getLogin() != null && !usuarioNovo.getLogin().isBlank())
-            usuarioAntigo.setLogin(usuarioNovo.getLogin());
-        if (usuarioNovo.getTipoUsuario() != null)
-            usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
-        if (usuarioNovo.getEmail() != null && !usuarioNovo.getEmail().isBlank())
-            usuarioAntigo.setEmail(usuarioNovo.getEmail());
-        if (usuarioNovo.getNome() != null && !usuarioNovo.getNome().isBlank())
-            usuarioAntigo.setNome(usuarioNovo.getNome());
-        if (usuarioNovo.getFotoPerfil() != null)
-            usuarioAntigo.setFotoPerfil(usuarioNovo.getFotoPerfil());
-        
+			senhaValida = passwordEncoder.matches(senha, senhaArmazenada);
 
-        if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
+		} else {
 
-            String senhaCriptografada = passwordEncoder.encode(usuarioNovo.getSenha());
 
-            usuarioAntigo.setSenha(senhaCriptografada);
-        }
+			senhaValida = senha.equals(senhaArmazenada);
 
-        return repository.save(usuarioAntigo);
+			if (senhaValida) {
+				usuario.setSenha(passwordEncoder.encode(senha));
+				repository.save(usuario);
+			}
+		}
 
-    }
+		if (!senhaValida) {
+			throw new org.springframework.web.server.ResponseStatusException(
+					org.springframework.http.HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos.");
+		}
 
-    public void deletar(Long id) {
-        Usuario usuario = buscarPorId(id);
+		return usuario;
+	}
 
-        repository.delete(usuario);
-    }
+	public List<Usuario> listarTodos() {
+		return repository.findAll();
+	}
+
+	public Usuario buscarPorId(Long id) {
+		return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+	}
+
+	public Usuario atualizar(Long id, Usuario usuarioNovo) {
+		Usuario usuarioAntigo = buscarPorId(id);
+
+		if (usuarioNovo.getLogin() != null && !usuarioNovo.getLogin().isBlank())
+			usuarioAntigo.setLogin(usuarioNovo.getLogin());
+		if (usuarioNovo.getTipoUsuario() != null)
+			usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
+		if (usuarioNovo.getEmail() != null && !usuarioNovo.getEmail().isBlank())
+			usuarioAntigo.setEmail(usuarioNovo.getEmail());
+		if (usuarioNovo.getNome() != null && !usuarioNovo.getNome().isBlank())
+			usuarioAntigo.setNome(usuarioNovo.getNome());
+		if (usuarioNovo.getFotoPerfil() != null)
+			usuarioAntigo.setFotoPerfil(usuarioNovo.getFotoPerfil());
+
+		if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
+
+			String senhaCriptografada = passwordEncoder.encode(usuarioNovo.getSenha());
+
+			usuarioAntigo.setSenha(senhaCriptografada);
+		}
+
+		return repository.save(usuarioAntigo);
+
+	}
+
+	public void deletar(Long id) {
+		Usuario usuario = buscarPorId(id);
+
+		repository.delete(usuario);
+	}
 
 }
