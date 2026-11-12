@@ -56,14 +56,10 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 65px;
-    padding: 0 40px;
+    height: 55px;
+    padding: 0 35px;
     background-color: #fff;
     border-bottom: 2px solid #2e7d32;
-}
-
-.main-header {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .contact img,
@@ -300,4 +296,138 @@ body {
     .login-box {
         padding: 40px 25px;
     }
+}
+
+/* MODAL DE ALERTAS */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
+
+.modal-alerta {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    padding: 30px 25px 25px;
+    background: #fff;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    animation: modalEntrada 0.25s ease;
+}
+
+.fechar-alerta {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: none;
+    color: #777;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.icone-alerta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #fde8e7;
+    color: #d93636;
+    font-size: 24px;
+}
+
+.icone-alerta.sucesso {
+    background: #e3f4e5;
+    color: #2e7d32;
+}
+
+.icone-alerta.aviso {
+    background: #fff2d6;
+    color: #b77908;
+}
+
+.modal-alerta h2 {
+    margin-bottom: 10px;
+    color: #2e6b35;
+    font-size: 21px;
+}
+
+.modal-alerta p {
+    margin-bottom: 22px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.btn-alerta {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #286b32;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-alerta:hover {
+    background: #1f5427;
+}
+
+body.modal-aberto {
+    overflow: hidden;
+}
+
+@keyframes modalEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* LOGO DO CABEÇALHO */
+.main-header {
+    height: 66px;
+    min-height: 66px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+}
+
+.main-header .logo {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+    padding: 0;
+    transform: translateY(-2px);
+}
+
+.main-header .logo img {
+    display: block;
+    width: 70px;
+    height: 60px;
+    object-fit: contain;
 }

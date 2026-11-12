@@ -1,3 +1,4 @@
+
 const API_URL = "http://localhost:8080/api/planta";
 
 let plantas = [];
@@ -9,12 +10,21 @@ const filtro = document.getElementById("opcoes");
 const modal = document.getElementById("modalDetalhes");
 const botaoFechar = document.getElementById("fechar");
 
-// Obtém o primeiro campo existente entre os nomes possíveis.
+// =====================================================
+// ELEMENTOS E CAMPOS DA PLANTA
+// =====================================================
+
 function obterCampo(objeto, ...campos) {
-    if (!objeto || typeof objeto !== "object") return "";
+    if (!objeto || typeof objeto !== "object") {
+        return "";
+    }
 
     for (const campo of campos) {
-        if (objeto[campo] !== undefined && objeto[campo] !== null) {
+        if (
+            objeto[campo] !== undefined &&
+            objeto[campo] !== null &&
+            objeto[campo] !== ""
+        ) {
             return objeto[campo];
         }
     }
@@ -22,72 +32,142 @@ function obterCampo(objeto, ...campos) {
     return "";
 }
 
-// Evita mostrar "[object Object]" quando um campo é uma entidade.
-function obterTexto(valor, campos = ["nome", "nomeCategoria", "descricao", "login", "username"]) {
-    if (valor === null || valor === undefined) return "";
+function obterTexto(
+    valor,
+    campos = [
+        "nome",
+        "nomeEspecie",
+        "nomeCientifico",
+        "nomeCategoria",
+        "descricao",
+        "login",
+        "username"
+    ]
+) {
+    if (valor === null || valor === undefined) {
+        return "";
+    }
 
     if (typeof valor === "object") {
         return String(obterCampo(valor, ...campos) || "");
     }
 
-    return String(valor);
+    return String(valor).trim();
 }
 
+// Nome que o usuário deu à planta.
 function nomePlanta(planta) {
-    return obterTexto(obterCampo(planta, "nome", "nomePlanta", "nome_planta"));
-}
-
-function especiePlanta(planta) {
     return obterTexto(
-        obterCampo(planta, "nomeEspecie", "especie", "nome_cientifico"),
-        ["nomeEspecie", "nomeCientifico", "nome", "descricao"]
+        obterCampo(
+            planta,
+            "nome",
+            "nomePlanta",
+            "nome_planta"
+        )
     );
 }
 
+// Espécie da planta.
+
+function especiePlanta(planta) {
+    const especie = obterCampo(
+        planta,
+        "nomeEspecie",
+        "especie",
+        "nome_especie",
+        "nomeCientifico",
+        "nome_cientifico",
+        "especiePlanta"
+    );
+
+    if (especie) {
+        return obterTexto(especie, [
+            "nomeEspecie",
+            "nome",
+            "nomeCientifico",
+            "descricao"
+        ]);
+    }
+
+    // Caso a espécie esteja salva no campo categoria
+    const categoria = obterCampo(
+        planta,
+        "categoria",
+        "categoriaPlanta",
+        "nomeCategoria"
+    );
+
+    return obterTexto(categoria, [
+        "nomeEspecie",
+        "nome",
+        "nomeCategoria",
+        "descricao"
+    ]);
+}
+
+
+// Categoria usada somente no filtro.
+// Não será exibida como uma segunda informação no card ou modal.
 function categoriaPlanta(planta) {
     const categoria = obterCampo(
         planta,
         "categoria",
-        "nomeCategoria",
         "categoriaPlanta",
-        "nomeEspecie"
+        "nomeCategoria",
+        "nome_categoria",
+        "tipoCategoria"
     );
 
     return obterTexto(categoria, [
         "nomeCategoria",
-        "nomeEspecie",
+        "nome_categoria",
         "nome",
-        "descricao",
-        "nome_categoria"
+        "descricao"
     ]);
 }
 
+// Descrição da planta.
 function descricaoPlanta(planta) {
     return obterTexto(
-        obterCampo(planta, "descricao", "descricaoPlanta", "observacao"),
+        obterCampo(
+            planta,
+            "descricao",
+            "descricaoPlanta",
+            "observacao"
+        ),
         ["descricao", "texto", "conteudo"]
     );
 }
 
+// Imagem da planta.
 function imagemPlanta(planta) {
     const imagem = obterCampo(
         planta,
         "imagemUrl",
         "urlImagem",
+        "url_imagem",
         "url",
         "imagem",
         "foto"
     );
 
     if (typeof imagem === "object" && imagem !== null) {
-        return obterTexto(imagem, ["url", "imagemUrl", "urlImagem"]);
+        return obterTexto(imagem, [
+            "url",
+            "imagemUrl",
+            "urlImagem"
+        ]);
     }
 
-    return imagem || "https://via.placeholder.com/400x250?text=Planta";
+    return imagem || "https://placehold.co/400x250?text=Planta";
 }
 
-function usuarioPlanta(planta) {
-    const usuario = obterCampo(
+// =====================================================
+// INFORMAÇÕES DO USUÁRIO
+// =====================================================
+
+function obterUsuario(planta) {
+    return obterCampo(
         planta,
         "usuario",
         "dono",
@@ -96,6 +176,10 @@ function usuarioPlanta(planta) {
         "tbUsuario",
         "usuarioCadastro"
     );
+}
+
+function usuarioPlanta(planta) {
+    const usuario = obterUsuario(planta);
 
     if (typeof usuario === "object" && usuario !== null) {
         return obterTexto(usuario, [
@@ -112,15 +196,7 @@ function usuarioPlanta(planta) {
 }
 
 function fotoUsuarioPlanta(planta) {
-    const usuario = obterCampo(
-        planta,
-        "usuario",
-        "dono",
-        "autor",
-        "usuarioPlanta",
-        "tbUsuario",
-        "usuarioCadastro"
-    );
+    const usuario = obterUsuario(planta);
 
     if (!usuario || typeof usuario !== "object") {
         return "";
@@ -140,11 +216,19 @@ function fotoUsuarioPlanta(planta) {
     );
 
     if (typeof foto === "object" && foto !== null) {
-        return obterTexto(foto, ["url", "caminho", "nomeArquivo"]);
+        return obterTexto(foto, [
+            "url",
+            "caminho",
+            "nomeArquivo"
+        ]);
     }
 
     return typeof foto === "string" ? foto : "";
 }
+
+// =====================================================
+// FUNÇÕES AUXILIARES
+// =====================================================
 
 function normalizar(texto) {
     return String(texto || "")
@@ -154,7 +238,33 @@ function normalizar(texto) {
         .trim();
 }
 
-// Carrega as plantas do banco por meio da API.
+// Evita repetir a mesma informação no modal.
+// Se nome e espécie forem iguais, mantém apenas um.
+function textoSemDuplicacao(nome, especie) {
+    const nomeLimpo = String(nome || "").trim();
+    const especieLimpa = String(especie || "").trim();
+
+    if (
+        nomeLimpo &&
+        especieLimpa &&
+        normalizar(nomeLimpo) === normalizar(especieLimpa)
+    ) {
+        return {
+            nome: "",
+            especie: especieLimpa
+        };
+    }
+
+    return {
+        nome: nomeLimpo,
+        especie: especieLimpa
+    };
+}
+
+// =====================================================
+// CARREGAR PLANTAS DA API
+// =====================================================
+
 async function carregarPlantas() {
     try {
         const response = await fetch(API_URL);
@@ -165,7 +275,6 @@ async function carregarPlantas() {
 
         const dados = await response.json();
 
-        // Aceita uma lista direta ou uma lista dentro de "content".
         plantas = Array.isArray(dados)
             ? dados
             : Array.isArray(dados.content)
@@ -181,13 +290,18 @@ async function carregarPlantas() {
         console.error("Erro ao carregar plantas:", erro);
 
         grid.innerHTML = "";
+
         mensagemVazia.textContent =
             "Não foi possível carregar as plantas. Verifique se a API está funcionando.";
+
         mensagemVazia.style.display = "block";
     }
 }
 
-// Preenche o filtro com as categorias que vieram da API.
+// =====================================================
+// FILTRO DE CATEGORIAS
+// =====================================================
+
 function carregarFiltroCategorias() {
     const categoriaAtual = filtro.value;
 
@@ -199,30 +313,44 @@ function carregarFiltroCategorias() {
         )
     ];
 
-    filtro.innerHTML = '<option value="todas">Todas</option>';
+    filtro.innerHTML = "";
+
+    const opcaoTodas = document.createElement("option");
+    opcaoTodas.value = "todas";
+    opcaoTodas.textContent = "Todas";
+
+    filtro.appendChild(opcaoTodas);
 
     categorias.forEach(categoria => {
         const opcao = document.createElement("option");
+
         opcao.value = categoria;
         opcao.textContent = categoria;
+
         filtro.appendChild(opcao);
     });
 
     const opcaoExistente = [...filtro.options].find(
-        opcao => normalizar(opcao.value) === normalizar(categoriaAtual)
+        opcao =>
+            normalizar(opcao.value) === normalizar(categoriaAtual)
     );
 
     if (opcaoExistente) {
         filtro.value = opcaoExistente.value;
+    } else {
+        filtro.value = "todas";
     }
 }
 
-// Cria os cards da galeria.
+// =====================================================
+// CRIAR CARDS
+// =====================================================
+
 function renderizarCards() {
     const pesquisa = normalizar(searchInput.value);
     const categoriaEscolhida = normalizar(filtro.value);
 
-    grid.querySelectorAll(".plant-card").forEach(card => card.remove());
+    grid.innerHTML = "";
 
     const filtradas = plantas.filter(planta => {
         const nome = normalizar(nomePlanta(planta));
@@ -243,6 +371,7 @@ function renderizarCards() {
 
     mensagemVazia.textContent =
         "🌱 Nenhuma planta foi encontrada nessa categoria.";
+
     mensagemVazia.style.display =
         filtradas.length === 0 ? "block" : "none";
 
@@ -250,89 +379,147 @@ function renderizarCards() {
         const card = document.createElement("article");
         card.className = "plant-card";
 
+        // Imagem
         const imagem = document.createElement("img");
+
         imagem.src = imagemPlanta(planta);
         imagem.alt = nomePlanta(planta) || "Planta";
         imagem.loading = "lazy";
 
         imagem.onerror = () => {
             imagem.onerror = null;
-            imagem.src = "https://via.placeholder.com/400x250?text=Planta";
+            imagem.src =
+                "https://placehold.co/400x250?text=Planta";
         };
 
+        // Informações
         const info = document.createElement("div");
         info.className = "card-info";
 
-        const nome = document.createElement("h3");
-        nome.textContent = nomePlanta(planta) || "Planta sem nome";
+        const nome = nomePlanta(planta);
+        const especie = especiePlanta(planta);
 
-        const especie = document.createElement("p");
-        especie.className = "species";
-        especie.textContent = especiePlanta(planta) || "Espécie não informada";
+        const dados = textoSemDuplicacao(nome, especie);
 
-        const categoria = document.createElement("span");
-        categoria.className = "tag";
-        categoria.textContent = categoriaPlanta(planta) || "Sem categoria";
+        // Mostra o nome somente se for diferente da espécie.
+        if (dados.nome) {
+            const titulo = document.createElement("h3");
 
-        info.append(nome, especie, categoria);
+            titulo.textContent = dados.nome;
+            info.appendChild(titulo);
+        }
+
+        // Exibe a espécie apenas uma vez.
+        const textoEspecie = document.createElement("p");
+
+        textoEspecie.className = "species";
+        textoEspecie.textContent =
+            dados.especie || "Espécie não informada";
+
+        info.appendChild(textoEspecie);
+
         card.append(imagem, info);
 
-        card.addEventListener("click", () => abrirModal(planta));
+        card.addEventListener("click", () => {
+            abrirModal(planta);
+        });
 
         grid.appendChild(card);
     });
 }
 
+// =====================================================
+// ABRIR MODAL DE DETALHES
+// =====================================================
+
 function abrirModal(planta) {
-    // Nome do usuário que cadastrou a planta
-    const elementoUsuario = document.getElementById("detalheUsuario");
-    elementoUsuario.textContent = usuarioPlanta(planta);
+    try {
+        // Abre o modal primeiro
+        const modal = document.getElementById("modalDetalhes");
 
-    // Foto de perfil do usuário
-    const avatar = document.querySelector("#modalDetalhes .avatar");
-    const fotoUsuario = fotoUsuarioPlanta(planta);
-
-    if (avatar) {
-        avatar.style.backgroundImage = "none";
-        avatar.style.backgroundColor = "#4caf50";
-        avatar.style.backgroundSize = "cover";
-        avatar.style.backgroundPosition = "center";
-        avatar.style.backgroundRepeat = "no-repeat";
-
-        if (fotoUsuario) {
-            avatar.style.backgroundImage =
-                `url("${fotoUsuario.replace(/["\\\n\r]/g, "")}")`;
+        if (!modal) {
+            console.error("Modal #modalDetalhes não encontrado no HTML.");
+            return;
         }
+
+        modal.classList.remove("hidden");
+
+        // Usuário
+        const elementoUsuario = document.getElementById("detalheUsuario");
+
+        if (elementoUsuario) {
+            elementoUsuario.textContent = usuarioPlanta(planta);
+        }
+
+        // Foto do usuário
+        const avatar = modal.querySelector(".avatar");
+        const fotoUsuario = fotoUsuarioPlanta(planta);
+
+        if (avatar) {
+            avatar.style.backgroundImage = fotoUsuario
+                ? `url("${fotoUsuario.replace(/["\\\r\n]/g, "")}")`
+                : "none";
+        }
+
+        // Imagem da planta
+        const imagem = document.getElementById("detalheImg");
+
+        if (imagem) {
+            imagem.onerror = function () {
+                imagem.onerror = null;
+                imagem.src =
+                    "https://placehold.co/400x250?text=Planta";
+            };
+
+            imagem.src = imagemPlanta(planta);
+            imagem.alt = nomePlanta(planta) || "Planta";
+        }
+
+        // Nome e espécie sem duplicação
+        const nome = nomePlanta(planta);
+        const especie = especiePlanta(planta);
+
+        const dados = textoSemDuplicacao(nome, especie);
+
+        const campoNome = document.getElementById("detalheNome");
+        const campoEspecie = document.getElementById("detalheEspecie");
+        const campoCategoria = document.getElementById("detalheCategoria");
+
+        if (campoNome) {
+            campoNome.value = dados.nome;
+            campoNome.style.display = dados.nome ? "" : "none";
+        }
+
+        if (campoEspecie) {
+            campoEspecie.value =
+                dados.especie || "Espécie não informada";
+            campoEspecie.style.display = "";
+        }
+
+        // A categoria não deve aparecer duplicada
+        if (campoCategoria) {
+            campoCategoria.value = "";
+            campoCategoria.style.display = "none";
+        }
+
+        // Descrição
+        const campoDescricao =
+            document.getElementById("detalheDescricao");
+
+        if (campoDescricao) {
+            campoDescricao.value =
+                descricaoPlanta(planta) || "Sem descrição.";
+        }
+
+    } catch (erro) {
+        console.error("Erro ao abrir o modal:", erro);
     }
-
-    // Foto da planta
-    const imagem = document.getElementById("detalheImg");
-
-    imagem.src = imagemPlanta(planta);
-    imagem.alt = nomePlanta(planta) || "Planta";
-
-    imagem.onerror = function () {
-        imagem.onerror = null;
-        imagem.src =
-            "https://via.placeholder.com/400x250?text=Planta";
-    };
-
-    // Informações da planta
-    document.getElementById("detalheNome").value =
-        nomePlanta(planta);
-
-    document.getElementById("detalheEspecie").value =
-        especiePlanta(planta);
-
-    document.getElementById("detalheCategoria").value =
-        categoriaPlanta(planta);
-
-    document.getElementById("detalheDescricao").value =
-        descricaoPlanta(planta) || "Sem descrição.";
-
-    // Abrir o modal
-    modal.classList.remove("hidden");
 }
+
+
+// =====================================================
+// FECHAR MODAL
+// =====================================================
 
 function fecharModal() {
     modal.classList.add("hidden");
@@ -352,8 +539,16 @@ document.addEventListener("keydown", evento => {
     }
 });
 
+// =====================================================
+// PESQUISA E FILTRO
+// =====================================================
+
 searchInput.addEventListener("input", renderizarCards);
+
 filtro.addEventListener("change", renderizarCards);
 
-// Inicia a galeria.
+// =====================================================
+// INICIAR GALERIA
+// =====================================================
+
 carregarPlantas();

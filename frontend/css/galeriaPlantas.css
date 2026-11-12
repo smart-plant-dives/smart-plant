@@ -1067,3 +1067,40 @@ textarea[readonly] {
     padding: 0;
     text-align: center;
 }
+
+
+/* Foto de perfil no modal */
+#modalDetalhes .avatar {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px;
+    min-height: 46px;
+    max-width: 46px;
+    max-height: 46px;
+
+    flex: 0 0 46px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    background-color: #e5e5e5;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    display: block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Cabeçalho do modal */
+#modalDetalhes .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+#modalDetalhes #detalheUsuario {
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}

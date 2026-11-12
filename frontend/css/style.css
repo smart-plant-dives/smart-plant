@@ -1123,3 +1123,10 @@ body {
     font-style: normal;
 }
 
+
+/* Afasta a seção verde do conteúdo inicial */
+.produto-smartplant {
+    margin-top: 100px;
+    margin-bottom: 25px;
+}
+

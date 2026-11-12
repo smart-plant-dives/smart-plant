@@ -48,6 +48,9 @@ public class Usuario {
     @Column(name = "tipo_usuario", nullable = false)
     private TipoUsuario tipoUsuario;
     
+    @Column(name = "username", unique = true, length = 30)
+    private String username;
+    
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
     private List<Planta> plantas;
@@ -128,6 +131,14 @@ public class Usuario {
 
 	public void setFotoPerfil(String fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
+	}
+	
+	public String getUsername() {
+	    return username;
+	}
+
+	public void setUsername(String username) {
+	    this.username = username;
 	}
 	
 }

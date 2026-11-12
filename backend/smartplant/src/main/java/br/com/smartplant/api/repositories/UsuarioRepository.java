@@ -8,8 +8,11 @@ import br.com.smartplant.api.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	Usuario findByLogin(String login);
-	
-	boolean existsByLogin(String login);
+    Usuario findByLogin(String login);
 
+    boolean existsByLogin(String login);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByUsernameAndIdNot(String username, Long id);
 }

@@ -1,5 +1,51 @@
 const API_CADASTRO_URL = "http://localhost:8080/api/usuario";
 
+function mostrarModal(titulo, mensagem, tipo = "erro", aoFechar = null) {
+    const modal = document.getElementById("modalAlerta");
+    const tituloElemento = document.getElementById("tituloAlerta");
+    const mensagemElemento = document.getElementById("mensagemAlerta");
+    const icone = document.getElementById("iconeAlerta");
+    const botao = document.getElementById("btnConfirmarAlerta");
+    const fechar = document.getElementById("btnFecharAlerta");
+
+    tituloElemento.textContent = titulo;
+    mensagemElemento.textContent = mensagem;
+
+    icone.className = "icone-alerta " + tipo;
+
+    const icones = {
+        erro: "fas fa-exclamation",
+        sucesso: "fas fa-check",
+        aviso: "fas fa-exclamation-triangle"
+    };
+
+    icone.innerHTML = `<i class="${icones[tipo] || icones.erro}"></i>`;
+
+    modal.hidden = false;
+    document.body.classList.add("modal-aberto");
+
+    function fecharModal() {
+        modal.hidden = true;
+        document.body.classList.remove("modal-aberto");
+
+        botao.removeEventListener("click", fecharModal);
+        fechar.removeEventListener("click", fecharModal);
+        modal.removeEventListener("click", clicarFora);
+
+        if (aoFechar) aoFechar();
+    }
+
+    function clicarFora(event) {
+        if (event.target === modal) fecharModal();
+    }
+
+    botao.addEventListener("click", fecharModal);
+    fechar.addEventListener("click", fecharModal);
+    modal.addEventListener("click", clicarFora);
+
+    botao.focus();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formCadastro");
     const inputEmail = document.getElementById("email");
@@ -32,16 +78,28 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         if (!dadosUsuario.nome || !dadosUsuario.login || !dadosUsuario.email || !dadosUsuario.senha) {
-            alert("Preencha todos os campos.");
+            mostrarModal(
+    "Campos obrigatórios",
+    "Preencha todos os campos.",
+    "aviso"
+);
             return;
         }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dadosUsuario.email)) {
-            alert("Informe um e-mail válido.");
+            mostrarModal(
+    "E-mail inválido",
+    "Informe um endereço de e-mail válido.",
+    "aviso"
+);
             inputEmail.focus();
             return;
         }
         if (dadosUsuario.senha.length < 8) {
-            alert("A senha deve conter pelo menos 8 caracteres.");
+            mostrarModal(
+    "Senha inválida",
+    "A senha deve conter pelo menos 8 caracteres.",
+    "aviso"
+);
             inputSenha.focus();
             return;
         }
@@ -74,7 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 foto: ""
             }));
 
-            alert("Conta criada com sucesso! Agora personalize seu perfil.");
+            mostrarModal(
+    "Cadastro realizado!",
+    "Conta criada com sucesso! Agora personalize seu perfil.",
+    "sucesso",
+    () => {
+        window.location.href = "addPlantas.html";
+    }
+);
             window.location.href = "addPlantas.html";
         } catch (error) {
             console.error("Erro no cadastro:", error);

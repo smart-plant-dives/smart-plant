@@ -10,13 +10,17 @@
 </head>
 
 <body>
-    <header class="main-header">
+    
+<header class="main-header">
+    <a href="../index.html" class="logo">
+        <img
+            src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg"
+            alt="Smart Plant"
+        >
+    </a>
+    <nav class="nav-auth"></nav>
+</header>
 
-        <a href="../index.html">
-            <img src="https://i.pinimg.com/736x/e7/35/8e/e7358e48ca6e2583c249b9c254bd88f1.jpg" alt="Smart Plant" height="60">
-        </a>
-        <nav class="nav-auth"></nav>
-    </header>
 
     <main class="login-container">
         <section class="login-box">
@@ -54,6 +58,33 @@
             </form>
         </section>
     </main>
+
+    <!-- Modal de alertas -->
+<div id="modalAlerta" class="modal-overlay" hidden>
+    <div class="modal-alerta" role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="tituloAlerta"
+         aria-describedby="mensagemAlerta">
+
+        <button type="button" id="btnFecharAlerta"
+                class="fechar-alerta" aria-label="Fechar">
+            &times;
+        </button>
+
+        <div id="iconeAlerta" class="icone-alerta">
+            <i class="fas fa-exclamation"></i>
+        </div>
+
+        <h2 id="tituloAlerta">Atenção!</h2>
+
+        <p id="mensagemAlerta"></p>
+
+        <button type="button" id="btnConfirmarAlerta"
+                class="btn-alerta">
+            Entendi
+        </button>
+    </div>
+</div>
 
     <script src="../js/cadastroUsuarioo.js"></script>
 </body>

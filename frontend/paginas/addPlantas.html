@@ -293,6 +293,67 @@
     </div>
 </div>
 
+<!-- MODAL DE EDIÇÃO DA PLANTA -->
+<div id="modalEditarPlanta" class="alerta-overlay" hidden>
+    <div class="modal-personalizado">
+        <h2>Editar planta</h2>
+
+        <div class="form-editar-planta">
+            <label for="editarNomePlanta">Nome da planta</label>
+            <input type="text" id="editarNomePlanta">
+
+            <label for="editarEspeciePlanta">Espécie</label>
+            <input type="text" id="editarEspeciePlanta">
+
+            <label for="editarDescricaoPlanta">Descrição</label>
+            <textarea
+                id="editarDescricaoPlanta"
+                maxlength="150"
+                rows="4"
+            ></textarea>
+
+            
+        </div>
+
+        <div class="botoes-modal-personalizado">
+            <button type="button" id="cancelarEditarPlanta">
+                Cancelar
+            </button>
+
+            <button type="button" id="confirmarEditarPlanta">
+                Salvar alterações
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+<div id="modalConfirmacao" class="alerta-overlay" hidden>
+    <div class="modal-personalizado modal-confirmacao">
+        <div class="alerta-icone">!</div>
+
+        <h2>Excluir planta?</h2>
+
+        <p id="mensagemConfirmacao">
+            Tem certeza de que deseja excluir esta planta?
+        </p>
+
+        <div class="botoes-modal-personalizado">
+            <button type="button" id="cancelarConfirmacao">
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="confirmarAcao"
+                class="botao-excluir"
+            >
+                Excluir
+            </button>
+        </div>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="copyright">
         <p>© Todos os Direitos Reservados</p>

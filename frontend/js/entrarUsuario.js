@@ -1,16 +1,11 @@
+
 const API_LOGIN_URL = "http://localhost:8080/api/usuario/login";
 
-
-// =====================================================
-// ELEMENTOS DO HTML
-// =====================================================
-
+// Elementos do HTML
 const formularioLogin = document.getElementById("form-login");
 const inputLogin = document.getElementById("login");
 const inputSenha = document.getElementById("senha");
 const botaoEntrar = document.querySelector(".btn-submit");
-
-const mensagemErro = document.getElementById("mensagem-erro");
 
 const modalAlerta = document.getElementById("modalAlerta");
 const tituloAlerta = document.getElementById("tituloAlerta");
@@ -19,18 +14,12 @@ const iconeAlerta = document.getElementById("iconeAlerta");
 
 const fecharAlerta = document.getElementById("fecharAlerta");
 const confirmarAlerta = document.getElementById("confirmarAlerta");
-
 const togglePassword = document.getElementById("togglePassword");
 
 let acaoAposAlerta = null;
 
-// =====================================================
-// MODAL DE ALERTA
-// =====================================================
-
+// Exibir alerta personalizado
 function mostrarAlerta(mensagem, tipo = "erro", titulo = "") {
-    textoAlerta.textContent = mensagem;
-
     const configuracoes = {
         erro: {
             titulo: "Ops! Algo deu errado",
@@ -56,6 +45,7 @@ function mostrarAlerta(mensagem, tipo = "erro", titulo = "") {
 
     const config = configuracoes[tipo] || configuracoes.erro;
 
+    textoAlerta.textContent = mensagem;
     tituloAlerta.textContent = titulo || config.titulo;
     iconeAlerta.className = "icone-alerta " + config.classe;
     iconeAlerta.innerHTML = `<i class="${config.icone}"></i>`;
@@ -63,6 +53,7 @@ function mostrarAlerta(mensagem, tipo = "erro", titulo = "") {
     modalAlerta.classList.add("ativo");
 }
 
+// Fechar alerta
 function fecharModalAlerta() {
     modalAlerta.classList.remove("ativo");
 
@@ -88,10 +79,7 @@ document.addEventListener("keydown", evento => {
     }
 });
 
-// =====================================================
-// MOSTRAR E OCULTAR SENHA
-// =====================================================
-
+// Mostrar ou ocultar senha
 if (togglePassword && inputSenha) {
     togglePassword.addEventListener("click", () => {
         const mostrar = inputSenha.type === "password";
@@ -103,103 +91,101 @@ if (togglePassword && inputSenha) {
     });
 }
 
-// =====================================================
-// LOGIN — APENAS UM EVENTO SUBMIT
-// =====================================================
+// Realizar login
+formularioLogin.addEventListener("submit", async evento => {
+    evento.preventDefault();
 
-if (formularioLogin) {
-    formularioLogin.addEventListener("submit", async evento => {
-        evento.preventDefault();
+    const login = inputLogin.value.trim();
+    const senha = inputSenha.value;
 
-        const login = inputLogin.value.trim();
-        const senha = inputSenha.value;
+    if (!login || !senha) {
+        mostrarAlerta(
+            "Preencha o usuário e a senha para entrar.",
+            "atencao"
+        );
+        return;
+    }
 
-        if (mensagemErro) {
-            mensagemErro.textContent = "";
-        }
+    const textoOriginal = botaoEntrar.textContent;
 
-        if (!login || !senha) {
-            mostrarAlerta(
-                "Preencha o usuário e a senha para entrar.",
-                "atencao"
-            );
+    botaoEntrar.disabled = true;
+    botaoEntrar.textContent = "Entrando...";
+
+    try {
+        const response = await fetch(API_LOGIN_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                login: login,
+                senha: senha
+            })
+        });
+
+        // Tratar erros retornados pelo backend
+        if (!response.ok) {
+            const detalhe = await response.text();
+
+            console.error("Erro HTTP no login:", {
+                status: response.status,
+                resposta: detalhe
+            });
+
+            if (response.status === 401) {
+                mostrarAlerta(
+                    "Usuário ou senha inválidos.",
+                    "erro",
+                    "Dados incorretos"
+                );
+            } else if (response.status === 403) {
+                mostrarAlerta(
+                    "O servidor bloqueou a tentativa de login. Verifique a configuração do Spring Security.",
+                    "erro",
+                    "Acesso bloqueado"
+                );
+            } else {
+                mostrarAlerta(
+                    detalhe || `Erro ao realizar login (HTTP ${response.status}).`,
+                    "erro"
+                );
+            }
+
             return;
         }
 
-        const textoOriginal = botaoEntrar.textContent;
+        // Ler os dados do usuário autenticado
+        const usuarioAutenticado = await response.json();
 
-        botaoEntrar.disabled = true;
-        botaoEntrar.textContent = "Entrando...";
+        console.log("Usuário autenticado:", usuarioAutenticado);
 
-        try {
-            const response = await fetch(API_LOGIN_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    login: login,
-                    senha: senha
-                })
-            });
+        // Salvar a sessão
+        localStorage.setItem(
+            "usuarioSessao",
+            JSON.stringify(usuarioAutenticado)
+        );
 
-            if (!response.ok) {
-                if (response.status === 401 ||
-                    response.status === 403) {
-                    mostrarAlerta(
-                        "Verifique seu usuário e sua senha.",
-                        "erro",
-                        "Dados incorretos"
-                    );
-                } else {
-                    const detalhe = await response.text();
+        // Exibir sucesso e redirecionar após fechar o modal
+        acaoAposAlerta = () => {
+            window.location.href = "addPlantas.html";
+        };
 
-                    mostrarAlerta(
-                        detalhe ||
-                        `Não foi possível realizar o login (HTTP ${response.status}).`,
-                        "erro"
-                    );
-                }
+        mostrarAlerta(
+            "Login realizado com sucesso! Você será redirecionado.",
+            "sucesso",
+            "Bem-vindo(a) ao SmartPlant!"
+        );
 
-                return;
-            }
+    } catch (erro) {
+        console.error("Erro ao tentar fazer login:", erro);
 
-            const usuarioAutenticado = await response.json();
+        mostrarAlerta(
+            "Não foi possível conectar ao servidor. Verifique se o Spring Boot está em execução.",
+            "conexao"
+        );
 
-            // Diagnóstico: verificar o formato da resposta da API.
-            console.log(
-                "Resposta recebida do login:",
-                usuarioAutenticado
-            );
-
-            // Preservar o ID e os demais campos retornados pela API.
-            localStorage.setItem(
-                "usuarioSessao",
-                JSON.stringify(usuarioAutenticado)
-            );
-
-            // Não sobrescrever o perfil com dados incompletos do login.
-            mostrarAlerta(
-                "Login realizado com sucesso! Você será redirecionado.",
-                "sucesso",
-                "Bem-vindo(a) ao SmartPlant!"
-            );
-
-            acaoAposAlerta = () => {
-                window.location.href = "addPlantas.html";
-            };
-
-        } catch (erro) {
-            console.error("Erro no login:", erro);
-
-            mostrarAlerta(
-                "Não foi possível conectar ao servidor. Verifique se o Spring Boot está funcionando.",
-                "conexao"
-            );
-
-        } finally {
-            botaoEntrar.disabled = false;
-            botaoEntrar.textContent = textoOriginal;
-        }
-    });
-}
+    } finally {
+        botaoEntrar.disabled = false;
+        botaoEntrar.textContent = textoOriginal;
+    }
+});

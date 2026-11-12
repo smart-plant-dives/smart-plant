@@ -1,4 +1,7 @@
+
 package br.com.smartplant.api.config;
+
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,28 +9,82 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuracao = new CorsConfiguration();
 
-		http
-				.csrf(csrf -> csrf.disable())
+        // Endereços do frontend
+        configuracao.setAllowedOrigins(List.of(
+            "http://127.0.0.1:5501",
+            "http://localhost:5501"
+        ));
 
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(HttpMethod.POST, "/api/usuario/login").permitAll()
+        // Métodos permitidos
+        configuracao.setAllowedMethods(List.of(
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        ));
 
-						.requestMatchers("/api/usuario/**", "/api/planta/**", "/api/categoria/**").permitAll()
+        // Cabeçalhos permitidos
+        configuracao.setAllowedHeaders(List.of("*"));
 
-						.anyRequest().authenticated());
+        UrlBasedCorsConfigurationSource origem =
+            new UrlBasedCorsConfigurationSource();
 
-		return http.build();
-	}
+        origem.registerCorsConfiguration("/**", configuracao);
+
+        return origem;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
+        http
+            .cors(cors -> cors.configurationSource(
+                corsConfigurationSource()
+            ))
+
+            .csrf(csrf -> csrf.disable())
+
+            .authorizeHttpRequests(auth -> auth
+
+                // Permite a verificação prévia do navegador
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // Permite o login
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/usuario/login"
+                ).permitAll()
+
+                // Mantém as permissões que você já tinha
+                .requestMatchers(
+                    "/api/usuario/**",
+                    "/api/planta/**",
+                    "/api/categoria/**"
+                ).permitAll()
+
+                // Mantém a proteção das demais rotas
+                .anyRequest().authenticated()
+            );
+
+        return http.build();
+    }
 }

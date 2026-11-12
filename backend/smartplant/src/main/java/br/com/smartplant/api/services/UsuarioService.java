@@ -92,31 +92,74 @@ public class UsuarioService {
 	public Usuario buscarPorId(Long id) {
 		return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
 	}
+	
+    public Usuario atualizar(Long id, Usuario usuarioNovo) {
+    Usuario usuarioAntigo = buscarPorId(id);
 
-	public Usuario atualizar(Long id, Usuario usuarioNovo) {
-		Usuario usuarioAntigo = buscarPorId(id);
+    if (usuarioNovo.getUsername() != null) {
+        String novoUsername = usuarioNovo.getUsername()
+                .trim()
+                .replaceFirst("^@+", "");
 
-		if (usuarioNovo.getLogin() != null && !usuarioNovo.getLogin().isBlank())
-			usuarioAntigo.setLogin(usuarioNovo.getLogin());
-		if (usuarioNovo.getTipoUsuario() != null)
-			usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
-		if (usuarioNovo.getEmail() != null && !usuarioNovo.getEmail().isBlank())
-			usuarioAntigo.setEmail(usuarioNovo.getEmail());
-		if (usuarioNovo.getNome() != null && !usuarioNovo.getNome().isBlank())
-			usuarioAntigo.setNome(usuarioNovo.getNome());
-		if (usuarioNovo.getFotoPerfil() != null)
-			usuarioAntigo.setFotoPerfil(usuarioNovo.getFotoPerfil());
+        if (novoUsername.isBlank()) {
+            throw new IllegalArgumentException(
+                    "O nome de usuário é obrigatório."
+            );
+        }
 
-		if (usuarioNovo.getSenha() != null && !usuarioNovo.getSenha().isBlank()) {
+        if (novoUsername.length() > 30) {
+            throw new IllegalArgumentException(
+                    "O nome de usuário deve ter no máximo 30 caracteres."
+            );
+        }
 
-			String senhaCriptografada = passwordEncoder.encode(usuarioNovo.getSenha());
+        if (!novoUsername.matches("[a-zA-Z0-9._]+")) {
+            throw new IllegalArgumentException(
+                    "Use apenas letras, números, ponto e underline."
+            );
+        }
 
-			usuarioAntigo.setSenha(senhaCriptografada);
-		}
+        if (repository.existsByUsernameAndIdNot(novoUsername, id)) {
+            throw new IllegalArgumentException(
+                    "Este nome de usuário já está sendo utilizado."
+            );
+        }
 
-		return repository.save(usuarioAntigo);
+        usuarioAntigo.setUsername(novoUsername);
+    }
 
-	}
+    if (usuarioNovo.getLogin() != null
+            && !usuarioNovo.getLogin().isBlank()) {
+        usuarioAntigo.setLogin(usuarioNovo.getLogin().trim());
+    }
+
+    if (usuarioNovo.getTipoUsuario() != null) {
+        usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
+    }
+
+    if (usuarioNovo.getEmail() != null
+            && !usuarioNovo.getEmail().isBlank()) {
+        usuarioAntigo.setEmail(usuarioNovo.getEmail());
+    }
+
+    if (usuarioNovo.getNome() != null
+            && !usuarioNovo.getNome().isBlank()) {
+        usuarioAntigo.setNome(usuarioNovo.getNome());
+    }
+
+    if (usuarioNovo.getFotoPerfil() != null) {
+        usuarioAntigo.setFotoPerfil(usuarioNovo.getFotoPerfil());
+    }
+
+    if (usuarioNovo.getSenha() != null
+            && !usuarioNovo.getSenha().isBlank()) {
+        usuarioAntigo.setSenha(
+                passwordEncoder.encode(usuarioNovo.getSenha())
+        );
+    }
+
+    return repository.save(usuarioAntigo);
+}
 
 	public void deletar(Long id) {
 		Usuario usuario = buscarPorId(id);
