@@ -34,6 +34,7 @@ public class Usuario {
     
     @NotBlank(message = "O email é obrigatório.")
     @Email(message = "Email inválido.")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
     
     @NotBlank(message = "A senha é obrigatória.")

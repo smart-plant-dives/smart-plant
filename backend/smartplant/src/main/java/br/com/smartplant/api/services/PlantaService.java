@@ -25,6 +25,7 @@ public class PlantaService {
     private EspecieRepository especieRepository;
 
 	public Planta salvar(Planta planta) {
+		planta.setId(null);
 
 		if (planta.getNomePlanta() == null || planta.getNomePlanta().isBlank()) {
 			throw new RuntimeException("O nome da planta é obrigatório.");

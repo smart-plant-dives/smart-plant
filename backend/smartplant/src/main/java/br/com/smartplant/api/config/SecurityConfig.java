@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/usuario", "/api/usuario/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/planta", "/api/planta/*", "/api/especie", "/api/especie/*").permitAll()
+                .requestMatchers("/api/especie/**").hasRole("ADMINISTRADOR")
                 .anyRequest().authenticated())
             .exceptionHandling(errors -> errors
                 .authenticationEntryPoint((request, response, ex) -> response.sendError(401))
