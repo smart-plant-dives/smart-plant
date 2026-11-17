@@ -1,0 +1,11 @@
+name: smartplant
+services:
+  smartplant-api:
+    build: ../backend/smartplant
+    container_name: smartplant-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:8090:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

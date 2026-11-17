@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:8080/api/planta";
+const API_URL = window.SMARTPLANT_API_BASE + "/planta";
 
 let plantas = [];
 
@@ -267,7 +267,7 @@ function textoSemDuplicacao(nome, especie) {
 
 async function carregarPlantas() {
     try {
-        const response = await fetch(API_URL);
+        const response = await window.smartFetch(API_URL);
 
         if (!response.ok) {
             throw new Error(`Erro HTTP ${response.status}`);

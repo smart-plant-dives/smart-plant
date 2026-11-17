@@ -1,5 +1,5 @@
 
-const API_LOGIN_URL = "http://localhost:8080/api/usuario/login";
+const API_LOGIN_URL = window.SMARTPLANT_API_BASE + "/usuario/login";
 
 // Elementos do HTML
 const formularioLogin = document.getElementById("form-login");
@@ -112,7 +112,7 @@ formularioLogin.addEventListener("submit", async evento => {
     botaoEntrar.textContent = "Entrando...";
 
     try {
-        const response = await fetch(API_LOGIN_URL, {
+        const response = await window.smartFetch(API_LOGIN_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.smartplant.api.entities.Usuario;
 import br.com.smartplant.api.repositories.UsuarioRepository;
+import br.com.smartplant.api.enuns.TipoUsuario;
 
 @Service
 public class UsuarioService {
@@ -19,6 +20,8 @@ public class UsuarioService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	public Usuario salvar(Usuario usuario) {
+		usuario.setId(null);
+		usuario.setTipoUsuario(TipoUsuario.USUARIO);
 		if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
 			throw new IllegalArgumentException("A senha é obrigatória.");
 		}
@@ -131,10 +134,6 @@ public class UsuarioService {
     if (usuarioNovo.getLogin() != null
             && !usuarioNovo.getLogin().isBlank()) {
         usuarioAntigo.setLogin(usuarioNovo.getLogin().trim());
-    }
-
-    if (usuarioNovo.getTipoUsuario() != null) {
-        usuarioAntigo.setTipoUsuario(usuarioNovo.getTipoUsuario());
     }
 
     if (usuarioNovo.getEmail() != null

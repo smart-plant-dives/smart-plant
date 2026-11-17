@@ -12,7 +12,7 @@ formLogin.addEventListener("submit", async function(event){
 
     try {
         // Dispara um POST enviando o login e senha no "corpo" (body) da requisição
-        const resposta = await fetch("http://localhost:8080/api/usuario", {
+        const resposta = await window.smartFetch(window.SMARTPLANT_API_BASE + "/usuario", {
             method: "POST",
             headers: { "Content-Type": "application/json" }, // Avisa que estamos a enviar um JSON
             body: JSON.stringify({

@@ -1,5 +1,5 @@
 
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = window.SMARTPLANT_API_BASE;
 
 // =====================================================
 // ELEMENTOS DO HTML
@@ -416,7 +416,7 @@ if (salvarPerfil) {
                     ""
             };
 
-            const resposta = await fetch(
+            const resposta = await window.smartFetch(
                 `${API_BASE}/usuario/${idUsuario}`,
                 {
                     method: "PUT",
@@ -738,7 +738,7 @@ async function carregarPlantas() {
     }
 
     try {
-        const resposta = await fetch(
+        const resposta = await window.smartFetch(
             `${API_BASE}/planta/usuario/${idUsuario}`
         );
 
@@ -872,7 +872,7 @@ confirmarEditarPlanta.addEventListener("click", async () => {
     confirmarEditarPlanta.disabled = true;
 
     try {
-        const resposta = await fetch(
+        const resposta = await window.smartFetch(
             `${API_BASE}/planta/${plantaEmEdicao.id}`,
             {
                 method: "PUT",
@@ -1063,7 +1063,7 @@ if (btnSalvarPlanta) {
         btnSalvarPlanta.disabled = true;
 
         try {
-            const resposta = await fetch(
+            const resposta = await window.smartFetch(
                 `${API_BASE}/planta/usuario/${idUsuario}`,
                 {
                     method: "POST",
@@ -1194,7 +1194,7 @@ async function apagarPlanta(id) {
     if (!confirmado) return;
 
     try {
-        const resposta = await fetch(
+        const resposta = await window.smartFetch(
             `${API_BASE}/planta/${id}`,
             {
                 method: "DELETE"

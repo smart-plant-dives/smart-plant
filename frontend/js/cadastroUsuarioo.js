@@ -1,4 +1,4 @@
-const API_CADASTRO_URL = "http://localhost:8080/api/usuario";
+const API_CADASTRO_URL = window.SMARTPLANT_API_BASE + "/usuario";
 
 function mostrarModal(titulo, mensagem, tipo = "erro", aoFechar = null) {
     const modal = document.getElementById("modalAlerta");
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch(API_CADASTRO_URL, {
+            const response = await window.smartFetch(API_CADASTRO_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dadosUsuario)
